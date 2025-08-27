@@ -1,0 +1,98 @@
+.conditions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.condition-card {
+  background-color: var(--background-white);
+  padding: 25px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  text-align: left;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.condition-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+/* New style for the highlighted card */
+.condition-card.highlighted {
+  background-color: #fff0f5; /* A light pink background */
+  border-color: #ffc0cb;
+}
+
+.condition-card h3 {
+  font-size: 1.3rem;
+  color: var(--text-dark);
+  margin: 15px 0 5px 0;
+}
+
+.condition-card p {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+.condition-card a {
+  color: var(--primary-blue);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* --- New Icon Styles --- */
+.condition-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+}
+
+/* Background colors for each icon */
+.icon-bg-blue { background-color: #e7f5ff; color: #3498db; }
+.icon-bg-red { background-color: #fff5f5; color: #e74c3c; }
+.icon-bg-pink { background-color: #ffffff; color: #e91e63; }
+.icon-bg-green { background-color: #e8f5e9; color: #2ecc71; }
+.icon-bg-purple { background-color: #f3e5f5; color: #9b59b6; }
+.icon-bg-yellow { background-color: #fffde7; color: #f1c40f; }
+.icon-bg-light-blue { background-color: #e1f5fe; color: #03a9f4; }
+.icon-bg-orange { background-color: #fff3e0; color: #f39c12; }
+
+
+/* --- New Pharmacist Help Styles --- */
+.pharmacist-help {
+  text-align: center;
+  margin-top: 50px;
+  padding-top: 30px;
+  border-top: 1px solid var(--border-color);
+}
+
+.pharmacist-help span {
+  color: var(--text-light);
+  font-size: 1.1rem;
+}
+
+.help-links {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.help-link {
+  color: var(--primary-blue);
+  font-weight: 600;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.1rem;
+}

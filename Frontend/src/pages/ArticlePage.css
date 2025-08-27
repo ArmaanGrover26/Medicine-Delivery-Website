@@ -1,0 +1,91 @@
+.article-page {
+  padding: 40px 0;
+}
+.article-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 30px;
+}
+.back-to-blogs {
+  display: inline-block;
+  text-decoration: none;
+  color: var(--primary-blue);
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.article-container h1 {
+  font-size: 2.5rem;
+  line-height: 1.2;
+}
+.article-meta-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 20px 0;
+  padding: 15px 0;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+.author-details {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.author-details div { display: flex; flex-direction: column; }
+.author-details span { font-size: 0.9rem; color: var(--text-light); }
+
+.article-stats, .article-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+.article-actions button {
+  background: none; border: none; font-size: 1.1rem; cursor: pointer; color: var(--text-light);
+}
+.article-main-image {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 30px;
+}
+
+.article-content {
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
+.article-content h3 { margin-top: 40px; }
+.article-content ul, .article-content ol { padding-left: 20px; }
+.article-content li { margin-bottom: 10px; }
+
+.article-footer { display: flex; flex-direction: column; gap: 30px; margin-top: 40px; }
+.article-tags-footer { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.article-tags-footer span { background: #f1f1f1; padding: 5px 10px; border-radius: 5px; font-size: 0.9rem; }
+
+.author-bio-box, .feedback-box {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 25px;
+}
+.author-bio-box { display: flex; gap: 20px; }
+.author-bio-box p { font-size: 0.9rem; color: var(--text-light); margin-top: 5px; }
+
+.feedback-box { text-align: center; }
+.feedback-box h4 { margin: 0 0 15px 0; }
+.feedback-box div { display: flex; justify-content: center; gap: 10px; margin-bottom: 15px; }
+.feedback-box button {
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--background-white);
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.feedback-box button:hover { background-color: #f1f1f1; }
+.feedback-box > span { font-size: 0.8rem; color: var(--text-light); }
+.feedback-thanks { font-weight: 600; color: var(--green-tag); }
