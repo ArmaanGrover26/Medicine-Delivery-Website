@@ -5,8 +5,11 @@
 
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 25px;
+  /* This new rule creates fixed-size columns */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  /* This centers the group of cards when there's extra space */
+  justify-content: center;
+  gap: 20px;
 }
 
 .view-all-container {
@@ -29,4 +32,11 @@
 .view-all-btn:hover {
   background-color: var(--primary-blue);
   color: white;
+}
+.no-products-found {
+  grid-column: 1 / -1; /* Make this message span the full grid width */
+  text-align: center;
+  font-size: 1.1rem;
+  color: var(--text-light);
+  padding: 40px 0;
 }

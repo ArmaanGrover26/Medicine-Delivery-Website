@@ -1,59 +1,44 @@
 import React from 'react';
 import ProductCard from '../ProductCard/ProductCard';
 import './PopularProducts.css';
+import { Link } from 'react-router-dom';
+import { products as allProducts } from '../../productData';
 
-const products = [
-  {
-    name: 'Paracetamol 500mg',
-    manufacturer: 'Cipla Ltd',
-    price: 45,
-    originalPrice: 60,
-    discount: 25,
-    rating: 4.5,
-    reviews: 534,
-    category: 'Pain Relief',
-    status: 'In Stock',
-    rxRequired: false
-  },
-  {
-    name: 'Cough Syrup 100ml',
-    manufacturer: 'Dabur India Ltd',
-    price: 85,
-    originalPrice: 110,
-    discount: 23,
-    rating: 4.3,
-    reviews: 267,
-    category: 'Cold & Flu',
-    status: 'Low Stock',
-    rxRequired: true
-  },
-  {
-    name: 'Cetirizine 10mg',
-    manufacturer: "Dr. Reddy's",
-    price: 38,
-    originalPrice: 50,
-    discount: 24,
-    rating: 4.4,
-    reviews: 189,
-    category: 'Allergy Relief',
-    status: 'In Stock',
-    rxRequired: false
-  }
-];
+// Receive the new props: searchTerm and sectionRef
+const PopularProducts = ({ searchTerm, sectionRef }) => {
+  
+  // Filter the products based on the search term.
+  // If the search term is empty, show the first 6 products.
+  const filteredProducts = searchTerm
+    ? allProducts.filter(product =>
+        product.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : allProducts.slice(0, 6);
 
-const PopularProducts = () => {
   return (
-    <section className="container popular-products-section">
+    // Attach the ref to this section so we can scroll to it
+    <section ref={sectionRef} className="container popular-products-section">
       <h2 className="section-title">Popular <span className="priority-text">Medicines</span></h2>
       <p className="section-subtitle">Trusted by millions, recommended by experts</p>
+      
       <div className="products-grid">
-        {products.map((product, index) => (
-          <ProductCard key={index} product={product} />
-        ))}
+        {/* Check if any products were found */}
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))
+        ) : (
+          // Show a message if no products match the search
+          <p className="no-products-found">No products found matching your search.</p>
+        )}
       </div>
-      <div className="view-all-container">
-        <button className="view-all-btn">View All Products →</button>
-      </div>
+
+      {/* Only show the "View All" button if the user is not searching */}
+      {!searchTerm && (
+        <div className="view-all-container">
+          <Link to="/products" className="view-all-btn">View All Products →</Link>
+        </div>
+      )}
     </section>
   );
 };

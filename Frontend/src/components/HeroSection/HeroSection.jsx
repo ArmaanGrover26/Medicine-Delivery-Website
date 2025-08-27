@@ -1,12 +1,10 @@
 import React from 'react';
 import './HeroSection.css';
 import heroBg from '../../assets/hero-background.jpg';
-// Import icons for this section
 import { FaSearch, FaShieldAlt, FaBolt } from 'react-icons/fa';
 import { FaClock } from 'react-icons/fa6';
 
-
-const HeroSection = () => {
+const HeroSection = ({ searchTerm, onSearchChange, searchInputRef }) => {
   return (
     <div className="hero-section" style={{ backgroundImage: `url(${heroBg})` }}>
       <div className="hero-overlay"></div>
@@ -15,8 +13,13 @@ const HeroSection = () => {
         <p>Get medicines, wellness products, and healthcare essentials delivered to your doorstep. Fast, reliable, and trusted by millions.</p>
         <div className="search-bar">
           <FaSearch className="search-icon" />
-          <input type="text" placeholder="Search for medicines, wellness products..." />
-          <button className="btn btn-primary">Search</button>
+          <input
+            ref={searchInputRef} // This ref is required for the re-focus feature
+            type="text"
+            placeholder="Search for medicines, wellness products..."
+            value={searchTerm}
+            onChange={onSearchChange}
+          />
         </div>
         <div className="hero-stats">
           <div className="stat-item">
