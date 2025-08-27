@@ -16,7 +16,7 @@
 .product-image-container {
   position: relative;
   background-color: #f7f7f7;
-  padding: 20px;
+  padding: 15px; /* Reduced padding */
 }
 
 .product-image {
@@ -31,10 +31,10 @@
 .discount-tag, .status-tag, .rx-tag {
   position: absolute;
   top: 10px;
-  padding: 5px 10px;
+  padding: 4px 8px; /* Reduced padding */
   border-radius: 5px;
   color: white;
-  font-size: 0.8rem;
+  font-size: 0.75rem; /* Reduced font size */
   font-weight: 600;
 }
 
@@ -54,56 +54,55 @@
 }
 
 .rx-tag {
-  top: auto; /* This is the fix: It cancels the 'top: 10px' from the rule above */
+  top: auto;
   bottom: 10px; 
   left: 10px;
   background-color: #6c757d;
 }
 
-
 /* --- INFO & ACTION STYLES --- */
 .product-info {
-  padding: 20px;
+  padding: 15px; /* Reduced padding */
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
 
 .product-category {
-  font-size: 0.8rem;
+  font-size: 0.75rem; /* Reduced font size */
   color: var(--primary-blue);
   font-weight: 600;
 }
 
 .product-name {
-  font-size: 1.1rem;
+  font-size: 1rem; /* Reduced font size */
   margin: 5px 0;
   color: var(--text-dark);
   font-weight: 600;
 }
 
 .product-manufacturer {
-  font-size: 0.9rem;
+  font-size: 0.85rem; /* Reduced font size */
   color: var(--text-light);
-  margin: 0 0 10px 0;
+  margin: 0 0 8px 0;
 }
 
 .product-rating {
-  font-size: 0.9rem;
+  font-size: 0.8rem; /* Reduced font size */
   color: var(--text-light);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .product-price {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   margin-top: auto;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .current-price {
-  font-size: 1.4rem;
+  font-size: 1.25rem; /* Reduced font size */
   font-weight: 700;
   color: var(--text-dark);
 }
@@ -120,7 +119,8 @@
 
 .add-to-cart-btn {
   flex-grow: 1;
-  padding: 12px;
+  padding: 10px; /* Reduced padding */
+  font-size: 0.9rem; /* Reduced font size */
   background: var(--primary-blue);
   color: white;
   border: none;
@@ -135,11 +135,11 @@
 }
 
 .wishlist-btn {
-  padding: 0 15px;
+  padding: 0 12px; /* Reduced padding */
   border: 1px solid var(--border-color);
   background: white;
   color: var(--red-tag);
   border-radius: 8px;
   cursor: pointer;
-  font-size: 1.5rem;
+  font-size: 1.2rem; /* Reduced font size */
 }

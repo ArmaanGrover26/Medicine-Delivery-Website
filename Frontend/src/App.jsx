@@ -12,6 +12,7 @@ import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 import BlogListPage from './pages/BlogListPage';
 import ArticlePage from './pages/ArticlePage';
+import AllProductsPage from './pages/AllProductsPage'; // 1. Import the new page
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/blogs" element={<BlogListPage />} />
         <Route path="/blogs/:articleId" element={<ArticlePage />} />
+        <Route path="/products" element={<AllProductsPage />} /> {/* 2. Add the new route */}
       </Routes>
       <Footer />
     </div>

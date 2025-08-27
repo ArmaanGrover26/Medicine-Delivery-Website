@@ -40,17 +40,21 @@
   opacity: 0.9;
 }
 
+/* Replace your old .search-bar and .search-bar .btn rules with this */
 .search-bar {
   display: flex;
   align-items: center;
   width: 100%;
-  max-width: 700px; /* Wider search bar */
-  margin: 0 auto 50px auto; /* Increased space */
+  max-width: 700px;
+  margin: 0 auto 50px auto;
   background: white;
   border-radius: 12px;
-  padding: 10px 10px 10px 20px; /* Adjusted padding */
+  /* Adjusted padding for a cleaner look without the button */
+  padding: 15px 20px; 
   box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
+
+/* You can delete the old .search-bar .btn rule if it's still there */
 
 .search-icon {
   color: #aaa;
@@ -66,9 +70,7 @@
   color: var(--text-dark);
 }
 
-.search-bar .btn {
-  padding: 12px 30px;
-}
+
 
 .hero-stats {
   display: flex;
