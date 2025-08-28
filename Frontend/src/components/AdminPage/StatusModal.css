@@ -1,0 +1,139 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  width: 400px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #999;
+}
+
+.modal-body {
+  flex-grow: 1;
+}
+
+.order-details p {
+  margin: 5px 0;
+  font-size: 0.9rem;
+  font-weight: bold; /* New: Making the labels bold */
+  color: #555; /* New: Softer color for the labels */
+}
+
+.detail-value {
+  font-weight: bold;
+  font-size: 1.2rem; /* Increased font size to make it more prominent */
+  color: #000; /* New: Changed to pure black for a strong contrast */
+  margin-top: -5px; /* New: Reduced top margin to bring it closer to the label */
+  margin-bottom: 20px;
+}
+
+.status-selection p {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.radio-group label {
+  display: block;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.radio-group input[type="radio"] {
+  display: none;
+}
+
+.radio-label {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.8rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s ease-in-out;
+}
+
+.radio-group input[type="radio"]:checked + .radio-label {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px #e6f7ff;
+}
+
+.radio-label.pending {
+  background-color: #fff3cd;
+  color: #ffc107;
+}
+
+.radio-label.delivered {
+  background-color: #d4edda;
+  color: #28a745;
+}
+
+.radio-label.cancelled {
+  background-color: #f8d7da;
+  color: #dc3545;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+  margin-top: 20px;
+}
+
+.cancel-button, .update-button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.cancel-button {
+  background-color: #f0f0f0;
+  color: #666;
+}
+
+.update-button {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.update-button:hover {
+  background-color: #218838;
+}

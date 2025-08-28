@@ -1,0 +1,121 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 15px; /* Made it even shorter */
+  border-radius: 8px;
+  width: 350px; /* Reduced width */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 8px; /* Reduced padding */
+  margin-bottom: 10px; /* Reduced margin */
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.1rem; /* Reduced heading size */
+  color: #333;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.4rem; /* Reduced close button size */
+  cursor: pointer;
+  color: #999;
+  transition: color 0.2s ease-in-out;
+}
+
+.close-button:hover {
+  color: #555;
+}
+
+.form-group {
+  margin-bottom: 10px; /* Reduced spacing between form fields */
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 4px; /* Reduced margin */
+  font-size: 0.9rem; /* Reduced label font size */
+  color: #555;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px; /* Reduced padding */
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  color: #333;
+  box-sizing: border-box;
+  font-size: 0.9rem; /* Reduced font size */
+  transition: all 0.2s ease-in-out;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+  background-color: #fff;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 10px; /* Reduced padding */
+  border-top: 1px solid #e0e0e0;
+  margin-top: 10px; /* Reduced margin */
+}
+
+.cancel-button, .update-button {
+  padding: 8px 16px; /* Reduced padding for smaller buttons */
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease-in-out;
+  font-size: 0.8rem; /* Reduced font size */
+}
+
+.cancel-button {
+  background-color: #e9ecef;
+  color: #6c757d;
+}
+
+.cancel-button:hover {
+  background-color: #ced4da;
+}
+
+.update-button {
+  background-color: #007bff;
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
+}
+
+.update-button:hover {
+  background-color: #0056b3;
+  box-shadow: 0 4px 6px rgba(0, 123, 255, 0.3);
+}
+    

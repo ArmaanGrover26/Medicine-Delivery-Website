@@ -1,0 +1,160 @@
+.manage-medicines-container {
+  padding: 30px;
+  flex-grow: 1;
+  background-color: #f4f5f7;
+}
+
+.manage-medicines-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.manage-medicines-header h1 {
+  margin: 0 0 5px;
+  color: #212529; /* Darker heading color */
+  font-weight: 600;
+}
+
+.manage-medicines-header p {
+  margin: 0;
+  color: #6c757d; /* Softer text color */
+}
+
+.add-medicine-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 25px; /* Increased padding for a more prominent button */
+  border-radius: 50px; /* Pill-shaped button */
+  border: none;
+  background-color: #28a745;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(40, 167, 69, 0.3);
+  transition: all 0.2s ease-in-out;
+}
+
+.add-medicine-button:hover {
+  background-color: #218838;
+  box-shadow: 0 6px 8px rgba(40, 167, 69, 0.4);
+}
+
+.medicine-inventory-section {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-header h2 {
+  margin: 0;
+  color: #333;
+}
+
+.search-bar {
+  position: relative;
+}
+
+.search-bar input {
+  padding: 8px 10px 8px 35px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  background-color: #f8f9fa;
+  color: #333; /* Ensuring text color is dark */
+  transition: all 0.2s ease-in-out;
+}
+
+.search-bar input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+}
+
+.medicine-table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.medicine-table-container th, .medicine-table-container td {
+  text-align: left;
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  color: #495057; /* Explicitly setting the text color for all cells */
+}
+
+.medicine-table-container th {
+  background-color: #f8f9fa;
+  color: #495057; /* Darker header color */
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+.medicine-table-container tr:hover {
+  background-color: #f5f5f5;
+}
+
+.status-badge {
+  padding: 5px 12px;
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 0.8rem;
+  text-transform: capitalize;
+}
+
+.status-badge.in-stock {
+  background-color: #d4edda;
+  color: #28a745;
+}
+
+.status-badge.low-stock {
+  background-color: #fff3cd;
+  color: #ffc107;
+}
+
+.status-badge.out-of-stock {
+  background-color: #f8d7da;
+  color: #dc3545;
+}
+
+.actions-cell {
+  display: flex;
+  gap: 15px;
+}
+
+.action-icon {
+  font-size: 1rem;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.action-icon:hover {
+  color: #007bff;
+}
+
+.trash-icon {
+  color: #dc3545;
+}
+
+.trash-icon:hover {
+  color: #c82333;
+}

@@ -1,3 +1,15 @@
+/* General App styles */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f5f7;
+}
+
+.app-container {
+  display: flex; /* This is the key line to make the layout side-by-side */
+}
+
+
 :root {
   --primary-blue: #007bff;
   --primary-gradient: linear-gradient(90deg, #007bff, #00c6ff);

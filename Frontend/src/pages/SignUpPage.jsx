@@ -78,7 +78,7 @@ const SignUpPage = () => {
              <div className="form-group">
               <label htmlFor="phone">Phone Number</label>
               <div className="input-wrapper">
-                <FaPhoneAlt className="input-icon" />
+                <FaPhoneAlt className="input-icon"/>
                 <input type="tel" id="phone" placeholder="+91 9876543210" />
               </div>
             </div>

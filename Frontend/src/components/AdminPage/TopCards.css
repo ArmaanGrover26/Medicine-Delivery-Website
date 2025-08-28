@@ -1,0 +1,93 @@
+.top-cards-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px; /* Reduced gap between cards */
+  margin-bottom: 20px; /* Reduced bottom margin */
+}
+
+.card {
+  color: rgba(0, 0, 0, 0.655);
+  background-color: #fff;
+  border-radius: 10px; /* Changed to 0 for a perfect rectangle */
+  padding: 8px 15px; /* Reduced vertical and horizontal padding */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08); /* Lighter shadow */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+/* Add a hover effect for a more interactive feel */
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.12);
+}
+
+.card-icon {
+  font-size: 2rem; /* Reduced icon size */
+  padding: 4px; /* Reduced padding */
+  border-radius: 0; /* Changed to 0 for a rectangle */
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Use a background gradient for the icons */
+.shopping-cart-icon {
+  background: #e6f7ff;
+}
+.shopping-cart-icon svg {
+  color: #007bff;
+}
+
+.warning-icon {
+  background: #f8d7da;
+}
+.warning-icon svg {
+  color: #dc3545;
+}
+
+.revenue-icon {
+  background: #d4edda;
+}
+.revenue-icon svg {
+  color: #28a745;
+}
+
+.users-icon {
+  background: #e9e5ff; /* A new, purple-ish background to match the icon */
+}
+.users-icon svg {
+  color: #6f42c1;
+}
+
+.card-content {
+  flex-grow: 1; /* This will make the content take up the available space */
+}
+
+.card-title {
+  font-size: 0.9rem; /* Reduced font size */
+  color: #666;
+  margin: 0;
+}
+
+.card-value {
+  font-size: 1.5rem; /* Reduced font size */
+  font-weight: bold;
+  margin: 1px 0; /* Reduced vertical margin */
+}
+
+.card-change {
+  font-size: 0.8rem; /* Reduced font size */
+}
+
+.positive {
+  color: #28a745;
+}
+
+.negative {
+  color: #dc3545;
+}
