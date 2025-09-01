@@ -1,6 +1,6 @@
 import React from 'react';
 import './HeroSection.css';
-import heroBg from '../../assets/hero-background.jpg';
+import heroBg from '../../assets/bgimage.jpg';
 import { FaSearch, FaShieldAlt, FaBolt } from 'react-icons/fa';
 import { FaClock } from 'react-icons/fa6';
 

@@ -1,66 +1,71 @@
 import React from 'react';
 import './Header.css';
 import { Link } from 'react-router-dom';
-import { FaHeartbeat, FaHeart, FaShieldAlt, FaFileAlt, FaUserCircle, FaShoppingCart, FaStethoscope } from 'react-icons/fa';
+import { useCart } from '../../context/CartContext';
+import { FaShoppingCart, FaHeart, FaShieldAlt, FaFileAlt, FaUserCircle, FaStethoscope } from 'react-icons/fa';
 
 const Header = () => {
+  const { cartItems } = useCart();
+  const totalItemsInCart = cartItems.reduce((total, item) => total + item.quantity, 0);
+
   return (
     <header className="header">
       <div className="header-container">
-        {/* Left side of the header */}
-        <div className="header-left">
-          <div className="logo">
-            <FaHeartbeat />
-            <span>HealthMeds</span>
-          </div>
-          <nav className="navigation">
-            <ul>
-              <li className="dropdown">
-                <a href="#/">Nutritional Drinks & Supplements &#9662;</a>
-                <div className="dropdown-content">
-                  <a href="#/">Protein Drinks</a>
-                  <a href="#/">Vitamins</a>
-                  <a href="#/">Minerals</a>
-                  <a href="#/">Energy Drinks</a>
-                </div>
-              </li>
-              <li className="dropdown">
-                <a href="#/"><FaHeart /> Women Care &#9662;</a>
-                <div className="dropdown-content">
-                  <a href="#/">Feminine Hygiene</a>
-                  <a href="#/">Pregnancy Care</a>
-                  <a href="#/">Skincare</a>
-                  <a href="#/">Hair Care</a>
-                </div>
-              </li>
-              <li className="dropdown">
-                <a href="#/"><FaShieldAlt /> Personal Care &#9662;</a>
-                <div className="dropdown-content">
-                  <a href="#/">Oral Care</a>
-                  <a href="#/">Body Care</a>
-                  <a href="#/">Face Care</a>
-                  <a href="#/">Hair Care</a>
-                </div>
-              </li>
-              <li className="dropdown">
-                <a href="#/"><FaStethoscope /> Health Devices &#9662;</a>
-                <div className="dropdown-content">
-                  <a href="#/">Blood Pressure Monitor</a>
-                  <a href="#/">Thermometer</a>
-                  <a href="#/">Glucose Monitor</a>
-                  <a href="#/">Pulse Oximeter</a>
-                </div>
-              </li>
-            </ul>
-          </nav>
+        {/* Logo on the left */}
+        <div className="logo">
+          <Link to="/">
+            <FaHeart className="logo-icon" /> HealthMeds
+          </Link>
         </div>
 
-        {/* Right side of the header */}
-        <div className="header-right">
-          <Link to="/blogs" className="header-link"><FaFileAlt /> Blogs</Link>
-          <Link to="/login" className="header-link"><FaUserCircle /> Login</Link>
+        {/* Navigation links with dropdowns */}
+        <nav className="navigation">
+          <ul>
+            <li className="dropdown">
+              <Link to="/products">Nutritional Drinks & Supplements ▼</Link>
+              <div className="dropdown-content">
+                <Link to="/products">Protein Drinks</Link>
+                <Link to="/products">Vitamins</Link>
+                <Link to="/products">Minerals</Link>
+              </div>
+            </li>
+            <li className="dropdown">
+              <Link to="/products"><FaHeart /> Women Care ▼</Link>
+              <div className="dropdown-content">
+                <Link to="/products">Feminine Hygiene</Link>
+                <Link to="/products">Pregnancy Care</Link>
+              </div>
+            </li>
+            <li className="dropdown">
+              <Link to="/products"><FaShieldAlt /> Personal Care ▼</Link>
+              <div className="dropdown-content">
+                <Link to="/products">Oral Care</Link>
+                <Link to="/products">Body Care</Link>
+              </div>
+            </li>
+            <li className="dropdown">
+              <Link to="/products"><FaStethoscope /> Health Devices ▼</Link>
+              <div className="dropdown-content">
+                <Link to="/products">Blood Pressure Monitor</Link>
+                <Link to="/products">Thermometer</Link>
+              </div>
+            </li>
+             <li>
+                <Link to="/blogs"><FaFileAlt /> Blogs</Link>
+             </li>
+          </ul>
+        </nav>
+
+        {/* Action buttons on the right */}
+        <div className="header-actions">
+          <Link to="/login" className="login-link"><FaUserCircle /> Login</Link>
           <Link to="/signup" className="signup-btn">Sign Up</Link>
-          <a href="#/" className="header-link cart-icon"><FaShoppingCart /></a>
+          <Link to="/cart" className="cart-icon-wrapper">
+            <FaShoppingCart className="cart-icon" />
+            {totalItemsInCart > 0 && (
+              <span className="cart-count">{totalItemsInCart}</span>
+            )}
+          </Link>
         </div>
       </div>
     </header>
