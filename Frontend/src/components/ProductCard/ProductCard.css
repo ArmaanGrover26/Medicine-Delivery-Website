@@ -1,145 +1,111 @@
+/* Styling for the product card using theme variables */
 .product-card {
-  background-color: var(--background-white);
+  background-color: var(--background-light);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: var(--border-radius);
   overflow: hidden;
   text-align: left;
   transition: box-shadow 0.3s;
   display: flex;
   flex-direction: column;
 }
-
 .product-card:hover {
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  box-shadow: var(--box-shadow);
 }
-
 .product-image-container {
-  position: relative;
-  background-color: #f7f7f7;
-  padding: 15px; /* Reduced padding */
+  padding: 1rem;
+  background-color: #f7f7f7; /* Keeping a neutral light grey for product images */
+  text-align: center;
 }
-
 .product-image {
   width: 100%;
-  height: auto;
-  display: block;
-  aspect-ratio: 1 / 1;
+  height: 150px;
   object-fit: contain;
 }
-
-/* --- TAG STYLES --- */
-.discount-tag, .status-tag, .rx-tag {
-  position: absolute;
-  top: 10px;
-  padding: 4px 8px; /* Reduced padding */
-  border-radius: 5px;
-  color: white;
-  font-size: 0.75rem; /* Reduced font size */
-  font-weight: 600;
-}
-
-.discount-tag {
-  left: 10px;
-  background-color: var(--green-tag);
-}
-
-.status-tag {
-  right: 10px;
-  background-color: var(--green-tag);
-}
-
-.status-tag.low-stock {
-  background-color: #ffc107;
-  color: var(--text-dark);
-}
-
-.rx-tag {
-  top: auto;
-  bottom: 10px; 
-  left: 10px;
-  background-color: #6c757d;
-}
-
-/* --- INFO & ACTION STYLES --- */
 .product-info {
-  padding: 15px; /* Reduced padding */
+  padding: 1rem;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
 }
-
-.product-category {
-  font-size: 0.75rem; /* Reduced font size */
-  color: var(--primary-blue);
-  font-weight: 600;
-}
-
 .product-name {
-  font-size: 1rem; /* Reduced font size */
-  margin: 5px 0;
-  color: var(--text-dark);
+  font-size: 1rem;
   font-weight: 600;
+  margin: 0 0 0.25rem 0;
+  color: var(--text-dark); /* FIX: Set explicit text color */
 }
-
 .product-manufacturer {
-  font-size: 0.85rem; /* Reduced font size */
-  color: var(--text-light);
-  margin: 0 0 8px 0;
+  font-size: 0.85rem;
+  color: var(--text-secondary); /* FIX: Use secondary text color */
+  margin: 0 0 1rem 0;
 }
-
-.product-rating {
-  font-size: 0.8rem; /* Reduced font size */
-  color: var(--text-light);
-  margin-bottom: 8px;
-}
-
 .product-price {
+  margin-top: auto;
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-top: auto;
-  margin-bottom: 10px;
+  gap: 0.5rem;
 }
-
 .current-price {
-  font-size: 1.25rem; /* Reduced font size */
+  font-size: 1.2rem;
   font-weight: 700;
-  color: var(--text-dark);
+  color: var(--text-dark); /* FIX: Set explicit text color */
 }
-
 .original-price {
   text-decoration: line-through;
-  color: var(--text-light);
+  color: var(--text-secondary); /* FIX: Use secondary text color */
 }
-
 .product-actions {
   display: flex;
-  gap: 10px;
+  gap: 0.5rem;
+  padding: 0 1rem 1rem 1rem;
 }
 
 .add-to-cart-btn {
   flex-grow: 1;
-  padding: 10px; /* Reduced padding */
-  font-size: 0.9rem; /* Reduced font size */
-  background: var(--primary-blue);
-  color: white;
+  padding: 0.75rem;
+  font-size: 0.9rem;
+  background-color: var(--primary-medium-blue);
+  color: var(--text-light);
   border: none;
-  border-radius: 8px;
+  border-radius: var(--border-radius);
   cursor: pointer;
   font-weight: 600;
-  transition: background-color 0.3s;
+  transition: background-color 0.2s;
 }
 
 .add-to-cart-btn:hover {
-  background-color: #0056b3;
+  background-color: var(--primary-dark-blue);
 }
 
 .wishlist-btn {
-  padding: 0 12px; /* Reduced padding */
+  padding: 0 0.75rem;
   border: 1px solid var(--border-color);
-  background: white;
-  color: var(--red-tag);
-  border-radius: 8px;
+  background: var(--background-light);
+  color: #dc3545; /* Keeping red for the heart icon */
+  border-radius: var(--border-radius);
   cursor: pointer;
-  font-size: 1.2rem; /* Reduced font size */
+  font-size: 1.2rem;
+}
+
+/* Styles for the quantity controller on the card */
+.quantity-control-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--primary-medium-blue);
+  border-radius: var(--border-radius);
+  flex-grow: 1;
+}
+.quantity-control-card button {
+  background-color: #e8eaf6; /* A light blue accent */
+  color: var(--primary-medium-blue);
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0.6rem 0.9rem;
+  font-weight: bold;
+}
+.quantity-control-card span {
+  font-weight: 600;
+  color: var(--text-dark); /* FIX: Set explicit text color for quantity */
 }

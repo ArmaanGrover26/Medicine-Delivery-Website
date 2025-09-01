@@ -1,24 +1,19 @@
 .hero-section {
   position: relative;
-  height: 90vh; /* Increased height to match design better */
+  height: 90vh;
   min-height: 600px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   color: white;
-  background-size: cover;
-  background-position: center;
-}
 
-.hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 50, 100, 0.6);
+  /* --- FIXES ARE HERE --- */
+  background-size: 100%;          /* 1. Stretches the image to cover the entire area */
+  background-position: center;     /* 2. Centers the image, keeping the most important parts visible */
+  background-repeat: no-repeat;    /* 3. Prevents the image from repeating */
 }
+/* NOTE: The .hero-overlay rule is no longer needed for a light theme and has been removed. */
 
 .hero-content {
   position: relative;
@@ -32,32 +27,29 @@
   font-size: 3.5rem;
   margin-bottom: 15px;
   font-weight: 700;
+  color: white; /* FIX: Set heading color to be visible */
 }
 
 .hero-content p {
   font-size: 1.2rem;
-  margin-bottom: 40px; /* Increased space */
-  opacity: 0.9;
+  margin-bottom: 40px;
+  color: var(--text-secondary); /* FIX: Set paragraph color to be visible */
 }
 
-/* Replace your old .search-bar and .search-bar .btn rules with this */
 .search-bar {
   display: flex;
   align-items: center;
   width: 100%;
   max-width: 700px;
   margin: 0 auto 50px auto;
-  background: white;
-  border-radius: 12px;
-  /* Adjusted padding for a cleaner look without the button */
+  background: var(--background-light); /* THEME: Use theme variable */
+  border-radius: var(--border-radius); /* THEME: Use theme variable */
   padding: 15px 20px; 
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  box-shadow: var(--box-shadow); /* THEME: Use theme variable */
 }
 
-/* You can delete the old .search-bar .btn rule if it's still there */
-
 .search-icon {
-  color: #aaa;
+  color: var(--text-secondary); /* THEME: Use theme variable */
   font-size: 1.2rem;
   margin-right: 15px;
 }
@@ -70,15 +62,12 @@
   color: var(--text-dark);
 }
 
-
-
 .hero-stats {
   display: flex;
   justify-content: center;
   gap: 50px;
 }
 
-/* --- New Styles for Stat Icons --- */
 .stat-item {
   display: flex;
   align-items: center;
@@ -93,13 +82,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
   font-size: 1.8rem;
 }
 
-.stat-item-icon.green-bg { background-color: #2ecc71; }
-.stat-item-icon.blue-bg { background-color: #3498db; }
-.stat-item-icon.purple-bg { background-color: #9b59b6; }
+/* THEME: Updated icon styles for light background */
+.stat-item-icon.green-bg { background-color: #e8f5e9; color: var(--accent-green); }
+.stat-item-icon.blue-bg { background-color: #e7f3ff; color: #3498db; }
+.stat-item-icon.purple-bg { background-color: #f3e5f5; color: #9b59b6; }
 
 .stat-item-text {
   display: flex;
@@ -109,9 +98,10 @@
 .stat-item-text strong {
   font-size: 1.5rem;
   font-weight: 700;
+  color: white; /* FIX: Set stat text color to be visible */
 }
 
 .stat-item-text span {
   font-size: 1rem;
-  opacity: 0.9;
+  color: white; /* FIX: Set stat text color to be visible */
 }

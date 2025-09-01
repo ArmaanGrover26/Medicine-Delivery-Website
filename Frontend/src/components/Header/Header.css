@@ -1,7 +1,7 @@
 .header {
-  background-color: var(--background-white);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 15px 30px;
+  background-color: var(--background-light);
+  box-shadow: var(--box-shadow);
+  padding: 1rem 3rem;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -11,128 +11,60 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
-.header-left, .header-right {
+.logo a {
   display: flex;
   align-items: center;
-}
-
-.header-left {
-  gap: 30px; /* Reduced space between logo and navigation */
-}
-
-.header-right {
-  gap: 16px; /* Reduced space between action items */
-}
-
-.logo {
+  gap: 0.5rem;
   font-size: 1.8rem;
   font-weight: 700;
-  color: var(--primary-blue);
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  color: var(--primary-medium-blue);
+}
+
+.logo-icon {
+  color: var(--primary-medium-blue);
 }
 
 .navigation ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  gap: 20px; /* Reduced space between menu items */
+  margin: 0; padding: 0; list-style: none; display: flex; gap: 2rem; align-items: center;
 }
 
 .navigation a {
-  text-decoration: none;
   color: var(--text-dark);
   font-weight: 500;
-  transition: color 0.3s;
   display: flex;
   align-items: center;
-  gap: 6px;
-  white-space: nowrap;
-  font-size: 0.9rem; /* Slightly reduced font size */
+  gap: 0.5rem;
 }
 
-.navigation a:hover {
-  color: var(--primary-blue);
-}
+.dropdown { position: relative; }
+.dropdown-content { display: none; position: absolute; top: 100%; left: 0; background-color: white; min-width: 220px; box-shadow: var(--box-shadow); border-radius: var(--border-radius); padding: 0.5rem 0; z-index: 1001; }
+.dropdown:hover .dropdown-content { display: block; }
+.dropdown-content a { color: black; padding: 12px 16px; display: block; text-align: left; }
+.dropdown-content a:hover { background-color: var(--background-medium); }
 
-.dropdown {
-  position: relative;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: var(--background-white);
-  min-width: 220px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-  border-radius: 8px;
-  left: 0;
-  
-  /* --- The Fix --- */
-  top: 100%; /* Position it directly below the parent link */
-  padding: 15px 0 10px 0; /* Use padding to create space, closing the invisible gap */
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-.dropdown-content a {
-  color: var(--text-dark);
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  font-weight: 400;
-}
-
-.dropdown-content a:hover {
-  background-color: #f1f1f1;
-}
-
-.header-link {
-  text-decoration: none;
-  color: var(--text-dark);
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  white-space: nowrap;
-}
-
-.header-link.cart-icon {
-  font-size: 1.5rem;
-}
+.header-actions { display: flex; align-items: center; gap: 1.5rem; }
+.login-link { color: var(--text-dark); font-weight: 500; display: flex; align-items: center; gap: 0.5rem; }
 
 .signup-btn {
-  padding: 10px 20px;
-  border: none;
-  background: var(--primary-gradient);
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
+  background-color: var(--accent-cyan);
+  color: var(--primary-dark-blue);
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--border-radius);
   font-weight: 600;
-  white-space: nowrap;
-}
-
-.theme-toggle-btn {
-  background: none;
   border: none;
   cursor: pointer;
-  font-size: 1.4rem;
-  color: var(--text-dark);
-  display: flex;
-  align-items: center;
-  padding: 5px;
+  transition: transform 0.2s ease;
+}
+.signup-btn:hover {
+  transform: scale(1.05);
 }
 
-.theme-toggle-btn:hover {
-  color: var(--primary-blue);
+.cart-icon-wrapper { position: relative; color: var(--text-dark); }
+.cart-icon { font-size: 1.5rem; }
+.cart-count {
+  position: absolute; top: -8px; right: -10px; background-color: var(--accent-green); color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.75rem; font-weight: bold; border: 2px solid white;
 }

@@ -66,3 +66,14 @@ body {
   color: transparent;
 }
 
+/* Add these styles to your App.css file */
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex-grow: 1; /* This is the key fix! */
+}
