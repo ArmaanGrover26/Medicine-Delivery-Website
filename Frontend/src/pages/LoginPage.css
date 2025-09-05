@@ -136,36 +136,69 @@
   margin-bottom: 8px;
 }
 
+/* --- Input + Icons --- */
 .input-wrapper {
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .input-wrapper input {
   width: 100%;
-  padding: 12px 15px 12px 40px;
+  padding: 12px 15px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
   font-size: 1rem;
+  padding-left: 44px; /* space for left icon */
 }
 
+/* Email input (icon on left) */
+#email {
+  padding-left: 44px; /* space for left icon */
+}
+
+/* Password input (icon on right) */
+#password {
+  padding-right: 44px; /* space for right icon */
+}
+
+/* Icon styles */
 .input-wrapper .input-icon {
   position: absolute;
-  left: 15px;
   top: 50%;
   transform: translateY(-50%);
+  font-size: 1.2rem;
   color: #aaa;
 }
 
-/* A little trick to reverse icon positions for the password field */
-#password + .input-icon {
-  left: auto;
-  right: 15px;
-  cursor: pointer;
-}
-#password {
-  padding: 12px 40px 12px 15px;
+/* Positions */
+.input-icon.left {
+  left: 15px;
 }
 
+.input-icon.right {
+  right: 15px;
+  cursor: pointer; /* so later we can make it toggle show/hide */
+}
+
+/* Ensure input text starts 2 spaces after icon in all input fields */
+.input-wrapper input {
+  padding-left: 44px;
+}
+
+.input-icon.left {
+  left: 15px;
+}
+
+.input-icon.right {
+  right: 15px;
+}
+
+/* If both icons (left and right) are present, adjust accordingly */
+.input-wrapper input.both-icons {
+  padding-left: 44px;
+  padding-right: 44px;
+}
 
 .form-options {
   display: flex;
