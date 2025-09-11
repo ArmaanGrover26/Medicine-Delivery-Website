@@ -64,36 +64,36 @@ const SignUpPage = () => {
             <div className="form-group">
               <label htmlFor="fullName">Full Name</label>
               <div className="input-wrapper">
-                <FaUser className="input-icon" />
-                <input type="text" id="fullName" placeholder="Enter your full name" />
+                  <FaUser className="input-icon left" />
+                  <input type="text" id="fullName" className="left-icon" placeholder="Enter your full name" />
               </div>
             </div>
              <div className="form-group">
               <label htmlFor="email">Email Address</label>
               <div className="input-wrapper">
-                <MdEmail className="input-icon" />
-                <input type="email" id="email" placeholder="your.email@example.com" />
+                  <MdEmail className="input-icon left" />
+                  <input type="email" id="email" className="left-icon" placeholder="your.email@example.com" />
               </div>
             </div>
              <div className="form-group">
               <label htmlFor="phone">Phone Number</label>
               <div className="input-wrapper">
-                <FaPhoneAlt className="input-icon"/>
-                <input type="tel" id="phone" placeholder="+91 9876543210" />
+                  <FaPhoneAlt className="input-icon left" />
+                  <input type="tel" id="phone" className="left-icon" placeholder="+91 9876543210" />
               </div>
             </div>
             <div className="form-group">
-              <label htmlFor="password">Password</label>
+              <label htmlFor="passwordd">Password</label>
               <div className="input-wrapper">
-                <input type="password" id="password" placeholder="Create a secure password" />
-                <MdVisibility className="input-icon-right" />
+                  <input type="password" id="passwordd" className="right-icon" placeholder="Create a secure password" />
+                  <MdVisibility className="input-icon-right right" />
               </div>
             </div>
              <div className="form-group">
               <label htmlFor="confirmPassword">Confirm Password</label>
               <div className="input-wrapper">
-                <input type="password" id="confirmPassword" placeholder="Confirm your password" />
-                <MdVisibility className="input-icon-right" />
+                  <input type="password" id="confirmPassword" className="right-icon" placeholder="Confirm your password" />
+                  <MdVisibility className="input-icon-right right" />
               </div>
             </div>
             <div className="form-options">

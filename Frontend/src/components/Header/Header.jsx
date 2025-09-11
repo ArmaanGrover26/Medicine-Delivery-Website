@@ -2,23 +2,23 @@ import React from 'react';
 import './Header.css';
 import { Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
+import { useAuth } from '../../context/AuthContext'; // 1. Import the authentication context hook
 import { FaShoppingCart, FaHeart, FaShieldAlt, FaFileAlt, FaUserCircle, FaStethoscope } from 'react-icons/fa';
 
 const Header = () => {
   const { cartItems } = useCart();
+  const { user, logout } = useAuth(); // 2. Get the current user and logout function
   const totalItemsInCart = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <header className="header">
       <div className="header-container">
-        {/* Logo on the left */}
+        {/* Logo and Navigation links remain the same */}
         <div className="logo">
           <Link to="/">
             <FaHeart className="logo-icon" /> HealthMeds
           </Link>
         </div>
-
-        {/* Navigation links with dropdowns */}
         <nav className="navigation">
           <ul>
             <li className="dropdown">
@@ -50,16 +50,35 @@ const Header = () => {
                 <Link to="/products">Thermometer</Link>
               </div>
             </li>
-             <li>
-                <Link to="/blogs"><FaFileAlt /> Blogs</Link>
-             </li>
+            <li>
+              <Link to="/blogs"><FaFileAlt /> Blogs</Link>
+            </li>
           </ul>
         </nav>
 
         {/* Action buttons on the right */}
         <div className="header-actions">
-          <Link to="/login" className="login-link"><FaUserCircle /> Login</Link>
-          <Link to="/signup" className="signup-btn">Sign Up</Link>
+          {/* 3. Conditionally render based on user login state */}
+          {user ? (
+            // If user is logged in, show the profile dropdown
+            <div className="profile-dropdown dropdown">
+              <a href="#!" className="login-link">
+                <FaUserCircle /> {user.name} ▼
+              </a>
+              <div className="dropdown-content">
+                <Link to="/profile">My Profile</Link>
+                <button onClick={logout} className="logout-btn">Logout</button>
+              </div>
+            </div>
+          ) : (
+            // If user is logged out, show Login and Sign Up
+            <>
+              <Link to="/login" className="login-link"><FaUserCircle /> Login</Link>
+              <Link to="/signup" className="signup-btn">Sign Up</Link>
+            </>
+          )}
+
+          {/* The cart icon is always visible */}
           <Link to="/cart" className="cart-icon-wrapper">
             <FaShoppingCart className="cart-icon" />
             {totalItemsInCart > 0 && (

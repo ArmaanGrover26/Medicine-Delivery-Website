@@ -1,11 +1,32 @@
-import React from 'react';
-import './LoginPage.css';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext'; // 1. Import the useAuth hook
+import './LoginPage.css';
 import { BsShieldFillCheck, BsArrowLeft } from 'react-icons/bs';
 import { FaHeartbeat, FaCheckCircle } from 'react-icons/fa';
 import { MdEmail, MdVisibility } from 'react-icons/md';
 
 const LoginPage = () => {
+  const { login } = useAuth(); // 2. Get the login function from the context
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  // 3. Create the function to handle form submission
+  const handleSignIn = (e) => {
+    e.preventDefault(); // Prevent the page from reloading
+    if (email && password) {
+      // For this mock login, we'll create a user object
+      // In a real app, you would send this to your backend for verification
+      const userData = {
+        email: email,
+        name: 'John Doe', // You can get the name from a backend in a real app
+      };
+      login(userData); // Call the login function from the context
+    } else {
+      alert('Please enter both email and password.');
+    }
+  };
+
   return (
     <div className="login-page-container">
       <Link to="/" className="back-to-home">
@@ -55,24 +76,37 @@ const LoginPage = () => {
           <p className="form-subtitle">
             Enter your credentials to access your account
           </p>
-          <form>
+          {/* 4. Connect the form to the handleSignIn function */}
+          <form onSubmit={handleSignIn}>
             <div className="form-group">
               <label htmlFor="email">Email Address</label>
               <div className="input-wrapper">
-                <MdEmail className="input-icon left" />
-                <input
-                  type="email"
-                  id="email"
-                  placeholder="your.email@example.com"
-                />
+                  <MdEmail className="input-icon left" />
+                  <input
+                    type="email"
+                    id="email"
+                    className="left-icon"
+                    placeholder="your.email@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)} // 5. Update email state
+                    required
+                  />
               </div>
             </div>
             <div className="form-group">
               <label htmlFor="password">Password</label>
-           <div className="input-wrapper">
-  <input type="password" id="password" placeholder="Enter your password" />
-  <MdVisibility className="input-icon right" />
-</div>
+              <div className="input-wrapper">
+                  <input
+                    type="password"
+                    id="password"
+                    className="right-icon"
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)} // 6. Update password state
+                    required
+                  />
+                  <MdVisibility className="input-icon right" />
+              </div>
             </div>
             <div className="form-options">
               <label className="checkbox-label">

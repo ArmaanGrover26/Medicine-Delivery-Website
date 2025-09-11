@@ -159,7 +159,8 @@
 
 /* Password input (icon on right) */
 #password {
-  padding-right: 44px; /* space for right icon */
+  padding-left: 44px;
+ /* space for right icon */
 }
 
 /* Icon styles */
@@ -181,20 +182,17 @@
   cursor: pointer; /* so later we can make it toggle show/hide */
 }
 
-/* Ensure input text starts 2 spaces after icon in all input fields */
+/* Input icon padding logic for login/signup */
 .input-wrapper input {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.input-wrapper input.left-icon {
   padding-left: 44px;
 }
-
-.input-icon.left {
-  left: 15px;
+.input-wrapper input.right-icon {
+  padding-right: 44px;
 }
-
-.input-icon.right {
-  right: 15px;
-}
-
-/* If both icons (left and right) are present, adjust accordingly */
 .input-wrapper input.both-icons {
   padding-left: 44px;
   padding-right: 44px;
