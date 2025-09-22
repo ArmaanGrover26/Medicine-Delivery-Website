@@ -1,29 +1,37 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import './CartPage.css';
 import { FaTrash } from 'react-icons/fa';
+import { BsArrowLeft } from 'react-icons/bs';
 
 const CartPage = () => {
-  // Get all the necessary items and functions from our cart context
   const { cartItems, increaseQuantity, decreaseQuantity, removeFromCart } = useCart();
+  const { user } = useAuth();
 
-  // Calculate totals for the summary
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const totalMRP = cartItems.reduce((total, item) => total + (item.originalPrice || item.price) * item.quantity, 0);
   const cartTotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   const totalDiscount = totalMRP - cartTotal;
 
-  // This function correctly handles both decreasing quantity and removing the item
   const handleDecrease = (item) => {
     if (item.quantity === 1) {
-      removeFromCart(item.id); // If quantity is 1, remove the item
+      removeFromCart(item.id);
     } else {
-      decreaseQuantity(item.id); // Otherwise, just decrease the quantity
+      decreaseQuantity(item.id);
     }
   };
 
   return (
     <div className="cart-page-wrapper">
+      <Link to="/" className="back-to-home">
+        <BsArrowLeft /> Back to Home
+      </Link>
+      
       <div className="cart-page-container">
         {/* --- LEFT SECTION: CART ITEMS --- */}
         <div className="cart-items-section">
@@ -87,7 +95,13 @@ const CartPage = () => {
             <div className="savings-banner">
               You will save ₹{totalDiscount.toFixed(2)} on this order
             </div>
-            <button className="proceed-btn">Proceed to Checkout</button>
+
+            {user ? (
+              // This button is now a Link to the checkout page
+              <Link to="/checkout" className="proceed-btn">Proceed to Checkout</Link>
+            ) : (
+              <Link to="/login" className="proceed-btn">Login to Place Order</Link>
+            )}
           </div>
         )}
       </div>

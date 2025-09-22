@@ -1,63 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './BlogListPage.css';
+import { Link } from 'react-router-dom';
 import { articles as allArticles } from '../blogData';
 import ArticleCard from '../components/ArticleCard/ArticleCard';
-import { FaSearch } from 'react-icons/fa';
-
-const categories = ['All', 'Diabetes Care', 'Heart Health', 'Mental Health', 'Skin Care', 'Bone Health'];
+import { BsArrowLeft } from 'react-icons/bs';
 
 const BlogListPage = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [activeCategory, setActiveCategory] = useState('All');
-  const [filteredArticles, setFilteredArticles] = useState(allArticles);
-
-  useEffect(() => {
-    let result = allArticles;
-    // Filter by category
-    if (activeCategory !== 'All') {
-      result = result.filter(article => article.category === activeCategory);
-    }
-    // Filter by search term
-    if (searchTerm) {
-      result = result.filter(article =>
-        article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        article.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-    setFilteredArticles(result);
-  }, [searchTerm, activeCategory]);
-
+  // Find the featured article from the full list
   const featuredArticle = allArticles.find(a => a.isFeatured);
+  
+  // Create a new list for the "Latest Articles" that excludes the featured one
+  const latestArticles = allArticles.filter(a => !a.isFeatured);
 
   return (
     <div className="blog-list-page">
+      <Link to="/" className="back-to-home">
+        <BsArrowLeft /> Back to Home
+      </Link>
+
       <div className="blog-header">
         <h1>Health <span className="highlight">Blogs & Articles</span></h1>
         <p>Stay informed with expert insights, health tips, and the latest medical information from our healthcare professionals</p>
       </div>
 
-      <div className="blog-filters">
-        <div className="blog-search-bar">
-          <FaSearch />
-          <input
-            type="text"
-            placeholder="Search articles, topics, or conditions..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
-        <div className="category-buttons">
-          {categories.map(category => (
-            <button
-              key={category}
-              className={activeCategory === category ? 'active' : ''}
-              onClick={() => setActiveCategory(category)}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
-      </div>
+      {/* The search bar and category filters have been removed */}
 
       {featuredArticle && (
         <div className="featured-article-section">
@@ -69,9 +35,13 @@ const BlogListPage = () => {
       <div className="latest-articles-section">
         <h3>Latest Articles</h3>
         <div className="articles-grid">
-          {filteredArticles.map(article => (
-            <ArticleCard key={article.id} article={article} />
-          ))}
+          {latestArticles.length > 0 ? (
+            latestArticles.map(article => (
+              <ArticleCard key={article.id} article={article} />
+            ))
+          ) : (
+            <p className="no-articles-found">No articles to display.</p>
+          )}
         </div>
       </div>
     </div>
