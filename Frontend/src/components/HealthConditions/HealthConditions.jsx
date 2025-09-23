@@ -1,10 +1,10 @@
-import React from 'react'; // Removed useState
+import React, { useState } from 'react';
 import './HealthConditions.css';
 import { Link } from 'react-router-dom';
 import { IoWater } from "react-icons/io5";
 import { FaThermometerHalf, FaHeart, FaShieldAlt, FaEye, FaSmile, FaBrain, FaBone, FaPhoneAlt } from 'react-icons/fa';
 import { BsFillChatDotsFill } from "react-icons/bs";
-// The Chatbot import has been removed
+import Chatbot from '../Chatbot/Chatbot';
 
 const conditions = [
   { name: 'Diabetes', desc: 'Blood sugar management', products: '15+', icon: <IoWater />, color: 'blue' },
@@ -18,7 +18,8 @@ const conditions = [
 ];
 
 const HealthConditions = () => {
-  // The isChatOpen state has been removed
+  // 2. Re-add the state to manage the chatbot's visibility
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   return (
     <section className="container">
@@ -48,14 +49,15 @@ const HealthConditions = () => {
           <a href="tel:1800-123-4567" className="help-link">
             <FaPhoneAlt /> Call: 1800-123-4567
           </a>
-          {/* This is now a simple link again */}
-          <a href="#!" className="help-link">
+          {/* 3. The 'a' tag is now a 'button' again with a working onClick handler */}
+          <button onClick={() => setIsChatOpen(true)} className="help-link">
             <BsFillChatDotsFill /> Chat with Pharmacist
-          </a>
+          </button>
         </div>
       </div>
       
-      {/* The conditional rendering for the chatbot has been removed */}
+      {/* 4. Conditionally render the Chatbot modal */}
+      {isChatOpen && <Chatbot onClose={() => setIsChatOpen(false)} />}
     </section>
   );
 };
