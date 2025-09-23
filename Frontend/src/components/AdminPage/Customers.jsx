@@ -77,21 +77,18 @@ const Customers = () => {
           <div className="card-content">
             <p className="summary-title">Total Customers</p>
             <h2 className="summary-value">{totalCustomers}</h2>
-            <p className="summary-change">+12% from last month</p>
           </div>
         </div>
         <div className="summary-card">
           <div className="card-content">
             <p className="summary-title">Active Customers</p>
             <h2 className="summary-value">{activeCustomers}</h2>
-            <p className="summary-change">Currently active</p>
           </div>
         </div>
         <div className="summary-card">
           <div className="card-content">
             <p className="summary-title">Average Orders</p>
             <h2 className="summary-value">{averageOrders}</h2>
-            <p className="summary-change">Per customer</p>
           </div>
         </div>
       </div>
@@ -128,11 +125,11 @@ const Customers = () => {
                 <tr key={customer.id}>
                   <td>{customer.id}</td>
                   <td>{customer.name}</td>
-                  <td>
+                  <td className="contact-cell">
                     <p>{customer.email}</p>
                     <p>{customer.phone}</p>
                   </td>
-                  <td>{customer.address}</td>
+                  <td className="address-cell">{customer.address}</td>
                   <td>{customer.totalOrders}</td>
                   <td>{customer.lastOrder}</td>
                   <td>

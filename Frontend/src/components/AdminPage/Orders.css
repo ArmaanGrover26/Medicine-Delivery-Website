@@ -103,16 +103,22 @@
   cursor: pointer;
 }
 
+/* --- Table Styling for Continuous Horizontal Line --- */
 .orders-table-container table {
   width: 100%;
-  border-collapse: collapse;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
-.orders-table-container th, .orders-table-container td {
+.orders-table-container th,
+.orders-table-container td {
   text-align: left;
   padding: 12px 15px;
-  border-bottom: 1px solid #eee;
+  border: none; /* Remove cell borders */
   color: #495057;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .orders-table-container th {
@@ -121,6 +127,14 @@
   font-weight: 600;
   text-transform: uppercase;
   font-size: 0.85rem;
+}
+
+.orders-table-container tr {
+  border-bottom: 1px solid #ddd; /* Single horizontal line for each row */
+}
+
+.orders-table-container tr:last-child {
+  border-bottom: none; /* Remove border from last row */
 }
 
 .orders-table-container tr:hover {
@@ -152,9 +166,8 @@
 
 .actions-cell {
   display: flex;
-  justify-content: center; /* New: Centers the content horizontally */
-  align-items: center; /* Ensures vertical alignment */
-  gap: 0; /* Removed the gap as there is only one item now */
+  justify-content: center;
+  align-items: center;
 }
 
 .action-icon {

@@ -2,7 +2,7 @@ import React from 'react';
 import './Header.css';
 import { Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
-import { FaShoppingCart, FaHeart, FaShieldAlt, FaFileAlt, FaUserCircle, FaStethoscope } from 'react-icons/fa';
+import { FaShoppingCart, FaHeartbeat, FaShieldAlt, FaFileAlt, FaUserCircle, FaStethoscope } from 'react-icons/fa'; // Updated: Imported FaHeartbeat
 
 const Header = () => {
   const { cartItems } = useCart();
@@ -14,7 +14,8 @@ const Header = () => {
         {/* Logo on the left */}
         <div className="logo">
           <Link to="/">
-            <FaHeart className="logo-icon" /> HealthMeds
+            {/* Replaced with FaHeartbeat icon */}
+            <FaHeartbeat className="logo-icon" /> HealthMeds
           </Link>
         </div>
 
@@ -30,7 +31,7 @@ const Header = () => {
               </div>
             </li>
             <li className="dropdown">
-              <Link to="/products"><FaHeart /> Women Care ▼</Link>
+              <Link to="/products"><FaHeartbeat /> Women Care ▼</Link>
               <div className="dropdown-content">
                 <Link to="/products">Feminine Hygiene</Link>
                 <Link to="/products">Pregnancy Care</Link>
@@ -50,9 +51,9 @@ const Header = () => {
                 <Link to="/products">Thermometer</Link>
               </div>
             </li>
-             <li>
-                <Link to="/blogs"><FaFileAlt /> Blogs</Link>
-             </li>
+            <li>
+              <Link to="/blogs"><FaFileAlt /> Blogs</Link>
+            </li>
           </ul>
         </nav>
 
