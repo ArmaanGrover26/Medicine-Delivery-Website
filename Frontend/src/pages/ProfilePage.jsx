@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ProfilePage.css';
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
@@ -8,18 +8,41 @@ import { BsArrowLeft } from 'react-icons/bs';
 const ProfilePage = () => {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('profile');
+  
+  // State to manage the form inputs
+  const [formData, setFormData] = useState({
+    fullName: '',
+    phone: '', // We'll add phone to the form
+  });
 
-  // Mock data for demonstration
-  const pastOrders = [
-    { id: '12345', date: '2025-08-28', total: '₹1,250', status: 'Delivered' },
-    { id: '12346', date: '2025-08-15', total: '₹850', status: 'Delivered' },
-  ];
-  const wishlist = [
-    { id: 6, name: 'Digital Thermometer', price: '₹250' },
-    { id: 5, name: 'Omega-3 Fish Oil', price: '₹450' },
-  ];
+  // When the component loads or the user changes, pre-fill the form
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        fullName: user.name || '',
+        // In a real app, the phone number would also come from the user object
+        phone: user.phone || '9876543210', 
+      });
+    }
+  }, [user]);
+  
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
+  };
+  
+  const handleUpdateProfile = (e) => {
+    e.preventDefault();
+    // In a real app, you would make an API call here to update the user's data
+    alert(`Profile updated for ${formData.fullName}`);
+  };
 
-  // Function to render content based on the active tab
+  // Mock data for other tabs
+  const pastOrders = [{ id: '12345', date: '2025-08-28', total: '₹1,250', status: 'Delivered' }];
+  const wishlist = [{ id: 6, name: 'Digital Thermometer', price: '₹250' }];
+
   const renderContent = () => {
     switch (activeTab) {
       case 'profile':
@@ -27,15 +50,33 @@ const ProfilePage = () => {
           <div>
             <h3>Edit Profile</h3>
             <p>Update your personal and contact information below.</p>
-            {/* A simple form for demonstration */}
-            <form className="profile-edit-form">
+            <form className="profile-edit-form" onSubmit={handleUpdateProfile}>
               <div className="form-group">
                 <label htmlFor="fullName">Full Name</label>
-                <input type="text" id="fullName" defaultValue={user?.name} />
+                <input 
+                  type="text" 
+                  id="fullName" 
+                  value={formData.fullName}
+                  onChange={handleChange}
+                />
+              </div>
+               <div className="form-group">
+                <label htmlFor="phone">Phone Number</label>
+                <input 
+                  type="tel" 
+                  id="phone" 
+                  value={formData.phone}
+                  onChange={handleChange}
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="email">Email Address</label>
-                <input type="email" id="email" defaultValue={user?.email} readOnly />
+                <input 
+                  type="email" 
+                  id="email" 
+                  defaultValue={user?.email} 
+                  readOnly 
+                />
               </div>
               <button type="submit" className="action-btn">Save Changes</button>
             </form>
