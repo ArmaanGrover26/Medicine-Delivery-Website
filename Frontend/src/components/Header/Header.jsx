@@ -20,9 +20,10 @@ const Header = () => {
   return (
     <header className="header">
       <div className="header-container">
+        {/* Logo on the left */}
         <div className="header-left">
           <Link to="/" className="logo" onClick={closeMenu}>
-            <FaHeartbeat />
+            <FaHeartbeat className="logo-icon" />
             <span>HealthMeds</span>
           </Link>
           

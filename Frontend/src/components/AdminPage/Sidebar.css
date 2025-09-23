@@ -4,6 +4,7 @@
   height: 100vh;
   padding: 20px;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0; /* Ensures the sidebar does not shrink */
 }
 
 .logo-container {
@@ -14,13 +15,22 @@
   font-weight: bold;
 }
 
-.logo-icon {
-  font-size: 30px;
-  color: #007bff;
+.sidebar-logo-link {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Adds space between the icon and text */
+  text-decoration: none; /* Removes underline from the link */
+}
+
+.logo-icon-svg {
+  width: 30px;
+  height: 30px;
+  color: #3498db; /* This line ensures the color is blue */
 }
 
 .logo-text {
   font-size: 24px;
+  font-weight: 700;
   color: #333;
 }
 
