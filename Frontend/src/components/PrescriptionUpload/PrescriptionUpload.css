@@ -1,155 +1,111 @@
-/* Responsive Prescription Upload Styles */
-@media (max-width: 900px) {
-  .prescription-container {
-    flex-direction: column;
-    gap: 14px;
-    padding: 18px;
-  }
-  .prescription-left, .prescription-right {
-    flex-basis: 100%;
-    padding: 14px;
-    border-radius: 8px;
-  }
-  .prescription-left h3 {
-    font-size: 1.1rem;
-  }
-  .prescription-right h4 {
-    font-size: 1rem;
-  }
-  .steps-list {
-    gap: 10px;
-  }
-}
-@media (max-width: 600px) {
-  .prescription-container {
-    margin: 10px 0;
-    padding: 6px;
-    border-radius: 6px;
-  }
-  .prescription-left, .prescription-right {
-    padding: 6px;
-    border-radius: 6px;
-  }
-  .prescription-icon {
-    font-size: 1.5rem;
-    margin-bottom: 6px;
-  }
-  .prescription-left h3 {
-    font-size: 0.95rem;
-    margin-bottom: 4px;
-  }
-  .prescription-left p {
-    font-size: 0.92rem;
-    margin-bottom: 8px;
-  }
-  .upload-btn {
-    font-size: 0.95rem;
-    padding: 8px 12px;
-    gap: 4px;
-  }
-  .prescription-right h4 {
-    font-size: 0.95rem;
-    margin-bottom: 6px;
-  }
-  .steps-list {
-    grid-template-columns: 1fr;
-    gap: 4px;
-  }
-  .steps-list li {
-    font-size: 0.92rem;
-    gap: 4px;
-  }
-  .steps-list li::before {
-    width: 18px;
-    height: 18px;
-    font-size: 0.9rem;
-  }
-}
+/* Enhanced styles for the Prescription Upload component */
 .prescription-container {
   display: flex;
-  gap: 30px;
-  background-color: var(--background-white);
-  padding: 30px;
-  border-radius: 12px;
+  gap: 40px; /* Increased gap */
+  background-color: var(--background-light);
+  padding: 50px; /* Increased padding */
+  border-radius: 16px; /* Larger radius for a softer look */
   border: 1px solid var(--border-color);
-  margin: 40px 0;
+  margin: 60px auto; /* Increased vertical margin */
   align-items: center;
+  max-width: 1200px;
+  width: 100%;
+  box-shadow: var(--box-shadow); /* Added theme shadow */
 }
 
 .prescription-left {
-  flex-basis: 35%;
-  background-color: #e7f5ff;
+  flex-basis: 40%; /* Adjusted flex-basis */
+  background-color: #eaf5ff; /* A light, welcoming blue */
   border-radius: 12px;
-  padding: 25px;
+  padding: 40px; /* Increased padding */
   text-align: center;
 }
 
 .prescription-icon {
-  font-size: 3rem;
-  color: var(--primary-blue);
-  margin-bottom: 15px;
-}
-
-.prescription-left h3 {
-  margin: 0 0 10px 0;
-  font-size: 1.5rem;
-}
-
-.prescription-left p {
-  color: var(--text-dark);
+  font-size: 4rem; /* Increased icon size */
+  color: var(--primary-medium-blue);
   margin-bottom: 20px;
 }
 
+.prescription-left h3 {
+  margin: 0 0 15px 0;
+  font-size: 2.2rem; /* Increased font size */
+  font-family: var(--font-primary); /* Use modern theme font */
+  font-weight: 700;
+  color: var(--primary-dark-blue);
+}
+
+.prescription-left p {
+  color: var(--text-secondary);
+  margin-bottom: 30px;
+  font-size: 1.2rem; /* Increased text size */
+  line-height: 1.6;
+}
+
 .upload-btn {
-  background-color: #1abc9c;
+  background-color: var(--accent-green); /* Use theme green */
   color: white;
   border: none;
-  border-radius: 8px;
-  padding: 12px 25px;
-  font-size: 1rem;
+  border-radius: 10px;
+  padding: 18px 36px; /* Bigger button */
+  font-size: 1.25rem; /* Bigger text */
   font-weight: 600;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
+  transition: all 0.3s ease;
+}
+
+.upload-btn:hover {
+  background-color: #388e3c; /* Darker green on hover */
+  transform: translateY(-3px); /* Add a subtle lift effect */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
 .prescription-right {
-  flex-basis: 65%;
+  flex-basis: 60%; /* Adjusted flex-basis */
 }
 
 .prescription-right h4 {
-  font-size: 1.2rem;
-  margin: 0 0 20px 0;
+  font-size: 2.2rem; /* Increased font size */
+  font-family: var(--font-primary); /* Use modern theme font */
+  font-weight: 700;
+  margin: 0 0 30px 0;
+  color: var(--primary-dark-blue);
 }
 
 .steps-list {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px; /* Increased gap */
 }
 
 .steps-list li {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  color: var(--text-dark);
+  gap: 20px; /* Increased gap */
+  color: var(--text-secondary);
+  font-size: 1.2rem; /* Increased size */
+  line-height: 1.7; /* More breathing space */
 }
 
 .steps-list li::before {
   content: counter(list-item);
   counter-increment: list-item;
   background-color: #e7f5ff;
-  color: var(--primary-blue);
+  color: var(--primary-medium-blue);
   font-weight: 700;
   border-radius: 50%;
-  width: 25px;
-  height: 25px;
+  width: 40px; /* Bigger circle */
+  height: 40px;
+  font-size: 1.2rem; /* Bigger number */
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  border: 2px solid var(--primary-medium-blue);
 }

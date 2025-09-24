@@ -1,74 +1,138 @@
-.plus-banner-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: linear-gradient(90deg, #1e3a5f, #152945);
-  color: white;
-  border-radius: 12px;
-  padding: 40px;
-  margin: 40px 0;
+.plus-membership-section {
+  padding: 4rem 2rem;
+  background-color: var(--background-medium);
+}
+
+.plus-membership-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative; /* This is essential for positioning the image */
+}
+
+.plus-header {
+  background-color: #eaf5ff;
+  padding: 3rem;
+  border-radius: 16px;
+  position: relative;
   overflow: hidden;
+  /* Add padding on the right to make space for the image */
+  padding-right: 420px; 
 }
 
-.plus-banner-content {
-  flex-basis: 60%;
-}
-
-.plus-banner-content h2 {
-  font-size: 2.2rem;
+.plus-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--primary-dark-blue);
   margin: 0;
 }
 
-.plus-text {
+.plus-logo {
+  color: var(--primary-medium-blue);
   font-weight: 900;
-  background-color: #f1c40f;
-  color: #8e44ad;
-  padding: 0 8px;
-  border-radius: 5px;
 }
 
-.plus-banner-content h3 {
+.plus-subtitle {
   font-size: 1.2rem;
-  font-weight: 400;
-  opacity: 0.9;
+  color: var(--text-secondary);
+  margin: 0.5rem 0 1.5rem 0;
 }
 
-.divider-line {
-  width: 100px;
-  height: 4px;
-  background-color: #f1c40f;
-  margin: 20px 0;
-}
-
-.plus-banner-content p {
-  line-height: 1.6;
-  max-width: 400px;
-  margin-bottom: 25px;
-}
-
-.plus-banner-content a {
-  color: #f1c40f;
-  text-decoration: none;
+.main-benefit-btn {
+  display: inline-block;
+  background-color: var(--background-light);
+  color: var(--primary-dark-blue);
   font-weight: 600;
-}
-
-.explore-btn {
-  background-color: #f1c40f;
-  color: #333;
-  border: none;
+  padding: 0.8rem 1.5rem;
   border-radius: 8px;
-  padding: 12px 25px;
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.plus-banner-image {
-  flex-basis: 40%;
-  text-align: right;
+/* --- THIS IS THE FIX --- */
+.plus-family-image {
+  position: absolute;
+  top: 0;      /* 1. Set top to 0 */
+  right: 30px;
+  bottom: 0;   /* 2. Set bottom to 0 */
+  width: 400px;
+  z-index: 2;
 }
 
-.plus-banner-image img {
-  max-width: 100%;
-  height: auto;
+.plus-family-image img {
+  width: 100%;
+  height: 100%;  /* 3. Change height to 100% */
+  object-fit: cover; /* 4. Add object-fit to prevent distortion */
+  border-radius: 8px;
+}
+/* --- END OF FIX --- */
+
+.plus-benefits-card {
+  background-color: var(--background-light);
+  border-radius: 12px;
+  padding: 2rem 3rem 3rem 3rem;
+  box-shadow: var(--box-shadow);
+  margin-top: -60px; /* Pulls the card up to overlap the header */
+  position: relative;
+  z-index: 1;
+}
+
+.benefits-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 0 0 2rem 0;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.benefit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.benefit-icon {
+  font-size: 1.8rem;
+  color: var(--accent-green);
+  margin-top: 5px;
+}
+
+.benefit-item strong {
+  display: block;
+  font-size: 1.1rem;
+  color: var(--text-dark);
+  margin-bottom: 0.25rem;
+}
+
+.benefit-item p {
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.additional-benefits {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
+  color: var(--text-secondary);
+}
+
+.benefit-icon-small {
+  color: var(--accent-green);
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 992px) {
+  .plus-family-image {
+    display: none; /* Hide the image on smaller screens to prevent layout breaking */
+  }
+  .plus-header {
+    padding-right: 3rem; /* Reset padding when image is hidden */
+  }
 }
