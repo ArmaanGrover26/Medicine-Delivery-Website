@@ -9,22 +9,30 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Initialize the Google AI client
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+// Initialize the Google AI client (if you have a key)
+const genAI = process.env.GEMINI_API_KEY 
+  ? new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
+  : null;
 
 
 // --- API Routes ---
-// Import the route files we created
+// Import all the route files we have created
 const userRoutes = require('./routes/users');
 const adminRoutes = require('./routes/admin');
+const orderRoutes = require('./routes/orders');
 
 // Tell the server to use these routes
 app.use('/api/users', userRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/orders', orderRoutes);
 
 
 // --- Gemini Chatbot Route ---
 app.post('/api/chat', async (req, res) => {
+  if (!genAI) {
+    return res.status(503).json({ error: "AI Service is not configured." });
+  }
+
   try {
     const { message } = req.body;
 

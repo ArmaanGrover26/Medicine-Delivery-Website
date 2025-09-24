@@ -6,24 +6,45 @@ const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token'));
+  const [addresses, setAddresses] = useState([]);
+  const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
 
-  // This effect runs when the app loads to check if a token exists
+  // This is the function to fetch orders for the logged-in user
+  const fetchOrders = async (authToken) => {
+    if (!authToken) return;
+    try {
+      const response = await fetch('http://localhost:3001/api/orders', {
+        headers: {
+          'x-auth-token': authToken
+        }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setOrders(data);
+      } else {
+        // Handle cases where the token might be expired
+        logout();
+      }
+    } catch (error) {
+      console.error("Failed to fetch orders:", error);
+    }
+  };
+
   useEffect(() => {
     if (token) {
       try {
-        // Decode the user info from the JWT payload
         const decoded = JSON.parse(atob(token.split('.')[1]));
         setUser(decoded.user);
+        fetchOrders(token); // Fetch orders when the app loads and a token exists
+        // In a real app, you'd fetch addresses too
+        setAddresses([{ id: 1, type: 'Home', name: decoded.user.name, address: '123 Health St, Wellness City', pincode: '400001', state: 'Maharashtra', phone: decoded.user.phone }]);
       } catch (e) {
-        // If token is invalid, clear it
-        localStorage.removeItem('token');
-        setToken(null);
+        logout(); // Clear everything if token is invalid
       }
     }
   }, [token]);
 
-  // Function to handle user sign-up
   const signup = async (userData) => {
     return fetch('http://localhost:3001/api/users/signup', {
       method: 'POST',
@@ -32,7 +53,6 @@ export const AuthProvider = ({ children }) => {
     });
   };
 
-  // Function to handle user login
   const login = async (credentials) => {
     const response = await fetch('http://localhost:3001/api/users/login', {
       method: 'POST',
@@ -43,26 +63,54 @@ export const AuthProvider = ({ children }) => {
     if (response.ok) {
       const data = await response.json();
       localStorage.setItem('token', data.token);
-      setToken(data.token);
+      setToken(data.token); // This will trigger the useEffect above
       setUser(data.user);
-      navigate('/profile');
+      // In a real app, you'd fetch addresses too
+      setAddresses([{ id: 1, type: 'Home', name: data.user.name, address: '123 Health St, Wellness City', pincode: '400001', state: 'Maharashtra', phone: data.user.phone }]);
+      navigate('/');
     } else {
-      // Let the component handle the error message by throwing an error
       const errorData = await response.json();
       throw new Error(errorData.message);
     }
   };
 
-  // Function to handle user logout
   const logout = () => {
     setUser(null);
     setToken(null);
+    setAddresses([]);
+    setOrders([]);
     localStorage.removeItem('token');
     navigate('/');
   };
+  
+  const addAddress = (newAddressData) => {
+    // In a real app, this would be a POST request to the backend
+    const newAddress = { id: Date.now(), ...newAddressData };
+    setAddresses(prev => [...prev, newAddress]);
+    return newAddress;
+  };
 
-  // The value provided to all components
-  const value = { user, token, login, logout, signup };
+  const addOrder = async (orderData) => {
+    const response = await fetch('http://localhost:3001/api/orders', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-auth-token': token
+        },
+        body: JSON.stringify(orderData),
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to place order.");
+    }
+    
+    await fetchOrders(token); // Re-fetch orders after adding a new one
+    
+    return await response.json();
+  };
+
+  const value = { user, token, login, logout, signup, addresses, addAddress, orders, addOrder };
 
   return (
     <AuthContext.Provider value={value}>
@@ -71,7 +119,6 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// Custom hook for easy access
 export const useAuth = () => {
   return useContext(AuthContext);
 };

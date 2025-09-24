@@ -14,7 +14,9 @@ import BlogListPage from './pages/BlogListPage';
 import ArticlePage from './pages/ArticlePage';
 import ProfilePage from './pages/ProfilePage';
 import ProductDetailPage from './pages/ProductDetailPage';
-import CheckoutPage from './pages/CheckoutPage'; // 1. Import the new checkout page
+import CheckoutPage from './pages/CheckoutPage';
+import PaymentPage from './pages/PaymentPage';         // 1. Import PaymentPage
+import OrderSuccessPage from './pages/OrderSuccessPage'; // 2. Import OrderSuccessPage
 
 // Admin Pages
 import AdminDashboardPage from './components/AdminPage/AdminDashboardPage';
@@ -51,6 +53,7 @@ function App() {
         <Route path="/cart" element={<Layout><CartPage /></Layout>} />
         <Route path="/blogs" element={<Layout><BlogListPage /></Layout>} />
         <Route path="/blogs/:articleId" element={<Layout><ArticlePage /></Layout>} />
+        <Route path="/order-success" element={<Layout><OrderSuccessPage /></Layout>} />
 
         {/* Protected User Routes */}
         <Route
@@ -63,13 +66,23 @@ function App() {
             </Layout>
           }
         />
-        {/* 2. Add the new protected route for the checkout page */}
         <Route
           path="/checkout"
           element={
             <Layout>
               <UserProtectedRoute>
                 <CheckoutPage />
+              </UserProtectedRoute>
+            </Layout>
+          }
+        />
+        {/* 3. Add the new protected route for the payment page */}
+        <Route
+          path="/payment"
+          element={
+            <Layout>
+              <UserProtectedRoute>
+                <PaymentPage />
               </UserProtectedRoute>
             </Layout>
           }

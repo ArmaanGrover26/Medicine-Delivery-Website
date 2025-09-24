@@ -2,45 +2,37 @@ import React, { useState, useEffect } from 'react';
 import './ProfilePage.css';
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
-import { FaUserEdit, FaBoxOpen, FaHeart, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaUserEdit, FaBoxOpen, FaHeart, FaMapMarkerAlt, FaTrash } from 'react-icons/fa';
 import { BsArrowLeft } from 'react-icons/bs';
 
 const ProfilePage = () => {
-  const { user } = useAuth();
+  const { user, addresses, deleteAddress, orders } = useAuth(); // Get real orders
   const [activeTab, setActiveTab] = useState('profile');
   
-  // State to manage the form inputs
   const [formData, setFormData] = useState({
     fullName: '',
-    phone: '', // We'll add phone to the form
+    phone: '',
   });
 
-  // When the component loads or the user changes, pre-fill the form
   useEffect(() => {
     if (user) {
       setFormData({
         fullName: user.name || '',
-        // In a real app, the phone number would also come from the user object
-        phone: user.phone || '9876543210', 
+        phone: user.phone || '',
       });
     }
   }, [user]);
   
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.id]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.id]: e.target.value });
   };
   
   const handleUpdateProfile = (e) => {
     e.preventDefault();
-    // In a real app, you would make an API call here to update the user's data
     alert(`Profile updated for ${formData.fullName}`);
   };
 
-  // Mock data for other tabs
-  const pastOrders = [{ id: '12345', date: '2025-08-28', total: '₹1,250', status: 'Delivered' }];
+  // Mock data for wishlist
   const wishlist = [{ id: 6, name: 'Digital Thermometer', price: '₹250' }];
 
   const renderContent = () => {
@@ -53,30 +45,15 @@ const ProfilePage = () => {
             <form className="profile-edit-form" onSubmit={handleUpdateProfile}>
               <div className="form-group">
                 <label htmlFor="fullName">Full Name</label>
-                <input 
-                  type="text" 
-                  id="fullName" 
-                  value={formData.fullName}
-                  onChange={handleChange}
-                />
+                <input type="text" id="fullName" value={formData.fullName} onChange={handleChange}/>
               </div>
-               <div className="form-group">
+              <div className="form-group">
                 <label htmlFor="phone">Phone Number</label>
-                <input 
-                  type="tel" 
-                  id="phone" 
-                  value={formData.phone}
-                  onChange={handleChange}
-                />
+                <input type="tel" id="phone" value={formData.phone} onChange={handleChange} />
               </div>
               <div className="form-group">
                 <label htmlFor="email">Email Address</label>
-                <input 
-                  type="email" 
-                  id="email" 
-                  defaultValue={user?.email} 
-                  readOnly 
-                />
+                <input type="email" id="email" defaultValue={user?.email} readOnly />
               </div>
               <button type="submit" className="action-btn">Save Changes</button>
             </form>
@@ -87,14 +64,18 @@ const ProfilePage = () => {
           <div>
             <h3>Past Orders</h3>
             <div className="order-list">
-              {pastOrders.map(order => (
-                <div key={order.id} className="order-item">
-                  <span>Order #{order.id}</span>
-                  <span>{order.date}</span>
-                  <span>{order.total}</span>
-                  <span className={`order-status ${order.status.toLowerCase()}`}>{order.status}</span>
-                </div>
-              ))}
+              {orders && orders.length > 0 ? (
+                orders.map(order => (
+                  <div key={order.id} className="order-item">
+                    <span>Order #ORD-{String(order.id).padStart(5, '0')}</span>
+                    <span>{new Date(order.order_date).toLocaleDateString()}</span>
+                    <span>₹{Number(order.total_amount).toFixed(2)}</span>
+                    <span className={`order-status ${order.status.toLowerCase()}`}>{order.status}</span>
+                  </div>
+                ))
+              ) : (
+                <p>You haven't placed any orders yet.</p>
+              )}
             </div>
           </div>
         );
@@ -109,6 +90,32 @@ const ProfilePage = () => {
                   <span>{item.price}</span>
                 </div>
               ))}
+            </div>
+          </div>
+        );
+      case 'addresses':
+        return (
+          <div>
+            <h3>Saved Addresses</h3>
+            <p>Manage your saved delivery addresses.</p>
+            <div className="saved-address-list">
+              {addresses && addresses.length > 0 ? (
+                addresses.map(addr => (
+                  <div key={addr.id} className="saved-address-card">
+                    <div className="address-details">
+                      <strong>{addr.name} ({addr.type})</strong>
+                      <span>{addr.address}, {addr.state} - {addr.pincode}</span>
+                      <span>Phone: {addr.phone}</span>
+                    </div>
+                    <div className="address-actions">
+                      <button className="edit-btn"><FaUserEdit /> Edit</button>
+                      <button className="delete-btn" onClick={() => deleteAddress(addr.id)}><FaTrash /> Delete</button>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p>You have no saved addresses.</p>
+              )}
             </div>
           </div>
         );
@@ -153,5 +160,4 @@ const ProfilePage = () => {
     </div>
   );
 };
-
 export default ProfilePage;

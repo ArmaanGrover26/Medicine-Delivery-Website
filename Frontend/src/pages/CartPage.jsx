@@ -33,7 +33,6 @@ const CartPage = () => {
       </Link>
       
       <div className="cart-page-container">
-        {/* --- LEFT SECTION: CART ITEMS --- */}
         <div className="cart-items-section">
           <h2 className="cart-header">MY CART ({cartItems.length} ITEMS)</h2>
           
@@ -71,7 +70,6 @@ const CartPage = () => {
           )}
         </div>
 
-        {/* --- RIGHT SECTION: CART SUMMARY --- */}
         {cartItems.length > 0 && (
           <div className="cart-summary-section">
             <h4>PRICE DETAILS</h4>
@@ -97,7 +95,7 @@ const CartPage = () => {
             </div>
 
             {user ? (
-              // This button is now a Link to the checkout page
+              // This is the fix: It is now a Link that navigates to /checkout
               <Link to="/checkout" className="proceed-btn">Proceed to Checkout</Link>
             ) : (
               <Link to="/login" className="proceed-btn">Login to Place Order</Link>
