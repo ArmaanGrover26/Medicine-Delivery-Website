@@ -90,3 +90,154 @@
 .negative {
   color: #dc3545;
 }
+
+/* Responsive Breakpoints */
+
+/* Large tablets and small desktops */
+@media (max-width: 1024px) {
+  .top-cards-container {
+    gap: 15px;
+    margin-bottom: 25px;
+  }
+  
+  .card {
+    padding: 18px;
+  }
+  
+  .card-icon {
+    font-size: 2.2rem;
+    padding: 8px;
+  }
+  
+  .card-title {
+    font-size: 0.95rem;
+  }
+  
+  .card-value {
+    font-size: 1.8rem;
+  }
+  
+  .card-change {
+    font-size: 0.85rem;
+  }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+  .top-cards-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .card {
+    padding: 16px;
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+  
+  .card-icon {
+    font-size: 2rem;
+    padding: 8px;
+    margin-bottom: 5px;
+  }
+  
+  .card-content {
+    flex-grow: 0;
+  }
+  
+  .card-title {
+    font-size: 0.9rem;
+  }
+  
+  .card-value {
+    font-size: 1.6rem;
+    margin: 3px 0;
+  }
+  
+  .card-change {
+    font-size: 0.8rem;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  .top-cards-container {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  
+  .card {
+    padding: 15px;
+    flex-direction: row;
+    text-align: left;
+    gap: 0;
+    justify-content: space-between;
+  }
+  
+  .card-icon {
+    font-size: 1.8rem;
+    padding: 6px;
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+  
+  .card-content {
+    flex-grow: 1;
+    margin-right: 10px;
+  }
+  
+  .card-title {
+    font-size: 0.85rem;
+    margin-bottom: 2px;
+  }
+  
+  .card-value {
+    font-size: 1.4rem;
+    margin: 2px 0;
+  }
+  
+  .card-change {
+    font-size: 0.75rem;
+  }
+  
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.12);
+  }
+}
+
+/* Very small screens */
+@media (max-width: 320px) {
+  .top-cards-container {
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .card {
+    padding: 12px;
+  }
+  
+  .card-icon {
+    font-size: 1.6rem;
+    padding: 5px;
+  }
+  
+  .card-content {
+    margin-right: 8px;
+  }
+  
+  .card-title {
+    font-size: 0.8rem;
+  }
+  
+  .card-value {
+    font-size: 1.2rem;
+  }
+  
+  .card-change {
+    font-size: 0.7rem;
+  }
+}
