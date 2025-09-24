@@ -3,13 +3,12 @@ import './BlogListPage.css';
 import { Link } from 'react-router-dom';
 import { articles as allArticles } from '../blogData';
 import ArticleCard from '../components/ArticleCard/ArticleCard';
+// 1. Import the icons you'll need for the trust bar
 import { BsArrowLeft } from 'react-icons/bs';
+import { FaRegLightbulb, FaRegFileAlt, FaRegClock } from 'react-icons/fa';
 
 const BlogListPage = () => {
-  // Find the featured article from the full list
   const featuredArticle = allArticles.find(a => a.isFeatured);
-  
-  // Create a new list for the "Latest Articles" that excludes the featured one
   const latestArticles = allArticles.filter(a => !a.isFeatured);
 
   return (
@@ -20,10 +19,31 @@ const BlogListPage = () => {
 
       <div className="blog-header">
         <h1>Health <span className="highlight">Blogs & Articles</span></h1>
-        <p>Stay informed with expert insights, health tips, and the latest medical information from our healthcare professionals</p>
-      </div>
+        
+        {/* --- THIS IS THE NEW TRUST BAR SECTION --- */}
+        <div className="trust-bar">
+          <div className="trust-item">
+            <div className="trust-icon-wrapper">
+              <FaRegLightbulb />
+            </div>
+            <span>Integrity</span>
+          </div>
+          <div className="trust-item">
+            <div className="trust-icon-wrapper">
+              <FaRegFileAlt />
+            </div>
+            <span>Verified</span>
+          </div>
+          <div className="trust-item">
+            <div className="trust-icon-wrapper">
+              <FaRegClock />
+            </div>
+            <span>Reliable</span>
+          </div>
+        </div>
+        {/* --- END OF NEW SECTION --- */}
 
-      {/* The search bar and category filters have been removed */}
+      </div>
 
       {featuredArticle && (
         <div className="featured-article-section">
@@ -35,13 +55,9 @@ const BlogListPage = () => {
       <div className="latest-articles-section">
         <h3>Latest Articles</h3>
         <div className="articles-grid">
-          {latestArticles.length > 0 ? (
-            latestArticles.map(article => (
-              <ArticleCard key={article.id} article={article} />
-            ))
-          ) : (
-            <p className="no-articles-found">No articles to display.</p>
-          )}
+          {latestArticles.map(article => (
+            <ArticleCard key={article.id} article={article} />
+          ))}
         </div>
       </div>
     </div>

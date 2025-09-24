@@ -1,41 +1,52 @@
+/* Main container for each article card */
 .article-card {
   display: block;
   text-decoration: none;
   color: inherit;
-  background-color: var(--background-white);
-  border-radius: 12px;
+  background-color: var(--background-light);
+  border-radius: var(--border-radius);
   box-shadow: 0 4px 15px rgba(0,0,0,0.05);
   border: 1px solid var(--border-color);
-  overflow: hidden;
+  overflow: hidden; /* This is important for the image corners */
   transition: transform 0.3s, box-shadow 0.3s;
+  height: 100%;
 }
 
 .article-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  box-shadow: var(--box-shadow);
 }
 
 .article-card-image {
   position: relative;
-  height: 200px;
+  height: 200px; /* Sets a fixed height for the image area */
+  overflow: hidden; /* Keeps the zoom effect contained */
+  /* The red border has been removed from this rule */
 }
 
 .article-card-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* This makes the image cover the area without distortion */
+  transition: transform 0.3s ease; /* Adds a smooth zoom animation */
+}
+
+/* Adds a subtle zoom effect on the image when the card is hovered */
+.article-card:hover .article-card-image img {
+  transform: scale(1.05);
 }
 
 .article-card-category {
   position: absolute;
   top: 15px;
   left: 15px;
-  background-color: var(--primary-blue);
-  color: white;
+  background-color: var(--primary-medium-blue);
+  color: var(--text-light);
   padding: 5px 10px;
   border-radius: 5px;
   font-size: 0.8rem;
   font-weight: 600;
+  z-index: 2; /* Ensures it's on top of the image */
 }
 
 .article-card-content {
@@ -46,7 +57,7 @@
   display: flex;
   align-items: center;
   font-size: 0.85rem;
-  color: var(--text-light);
+  color: var(--text-secondary);
   gap: 15px;
 }
 .top-meta { margin-bottom: 10px; }
@@ -64,7 +75,7 @@
 
 .article-card-content p {
   font-size: 0.95rem;
-  color: var(--text-light);
+  color: var(--text-secondary);
   line-height: 1.6;
 }
 
@@ -82,9 +93,10 @@
 }
 
 .article-card-tags span {
-  background-color: #f1f1f1;
-  color: var(--text-light);
+  background-color: var(--background-medium);
+  color: var(--text-secondary);
   padding: 4px 8px;
   border-radius: 5px;
   font-size: 0.75rem;
 }
+
