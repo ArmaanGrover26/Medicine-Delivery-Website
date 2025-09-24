@@ -91,7 +91,7 @@
 .address-card-header { display: flex; align-items: center; gap: 10px; font-weight: 600; }
 .address-card-body { margin-top: 10px; line-height: 1.6; }
 .address-card-body strong { display: block; }
-.address-card-body p { margin: 5px 0 0 0; color: var(--text-light); }
+.address-card-body p { margin: 5px 0 0 0; color: var(--text-dark); }
 
 .add-address-btn-text {
   background: none;
@@ -132,4 +132,10 @@
   padding-top: 20px;
   border-top: 1px solid var(--border-color);
   text-align: right;
+}
+
+.proceed-btn.disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  text-decoration: none;
 }
