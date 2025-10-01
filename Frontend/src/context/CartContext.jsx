@@ -9,6 +9,7 @@ export const useCart = () => useContext(CartContext);
 // 3. Create the Provider component
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
+  const [shippingAddress, setShippingAddress] = useState(null);
 
   // Function to add a product to the cart
   const addToCart = (product) => {
@@ -25,7 +26,6 @@ export const CartProvider = ({ children }) => {
         return [...prevItems, { ...product, quantity: 1 }];
       }
     });
-    console.log(`${product.name} added to cart!`);
   };
   
   // Function to remove an item from the cart
@@ -53,13 +53,25 @@ export const CartProvider = ({ children }) => {
     );
   };
 
+  // This is the new function to empty the cart after an order is placed
+  const clearCart = () => {
+    setCartItems([]);
+  };
+
+  // Calculate the total price of all items in the cart
+  const cartTotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+
   // The value that will be available to all consuming components
   const value = {
     cartItems,
+    shippingAddress, // 2. Export the address
+    setShippingAddress, // 3. Export the function to set it
     addToCart,
     removeFromCart,
     increaseQuantity,
     decreaseQuantity,
+    clearCart,    // Export the new function
+    cartTotal     // Export the calculated total
   };
 
   return (

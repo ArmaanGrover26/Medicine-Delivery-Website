@@ -1,3 +1,66 @@
+/* Responsive Blog List Page Styles */
+@media (max-width: 900px) {
+  .blog-list-page {
+    max-width: 98vw;
+    padding: 0 10px;
+  }
+  .blog-header h1 {
+    font-size: 2rem;
+  }
+  .featured-article-section h3, .latest-articles-section h3 {
+    font-size: 1.2rem;
+  }
+  .articles-grid {
+    gap: 14px;
+  }
+}
+@media (max-width: 600px) {
+  .blog-list-page {
+    max-width: 100vw;
+    padding: 0 2vw;
+  }
+  .blog-header h1 {
+    font-size: 1.2rem;
+  }
+  .blog-header p {
+    font-size: 0.95rem;
+  }
+  .featured-article-section, .latest-articles-section {
+    margin-bottom: 18px;
+  }
+  .featured-article-section h3, .latest-articles-section h3 {
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+  .articles-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .category-buttons {
+    gap: 4px;
+  }
+  .category-buttons button {
+    padding: 6px 10px;
+    font-size: 0.95rem;
+  }
+}
+/* Add this new rule to the top of the file */
+.back-to-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--text-dark);
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+.blog-list-page {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 30px;
+}
+/* ... rest of the CSS ... */
 .blog-list-page {
   max-width: 1200px;
   margin: 40px auto;
@@ -10,7 +73,15 @@
 }
 .blog-header h1 { font-size: 2.8rem; }
 .blog-header .highlight { color: var(--primary-blue); }
-.blog-header p { font-size: 1.1rem; color: var(--text-light); max-width: 700px; margin: 10px auto 0 auto; }
+.blog-header p { font-size: 1.1rem; color: #222 !important; max-width: 700px; margin: 10px auto 0 auto; }
+/* Force readable color for small blog text in light theme */
+.blog-meta,
+.blog-snippet,
+.blog-list-page p,
+.article-meta,
+.article-snippet {
+  color: #222 !important;
+}
 
 .blog-filters {
   display: flex;

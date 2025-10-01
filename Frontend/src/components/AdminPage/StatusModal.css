@@ -15,10 +15,15 @@
   background-color: #fff;
   padding: 25px;
   border-radius: 8px;
-  width: 400px;
+  width: 90%;
+  max-width: 400px;
+  min-width: 320px;
+  max-height: 90vh;
+  overflow-y: auto;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
+  margin: 0 20px;
 }
 
 .modal-header {
@@ -50,15 +55,15 @@
 .order-details p {
   margin: 5px 0;
   font-size: 0.9rem;
-  font-weight: bold; /* New: Making the labels bold */
-  color: #555; /* New: Softer color for the labels */
+  font-weight: bold;
+  color: #555;
 }
 
 .detail-value {
   font-weight: bold;
-  font-size: 1.2rem; /* Increased font size to make it more prominent */
-  color: #000; /* New: Changed to pure black for a strong contrast */
-  margin-top: -5px; /* New: Reduced top margin to bring it closer to the label */
+  font-size: 1.2rem;
+  color: #000;
+  margin-top: -5px;
   margin-bottom: 20px;
 }
 
@@ -69,7 +74,8 @@
 
 .radio-group label {
   display: block;
-  margin-bottom: 5px;
+  /* --- SPACING INCREASED AS REQUESTED --- */
+  margin-bottom: 10px; 
   cursor: pointer;
 }
 
@@ -78,6 +84,7 @@
 }
 
 .radio-label {
+  display: inline-block; /* Ensures padding is consistent */
   padding: 6px 12px;
   border-radius: 20px;
   font-weight: bold;
@@ -89,23 +96,41 @@
 
 .radio-group input[type="radio"]:checked + .radio-label {
   border-color: #007bff;
-  box-shadow: 0 0 0 2px #e6f7ff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
 }
 
+/* --- EXISTING COLORS --- */
 .radio-label.pending {
-  background-color: #fff3cd;
-  color: #ffc107;
+  background-color: #fffbeb;
+  color: #b45309;
 }
 
 .radio-label.delivered {
-  background-color: #d4edda;
-  color: #28a745;
+  background-color: #f0fdf4;
+  color: #15803d;
 }
 
 .radio-label.cancelled {
-  background-color: #f8d7da;
-  color: #dc3545;
+  background-color: #fef2f2;
+  color: #b91c1c;
 }
+
+/* --- NEW COLORS ADDED --- */
+.radio-label.processing {
+  background-color: #eff6ff;
+  color: #1d4ed8;
+}
+
+.radio-label.shipped {
+  background-color: #f5f3ff;
+  color: #5b21b6;
+}
+
+.radio-label.out-for-delivery {
+  background-color: #f0fdfa;
+  color: darkgreen;
+}
+
 
 .modal-footer {
   display: flex;
@@ -136,4 +161,152 @@
 
 .update-button:hover {
   background-color: #218838;
+}
+
+
+
+
+
+/* Responsive Breakpoints */
+
+/* Large tablets and small desktops */
+@media (max-width: 768px) {
+  .modal-content {
+    padding: 20px;
+    margin: 0 15px;
+    width: 95%;
+    min-width: 280px;
+  }
+  
+  .modal-header h3 {
+    font-size: 1.1rem;
+  }
+  
+  .order-details p {
+    font-size: 0.85rem;
+  }
+  
+  .detail-value {
+    font-size: 1.1rem;
+    margin-bottom: 18px;
+  }
+  
+  .status-selection p {
+    font-size: 0.9rem;
+  }
+  
+  .radio-label {
+    padding: 5px 10px;
+    font-size: 0.75rem;
+  }
+  
+  .cancel-button, .update-button {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 15px;
+    margin: 0 10px;
+    width: calc(100% - 20px);
+    min-width: 260px;
+    max-height: 85vh;
+  }
+  
+  .modal-header {
+    padding-bottom: 12px;
+    margin-bottom: 15px;
+  }
+  
+  .modal-header h3 {
+    font-size: 1rem;
+  }
+  
+  .close-button {
+    font-size: 1.3rem;
+  }
+  
+  .order-details p {
+    font-size: 0.8rem;
+    margin: 4px 0;
+  }
+  
+  .detail-value {
+    font-size: 1rem;
+    margin-bottom: 15px;
+  }
+  
+  .status-selection p {
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+  }
+  
+  .radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .radio-group label {
+    margin-bottom: 0;
+  }
+  
+  .radio-label {
+    padding: 8px 15px;
+    font-size: 0.8rem;
+    text-align: center;
+    border-radius: 25px;
+  }
+  
+  .modal-footer {
+    padding-top: 15px;
+    margin-top: 15px;
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+  
+  .cancel-button, .update-button {
+    padding: 10px;
+    width: 100%;
+    font-size: 0.9rem;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 320px) {
+  .modal-content {
+    padding: 12px;
+    margin: 0 5px;
+    min-width: 240px;
+  }
+  
+  .modal-header h3 {
+    font-size: 0.9rem;
+  }
+  
+  .order-details p {
+    font-size: 0.75rem;
+  }
+  
+  .detail-value {
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+  }
+  
+  .status-selection p {
+    font-size: 0.8rem;
+  }
+  
+  .radio-label {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+  }
+  
+  .cancel-button, .update-button {
+    padding: 8px;
+    font-size: 0.8rem;
+  }
 }

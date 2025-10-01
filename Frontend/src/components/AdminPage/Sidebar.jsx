@@ -1,13 +1,17 @@
 import React from 'react';
 import './Sidebar.css';
-import { FaTachometerAlt, FaBoxes, FaUser, FaClipboardList, FaCog } from 'react-icons/fa';
+import { FaTachometerAlt, FaBoxes, FaUser, FaClipboardList, FaCog, FaHeartbeat } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const Sidebar = ({ currentPage, setCurrentPage }) => {
   return (
     <div className="sidebar">
       <div className="logo-container">
-        <div className="logo-icon">💊</div>
-        <div className="logo-text">MediDelivery</div>
+        <Link to="/" className="sidebar-logo-link">
+          {/* Replaced with inline SVG for the heartbeat icon */}
+          <FaHeartbeat className="logo-icon-svg" />
+          <div className="logo-text">HealthMeds</div>
+        </Link>
         <div className="admin-panel-text">Admin Panel</div>
       </div>
       <ul className="sidebar-menu">
@@ -27,6 +31,7 @@ const Sidebar = ({ currentPage, setCurrentPage }) => {
           <div className="menu-icon"><FaUser /></div>
           Customers
         </li>
+        
       </ul>
     </div>
   );

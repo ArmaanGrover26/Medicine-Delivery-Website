@@ -1,3 +1,64 @@
+/* Responsive Health Conditions Section */
+@media (max-width: 900px) {
+  .conditions-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: 24px;
+  }
+  .condition-card {
+    padding: 14px;
+  }
+  .condition-card h3 {
+    font-size: 1.05rem;
+  }
+  .condition-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 1.1rem;
+  }
+  .pharmacist-help {
+    margin-top: 24px;
+    padding-top: 14px;
+  }
+  .help-link {
+    font-size: 0.98rem;
+    gap: 4px;
+  }
+}
+@media (max-width: 600px) {
+  .conditions-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .condition-card {
+    padding: 7px;
+  }
+  .condition-card h3 {
+    font-size: 0.95rem;
+    margin: 8px 0 2px 0;
+  }
+  .condition-card p {
+    font-size: 0.92rem;
+    margin: 0.2rem 0 0.5rem 0;
+  }
+  .condition-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
+  }
+  .pharmacist-help {
+    margin-top: 10px;
+    padding-top: 6px;
+  }
+  .help-link {
+    font-size: 0.9rem;
+    gap: 2px;
+  }
+  .section-subtitle {
+    font-size: 0.95rem;
+  }
+}
 .conditions-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -32,7 +93,7 @@
 }
 
 .condition-card p {
-  color: var(--text-secondary); /* Use the visible secondary text color from your theme */
+  color: #444; /* Darkened for better readability */
   margin: 0.5rem 0 1rem 0;
 }
 
@@ -69,7 +130,6 @@
 .icon-bg-light-blue { background-color: #e1f5fe; color: #03a9f4; }
 .icon-bg-orange { background-color: #fff3e0; color: #f39c12; }
 
-
 /* --- New Pharmacist Help Styles --- */
 .pharmacist-help {
   text-align: center;
@@ -79,7 +139,7 @@
 }
 
 .pharmacist-help span {
-  color: var(--text-light);
+  color: #222 !important; /* Strong dark text for visibility */
   font-size: 1.1rem;
 }
 
@@ -99,5 +159,13 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  font-size: 1.1rem;
+}
+
+/* --- Extra fixes for visibility --- */
+
+/* Section subtitle under heading */
+.section-subtitle {
+  color: #333 !important; /* Dark gray for readability */
   font-size: 1.1rem;
 }

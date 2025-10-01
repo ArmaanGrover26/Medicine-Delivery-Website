@@ -1,3 +1,68 @@
+/* Responsive Article Page Styles */
+@media (max-width: 900px) {
+  .article-container {
+    max-width: 98vw;
+    padding: 0 10px;
+  }
+  .article-container h1 {
+    font-size: 1.5rem;
+  }
+  .article-content {
+    font-size: 1rem;
+  }
+}
+@media (max-width: 600px) {
+  .article-page {
+    padding: 18px 0;
+  }
+  .article-container {
+    max-width: 100vw;
+    padding: 0 2vw;
+  }
+  .article-container h1 {
+    font-size: 1.1rem;
+  }
+  .article-meta-bar {
+    flex-direction: column;
+    gap: 6px;
+    margin: 10px 0;
+    padding: 8px 0;
+  }
+  .author-details {
+    gap: 4px;
+  }
+  .article-main-image {
+    margin-bottom: 10px;
+    border-radius: 6px;
+  }
+  .article-content {
+    font-size: 0.95rem;
+  }
+  .article-content h3 {
+    margin-top: 18px;
+  }
+  .article-footer {
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .author-bio-box, .feedback-box {
+    padding: 10px;
+    border-radius: 6px;
+  }
+  .author-bio-box {
+    gap: 8px;
+  }
+  .author-bio-box p {
+    font-size: 0.85rem;
+  }
+  .feedback-box button {
+    padding: 7px 10px;
+    font-size: 0.95rem;
+  }
+  .feedback-box > span {
+    font-size: 0.75rem;
+  }
+}
 .article-page {
   padding: 40px 0;
 }

@@ -1,31 +1,55 @@
-import React, { useState } from 'react';
-import { FaEye, FaEdit, FaSearch, FaFileExport } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios'; // Import axios for making API calls
+import { FaEdit, FaSearch } from 'react-icons/fa';
 import StatusModal from './StatusModal';
 import './Orders.css';
 
-// This is our mock data for the orders.
-const initialOrders = [
-  { id: 'ORD-001', customer: 'John Smith', medicine: 'Paracetamol 500mg', quantity: 2, total: 24.99, status: 'Delivered', date: '2024-12-17' },
-  { id: 'ORD-002', customer: 'Sarah Johnson', medicine: 'Vitamin D3 1000IU', quantity: 1, total: 15.99, status: 'Pending', date: '2024-12-17' },
-  { id: 'ORD-003', customer: 'Michael Brown', medicine: 'Aspirin 75mg', quantity: 3, total: 18.75, status: 'Cancelled', date: '2024-12-16' },
-  { id: 'ORD-004', customer: 'Emily Davis', medicine: 'Omega-3 Fish Oil', quantity: 1, total: 29.99, status: 'Delivered', date: '2024-12-16' },
-  { id: 'ORD-005', customer: 'David Wilson', medicine: 'Calcium + Magnesium', quantity: 2, total: 34.98, status: 'Pending', date: '2024-12-15' },
-  { id: 'ORD-006', customer: 'Lisa Anderson', medicine: 'Iron Supplement', quantity: 1, total: 22.50, status: 'Delivered', date: '2024-12-14' },
-];
+// The base URL for your backend API
+const API_BASE_URL = 'http://localhost:8080/api/admin';
 
 const Orders = () => {
-  const [orders, setOrders] = useState(initialOrders);
+  const [orders, setOrders] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('All Status');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
 
-  const handleUpdateStatus = (orderId, newStatus) => {
-    setOrders(prevOrders =>
-      prevOrders.map(order =>
-        order.id === orderId ? { ...order, status: newStatus } : order
-      )
-    );
+  // --- NEW: Function to fetch all orders from the backend ---
+  const fetchAllOrders = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      // We assume the admin is already logged in and the JWT token
+      // is being sent automatically by the axios interceptor in AuthContext.
+      const response = await axios.get(`${API_BASE_URL}/orders`);
+      setOrders(response.data);
+    } catch (err) {
+      console.error("Failed to fetch orders:", err);
+      setError("Could not load orders. Please ensure you are logged in as an admin and try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // --- NEW: Fetch orders when the component first loads ---
+  useEffect(() => {
+    fetchAllOrders();
+  }, []);
+
+  // --- UPDATED: This function now calls the backend API ---
+  const handleUpdateStatus = async (orderId, newStatus) => {
+    try {
+      // Call the PUT endpoint to update the status
+      await axios.put(`${API_BASE_URL}/orders/${orderId}/status`, { status: newStatus });
+      // After a successful update, refresh the list to show the change
+      await fetchAllOrders();
+    } catch (err) {
+      console.error("Failed to update order status:", err);
+      alert("Failed to update status. Please try again.");
+    }
   };
   
   const handleEditClick = (order) => {
@@ -38,13 +62,52 @@ const Orders = () => {
     setSelectedOrder(null);
   };
   
+  // --- UPDATED: Filter logic now works with the real data structure ---
   const filteredOrders = orders.filter(order => {
-    const matchesSearch = order.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          order.medicine.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          order.id.toLowerCase().includes(searchTerm.toLowerCase());
+    const searchLower = searchTerm.toLowerCase();
+    const matchesSearch = 
+        order.shippingName.toLowerCase().includes(searchLower) ||
+        String(order.id).includes(searchLower) ||
+        // Search through all product names in the order
+        order.orderItems.some(item => item.productName.toLowerCase().includes(searchLower));
+
     const matchesStatus = statusFilter === 'All Status' || order.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
+
+  const renderTableContent = () => {
+    if (isLoading) {
+      return <tr><td colSpan="8" style={{ textAlign: 'center' }}>Loading orders...</td></tr>;
+    }
+    if (error) {
+      return <tr><td colSpan="8" style={{ textAlign: 'center', color: 'red' }}>{error}</td></tr>;
+    }
+    if (filteredOrders.length === 0) {
+      return <tr><td colSpan="8" style={{ textAlign: 'center' }}>No orders found.</td></tr>;
+    }
+    return filteredOrders.map((order) => (
+      <tr key={order.id}>
+        <td>#ORD-{String(order.id).padStart(5, '0')}</td>
+        <td>{order.shippingName}</td>
+        <td>
+          {/* Display the first product name, and a note if there are more */}
+          {order.orderItems[0]?.productName}
+          {order.orderItems.length > 1 && ` (+${order.orderItems.length - 1} more)`}
+        </td>
+        <td>{order.orderItems.reduce((total, item) => total + item.quantity, 0)}</td>
+        <td>₹{order.totalAmount.toFixed(2)}</td>
+        <td>
+          <span className={`status-badge ${order.status.toLowerCase().replace(' ', '-')}`}>
+            {order.status}
+          </span>
+        </td>
+        <td>{new Date(order.orderDate).toLocaleDateString()}</td>
+        <td className="actions-cell">
+          <FaEdit className="action-icon" onClick={() => handleEditClick(order)} />
+        </td>
+      </tr>
+    ));
+  };
 
   return (
     <div className="orders-container">
@@ -62,7 +125,7 @@ const Orders = () => {
               <FaSearch className="search-icon" />
               <input 
                 type="text" 
-                placeholder="Search orders..." 
+                placeholder="Search by ID, customer, or product..." 
                 value={searchTerm} 
                 onChange={(e) => setSearchTerm(e.target.value)} 
               />
@@ -73,8 +136,11 @@ const Orders = () => {
               onChange={(e) => setStatusFilter(e.target.value)}
             >
               <option>All Status</option>
-              <option>Delivered</option>
               <option>Pending</option>
+              <option>Processing</option>
+              <option>Shipped</option>
+              <option>Out for Delivery</option>
+              <option>Delivered</option>
               <option>Cancelled</option>
             </select>
           </div>
@@ -85,33 +151,16 @@ const Orders = () => {
               <tr>
                 <th>Order ID</th>
                 <th>Customer Name</th>
-                <th>Medicine Name</th>
-                <th>Quantity</th>
-                <th>Total</th>
+                <th>Products</th>
+                <th>Total Quantity</th>
+                <th>Total Amount</th>
                 <th>Status</th>
                 <th>Date</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              {filteredOrders.map((order) => (
-                <tr key={order.id}>
-                  <td>{order.id}</td>
-                  <td>{order.customer}</td>
-                  <td>{order.medicine}</td>
-                  <td>{order.quantity}</td>
-                  <td>${order.total}</td>
-                  <td>
-                    <span className={`status-badge ${order.status.toLowerCase()}`}>
-                      {order.status}
-                    </span>
-                  </td>
-                  <td>{order.date}</td>
-                  <td className="actions-cell">
-                    <FaEdit className="action-icon" onClick={() => handleEditClick(order)} />
-                  </td>
-                </tr>
-              ))}
+              {renderTableContent()}
             </tbody>
           </table>
         </div>
