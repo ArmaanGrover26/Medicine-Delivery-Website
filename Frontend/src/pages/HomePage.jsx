@@ -1,49 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import HeroSection from '../components/HeroSection/HeroSection';
 import HealthConditions from '../components/HealthConditions/HealthConditions';
 import PopularProducts from '../components/PopularProducts/PopularProducts';
-import PrescriptionUpload from '../components/PrescriptionUpload/PrescriptionUpload';
-import PlusMembership from '../components/PlusMembership/PlusMembership';
-import { products as allProducts } from '../productData';
 
 const HomePage = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [suggestions, setSuggestions] = useState([]);
+  
+  // Create refs for both the section to scroll to AND the input to focus
+  const productsSectionRef = useRef(null);
+  const searchInputRef = useRef(null); // New ref for the search input
 
   const handleSearchChange = (event) => {
-    const value = event.target.value;
-    setSearchTerm(value);
-
-    if (value.length > 1) { // Start suggesting after 1 character
-      const filteredSuggestions = allProducts.filter(product =>
-        product.name.toLowerCase().includes(value.toLowerCase())
-      ).slice(0, 5); // Show up to 5 suggestions
-      setSuggestions(filteredSuggestions);
-    } else {
-      setSuggestions([]); // Clear suggestions if search is too short
+    const newTerm = event.target.value;
+    
+    if (newTerm.length === 4) {
+      productsSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+      
+      // After scrolling, set the focus back to the input field.
+      // We use a short delay to ensure the focus happens after the scroll animation.
+      setTimeout(() => {
+        searchInputRef.current?.focus();
+      }, 500); // 500ms delay
     }
+    
+    setSearchTerm(newTerm);
   };
 
   return (
     <main>
       <HeroSection
         searchTerm={searchTerm}
-        suggestions={suggestions}
         onSearchChange={handleSearchChange}
-        // This function clears the search when a suggestion is clicked
-        onSuggestionClick={() => {
-          setSearchTerm('');
-          setSuggestions([]);
-        }}
+        // Pass the new ref down to the HeroSection
+        searchInputRef={searchInputRef}
       />
-      
-      {/* The main page content is now wrapped in a container for consistent spacing */}
-      <div className="container">
-        <PrescriptionUpload />
-        <HealthConditions />
-        <PlusMembership />
-        <PopularProducts />
-      </div>
+      <HealthConditions />
+      <PopularProducts
+        searchTerm={searchTerm}
+        sectionRef={productsSectionRef}
+      />
     </main>
   );
 };

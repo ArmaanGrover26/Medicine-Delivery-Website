@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './HealthConditions.css';
-import { Link } from 'react-router-dom';
+// Import all the icons we need for this section
 import { IoWater } from "react-icons/io5";
 import { FaThermometerHalf, FaHeart, FaShieldAlt, FaEye, FaSmile, FaBrain, FaBone, FaPhoneAlt } from 'react-icons/fa';
 import { BsFillChatDotsFill } from "react-icons/bs";
-import Chatbot from '../Chatbot/Chatbot';
 
+// We add an 'icon' and 'color' property to each object
 const conditions = [
   { name: 'Diabetes', desc: 'Blood sugar management', products: '15+', icon: <IoWater />, color: 'blue' },
   { name: 'Cold & Cough', desc: 'Relief from cold, cough', products: '20+', icon: <FaThermometerHalf />, color: 'red' },
@@ -18,9 +18,6 @@ const conditions = [
 ];
 
 const HealthConditions = () => {
-  // 2. Re-add the state to manage the chatbot's visibility
-  const [isChatOpen, setIsChatOpen] = useState(false);
-
   return (
     <section className="container">
       <h2 className="section-title">Browse by <span className="priority-text">Health Conditions</span></h2>
@@ -28,36 +25,31 @@ const HealthConditions = () => {
       
       <div className="conditions-grid">
         {conditions.map((condition, index) => (
-          <Link 
-            to={`/products?condition=${encodeURIComponent(condition.name)}`} 
-            key={index} 
-            className={`condition-card ${condition.color === 'pink' ? 'highlighted' : ''}`}
-          >
+          // The 'pink' card gets a special 'highlighted' class
+          <div key={index} className={`condition-card ${condition.color === 'pink' ? 'highlighted' : ''}`}>
+            {/* We pass the color to the icon container to style its background */}
             <div className={`condition-icon icon-bg-${condition.color}`}>
               {condition.icon}
             </div>
             <h3>{condition.name}</h3>
             <p>{condition.desc}</p>
-            <div className="product-count-link">{condition.products} products →</div>
-          </Link>
+            <a href="#/">{condition.products} products →</a>
+          </div>
         ))}
       </div>
 
+      {/* This is the new section at the bottom */}
       <div className="pharmacist-help">
         <span>Can't find what you're looking for? Our pharmacists are here to help.</span>
         <div className="help-links">
-          <a href="tel:1800-123-4567" className="help-link">
+          <a href="#/" className="help-link">
             <FaPhoneAlt /> Call: 1800-123-4567
           </a>
-          {/* 3. The 'a' tag is now a 'button' again with a working onClick handler */}
-          <button onClick={() => setIsChatOpen(true)} className="help-link">
+          <a href="#/" className="help-link">
             <BsFillChatDotsFill /> Chat with Pharmacist
-          </button>
+          </a>
         </div>
       </div>
-      
-      {/* 4. Conditionally render the Chatbot modal */}
-      {isChatOpen && <Chatbot onClose={() => setIsChatOpen(false)} />}
     </section>
   );
 };

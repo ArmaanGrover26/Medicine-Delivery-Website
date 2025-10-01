@@ -1,33 +1,29 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext'; // 1. Import the useAuth hook
 import './LoginPage.css';
 import { BsShieldFillCheck, BsArrowLeft } from 'react-icons/bs';
 import { FaHeartbeat, FaCheckCircle } from 'react-icons/fa';
 import { MdEmail, MdVisibility } from 'react-icons/md';
 
 const LoginPage = () => {
-  const { login } = useAuth();
+  const { login } = useAuth(); // 2. Get the login function from the context
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
 
-  // This function handles the API call via the AuthContext
-  const handleSignIn = async (e) => {
-    e.preventDefault();
-    setError('');
-    setIsLoading(true);
-
-    try {
-      // Call the login function from AuthContext
-      await login({ email, password });
-      // Navigation is handled inside the context's login function on success
-    } catch (err) {
-      // The catch block displays the specific error message from the context
-      setError(err.message);
-    } finally {
-      setIsLoading(false);
+  // 3. Create the function to handle form submission
+  const handleSignIn = (e) => {
+    e.preventDefault(); // Prevent the page from reloading
+    if (email && password) {
+      // For this mock login, we'll create a user object
+      // In a real app, you would send this to your backend for verification
+      const userData = {
+        email: email,
+        name: 'John Doe', // You can get the name from a backend in a real app
+      };
+      login(userData); // Call the login function from the context
+    } else {
+      alert('Please enter both email and password.');
     }
   };
 
@@ -80,49 +76,48 @@ const LoginPage = () => {
           <p className="form-subtitle">
             Enter your credentials to access your account
           </p>
+          {/* 4. Connect the form to the handleSignIn function */}
           <form onSubmit={handleSignIn}>
             <div className="form-group">
               <label htmlFor="email">Email Address</label>
               <div className="input-wrapper">
-                <MdEmail className="input-icon left" />
-                <input
-                  type="email"
-                  id="email"
-                  className="left-icon"
-                  placeholder="your.email@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
+                  <MdEmail className="input-icon left" />
+                  <input
+                    type="email"
+                    id="email"
+                    className="left-icon"
+                    placeholder="your.email@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)} // 5. Update email state
+                    required
+                  />
               </div>
             </div>
             <div className="form-group">
               <label htmlFor="password">Password</label>
               <div className="input-wrapper">
-                <input
-                  type="password"
-                  id="password"
-                  className="right-icon"
-                  placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-                <MdVisibility className="input-icon right" />
+                  <input
+                    type="password"
+                    id="password"
+                    className="right-icon"
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)} // 6. Update password state
+                    required
+                  />
+                  <MdVisibility className="input-icon right" />
               </div>
             </div>
             <div className="form-options">
               <label className="checkbox-label">
                 <input type="checkbox" /> Remember me
               </label>
-              <a href="/forgot-password">Forgot password?</a>
+              <a href="#/">Forgot password?</a>
             </div>
-            <button type="submit" className="signin-btn" disabled={isLoading}>
-              {isLoading ? 'Signing In...' : 'Sign In'}
+            <button type="submit" className="signin-btn">
+              Sign In
             </button>
           </form>
-          {/* Display error messages from the backend */}
-          {error && <p className="error-message">{error}</p>}
           <p className="signup-link">
             Don't have an account? <Link to="/signup">Create Account</Link>
           </p>

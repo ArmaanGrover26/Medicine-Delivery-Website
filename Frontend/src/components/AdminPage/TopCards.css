@@ -1,15 +1,16 @@
 .top-cards-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Changed from 4 to 3 */
-  gap: 20px;
-  margin-bottom: 30px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px; /* Reduced gap between cards */
+  margin-bottom: 20px; /* Reduced bottom margin */
 }
 
 .card {
+  color: rgba(0, 0, 0, 0.655);
   background-color: #fff;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px; /* Changed to 0 for a perfect rectangle */
+  padding: 8px 15px; /* Reduced vertical and horizontal padding */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08); /* Lighter shadow */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -19,14 +20,14 @@
 
 /* Add a hover effect for a more interactive feel */
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.12);
 }
 
 .card-icon {
-  font-size: 2.5rem;
-  padding: 10px;
-  border-radius: 50%;
+  font-size: 2rem; /* Reduced icon size */
+  padding: 4px; /* Reduced padding */
+  border-radius: 0; /* Changed to 0 for a rectangle */
   position: relative;
   overflow: hidden;
   display: flex;
@@ -57,30 +58,30 @@
 }
 
 .users-icon {
-  background: #e9e5ff;
+  background: #e9e5ff; /* A new, purple-ish background to match the icon */
 }
 .users-icon svg {
   color: #6f42c1;
 }
 
 .card-content {
-  flex-grow: 1;
+  flex-grow: 1; /* This will make the content take up the available space */
 }
 
 .card-title {
-  font-size: 1rem;
+  font-size: 0.9rem; /* Reduced font size */
   color: #666;
   margin: 0;
 }
 
 .card-value {
-  font-size: 2rem;
+  font-size: 1.5rem; /* Reduced font size */
   font-weight: bold;
-  margin: 5px 0;
+  margin: 1px 0; /* Reduced vertical margin */
 }
 
 .card-change {
-  font-size: 0.9rem;
+  font-size: 0.8rem; /* Reduced font size */
 }
 
 .positive {
@@ -89,155 +90,4 @@
 
 .negative {
   color: #dc3545;
-}
-
-/* Responsive Breakpoints */
-
-/* Large tablets and small desktops */
-@media (max-width: 1024px) {
-  .top-cards-container {
-    gap: 15px;
-    margin-bottom: 25px;
-  }
-  
-  .card {
-    padding: 18px;
-  }
-  
-  .card-icon {
-    font-size: 2.2rem;
-    padding: 8px;
-  }
-  
-  .card-title {
-    font-size: 0.95rem;
-  }
-  
-  .card-value {
-    font-size: 1.8rem;
-  }
-  
-  .card-change {
-    font-size: 0.85rem;
-  }
-}
-
-/* Tablets */
-@media (max-width: 768px) {
-  .top-cards-container {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    margin-bottom: 20px;
-  }
-  
-  .card {
-    padding: 16px;
-    flex-direction: column;
-    text-align: center;
-    gap: 10px;
-  }
-  
-  .card-icon {
-    font-size: 2rem;
-    padding: 8px;
-    margin-bottom: 5px;
-  }
-  
-  .card-content {
-    flex-grow: 0;
-  }
-  
-  .card-title {
-    font-size: 0.9rem;
-  }
-  
-  .card-value {
-    font-size: 1.6rem;
-    margin: 3px 0;
-  }
-  
-  .card-change {
-    font-size: 0.8rem;
-  }
-}
-
-/* Mobile phones */
-@media (max-width: 480px) {
-  .top-cards-container {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    margin-bottom: 18px;
-  }
-  
-  .card {
-    padding: 15px;
-    flex-direction: row;
-    text-align: left;
-    gap: 0;
-    justify-content: space-between;
-  }
-  
-  .card-icon {
-    font-size: 1.8rem;
-    padding: 6px;
-    margin-bottom: 0;
-    flex-shrink: 0;
-  }
-  
-  .card-content {
-    flex-grow: 1;
-    margin-right: 10px;
-  }
-  
-  .card-title {
-    font-size: 0.85rem;
-    margin-bottom: 2px;
-  }
-  
-  .card-value {
-    font-size: 1.4rem;
-    margin: 2px 0;
-  }
-  
-  .card-change {
-    font-size: 0.75rem;
-  }
-  
-  .card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.12);
-  }
-}
-
-/* Very small screens */
-@media (max-width: 320px) {
-  .top-cards-container {
-    gap: 10px;
-    margin-bottom: 15px;
-  }
-  
-  .card {
-    padding: 12px;
-  }
-  
-  .card-icon {
-    font-size: 1.6rem;
-    padding: 5px;
-  }
-  
-  .card-content {
-    margin-right: 8px;
-  }
-  
-  .card-title {
-    font-size: 0.8rem;
-  }
-  
-  .card-value {
-    font-size: 1.2rem;
-  }
-  
-  .card-change {
-    font-size: 0.7rem;
-  }
 }

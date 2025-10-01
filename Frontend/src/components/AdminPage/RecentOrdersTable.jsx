@@ -1,30 +1,38 @@
 import React, { useState } from 'react';
 import './RecentOrdersTable.css';
-import { FaEdit } from 'react-icons/fa';
+import { FaEye, FaEdit } from 'react-icons/fa';
 import StatusModal from './StatusModal';
 
-// This component now accepts 'orders' as a prop from its parent (the Dashboard).
-// It no longer has its own mock data.
-const RecentOrdersTable = ({ orders }) => {
+const ordersData = [
+  { id: 'ORD-001', customer: 'John Smith', medicine: 'Paracetamol 500mg', quantity: 2, status: 'Delivered', date: '2024-12-17' },
+  { id: 'ORD-002', customer: 'Sarah Johnson', medicine: 'Vitamin D3 1000IU', quantity: 1, status: 'Pending', date: '2024-12-17' },
+  { id: 'ORD-003', customer: 'Michael Brown', medicine: 'Aspirin 75mg', quantity: 3, status: 'Cancelled', date: '2024-12-16' },
+  { id: 'ORD-004', customer: 'Emily Davis', medicine: 'Omega-3 Fish Oil', quantity: 1, status: 'Delivered', date: '2024-12-16' },
+  { id: 'ORD-005', customer: 'David Wilson', medicine: 'Calcium + Magnesium', quantity: 2, status: 'Pending', date: '2024-12-15' },
+];
+
+const RecentOrdersTable = () => {
+  const [orders, setOrders] = useState(ordersData);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
 
-  // Note: The status update logic will be handled on the main "Orders" page,
-  // not on this dashboard summary table. This modal is kept for UI consistency.
   const handleEditClick = (order) => {
     setSelectedOrder(order);
     setIsModalOpen(true);
+  };
+
+  const handleUpdateStatus = (orderId, newStatus) => {
+    setOrders(prevOrders =>
+      prevOrders.map(order =>
+        order.id === orderId ? { ...order, status: newStatus } : order
+      )
+    );
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedOrder(null);
   };
-
-  const handlePlaceholderUpdate = () => {
-    alert("To update status, please go to the main 'Orders' page.");
-    handleCloseModal();
-  }
 
   return (
     <div className="table-container">
@@ -34,29 +42,26 @@ const RecentOrdersTable = ({ orders }) => {
           <tr>
             <th>Order ID</th>
             <th>Customer Name</th>
-            <th>Products</th>
+            <th>Medicine Name</th>
+            <th>Quantity</th>
             <th>Status</th>
             <th>Date</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {/* We now map over the 'orders' prop passed from the Dashboard */}
           {orders.map((order) => (
             <tr key={order.id}>
-              {/* The data fields are updated to match your real backend data structure */}
-              <td>#ORD-{String(order.id).padStart(5, '0')}</td>
-              <td>{order.shippingName}</td>
+              <td>{order.id}</td>
+              <td>{order.customer}</td>
+              <td>{order.medicine}</td>
+              <td>{order.quantity}</td>
               <td>
-                {order.orderItems[0]?.productName}
-                {order.orderItems.length > 1 && ` (+${order.orderItems.length - 1})`}
-              </td>
-              <td>
-                <span className={`status-badge ${order.status.toLowerCase().replace(' ', '-')}`}>
+                <span className={`status-badge ${order.status.toLowerCase()}`}>
                   {order.status}
                 </span>
               </td>
-              <td>{new Date(order.orderDate).toLocaleDateString()}</td>
+              <td>{order.date}</td>
               <td className="actions-cell">
                 <FaEdit className="action-icon" onClick={() => handleEditClick(order)} />
               </td>
@@ -68,8 +73,7 @@ const RecentOrdersTable = ({ orders }) => {
         order={selectedOrder}
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        // This now calls a placeholder function as the main logic is on the Orders page
-        onUpdate={handlePlaceholderUpdate}
+        onUpdate={handleUpdateStatus}
       />
     </div>
   );

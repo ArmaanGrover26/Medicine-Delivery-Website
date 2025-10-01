@@ -1,38 +1,31 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import { useAuth } from '../context/AuthContext';
 import './CartPage.css';
 import { FaTrash } from 'react-icons/fa';
-import { BsArrowLeft } from 'react-icons/bs';
 
 const CartPage = () => {
+  // Get all the necessary items and functions from our cart context
   const { cartItems, increaseQuantity, decreaseQuantity, removeFromCart } = useCart();
-  const { user } = useAuth();
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
+  // Calculate totals for the summary
   const totalMRP = cartItems.reduce((total, item) => total + (item.originalPrice || item.price) * item.quantity, 0);
   const cartTotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   const totalDiscount = totalMRP - cartTotal;
 
+  // This function correctly handles both decreasing quantity and removing the item
   const handleDecrease = (item) => {
     if (item.quantity === 1) {
-      removeFromCart(item.id);
+      removeFromCart(item.id); // If quantity is 1, remove the item
     } else {
-      decreaseQuantity(item.id);
+      decreaseQuantity(item.id); // Otherwise, just decrease the quantity
     }
   };
 
   return (
     <div className="cart-page-wrapper">
-      <Link to="/" className="back-to-home">
-        <BsArrowLeft /> Back to Home
-      </Link>
-      
       <div className="cart-page-container">
+        {/* --- LEFT SECTION: CART ITEMS --- */}
         <div className="cart-items-section">
           <h2 className="cart-header">MY CART ({cartItems.length} ITEMS)</h2>
           
@@ -70,6 +63,7 @@ const CartPage = () => {
           )}
         </div>
 
+        {/* --- RIGHT SECTION: CART SUMMARY --- */}
         {cartItems.length > 0 && (
           <div className="cart-summary-section">
             <h4>PRICE DETAILS</h4>
@@ -93,13 +87,7 @@ const CartPage = () => {
             <div className="savings-banner">
               You will save ₹{totalDiscount.toFixed(2)} on this order
             </div>
-
-            {user ? (
-              // This is the fix: It is now a Link that navigates to /checkout
-              <Link to="/checkout" className="proceed-btn">Proceed to Checkout</Link>
-            ) : (
-              <Link to="/login" className="proceed-btn">Login to Place Order</Link>
-            )}
+            <button className="proceed-btn">Proceed to Checkout</button>
           </div>
         )}
       </div>

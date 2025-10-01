@@ -4,7 +4,7 @@ import Dashboard from './Dashboard';
 import ManageMedicines from './ManageMedicines';
 import Orders from './Orders';
 import Customers from './Customers';
-// import './AdminDashboardPage.css';
+// import './AdminDashboardPage.css'; // Assuming you have a CSS file for this page
 
 // Mock data to simulate an API response for orders
 const initialOrders = [

@@ -1,22 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './StatusModal.css';
 
-// --- THIS IS THE FIX ---
-// We define a complete, definitive list of all possible order statuses.
-const STATUS_OPTIONS = [
-  'Pending',
-  'Processing',
-  'Shipped',
-  'Out for Delivery',
-  'Delivered',
-  'Cancelled'
-];
-
 const StatusModal = ({ order, isOpen, onClose, onUpdate }) => {
   const [selectedStatus, setSelectedStatus] = useState('');
 
-  // When the modal opens or the selected order changes,
-  // set the initial state to the order's current status.
   useEffect(() => {
     if (order) {
       setSelectedStatus(order.status);
@@ -25,10 +12,9 @@ const StatusModal = ({ order, isOpen, onClose, onUpdate }) => {
 
   const handleUpdate = () => {
     if (onUpdate) {
-      // Call the onUpdate function passed from the parent (Orders.jsx)
       onUpdate(order.id, selectedStatus);
     }
-    onClose(); // Close the modal after updating
+    onClose();
   };
 
   if (!isOpen || !order) {
@@ -45,30 +31,40 @@ const StatusModal = ({ order, isOpen, onClose, onUpdate }) => {
         <div className="modal-body">
           <div className="order-details">
             <p><strong>Order ID</strong></p>
-            {/* Display the formatted Order ID */}
-            <p className="detail-value">#ORD-{String(order.id).padStart(5, '0')}</p>
+            <p className="detail-value">{order.id}</p>
             <p><strong>Customer</strong></p>
-            {/* CORRECTED: Use `shippingName` to match your live data */}
-            <p className="detail-value">{order.shippingName}</p>
+            <p className="detail-value">{order.customer}</p>
           </div>
           <div className="status-selection">
             <p>Select New Status</p>
             <div className="radio-group">
-              {/* We now map over the complete STATUS_OPTIONS array to create the radio buttons */}
-              {STATUS_OPTIONS.map(status => (
-                <label key={status}>
-                  <input
-                    type="radio"
-                    value={status}
-                    checked={selectedStatus === status}
-                    onChange={(e) => setSelectedStatus(e.target.value)}
-                  />
-                  {/* The span's class is now dynamic to match the status */}
-                  <span className={`radio-label ${status.toLowerCase().replace(' ', '-')}`}>
-                    {status}
-                  </span>
-                </label>
-              ))}
+              <label>
+                <input
+                  type="radio"
+                  value="Pending"
+                  checked={selectedStatus === 'Pending'}
+                  onChange={(e) => setSelectedStatus(e.target.value)}
+                />
+                <span className="radio-label pending">Pending</span>
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="Delivered"
+                  checked={selectedStatus === 'Delivered'}
+                  onChange={(e) => setSelectedStatus(e.target.value)}
+                />
+                <span className="radio-label delivered">Delivered</span>
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="Cancelled"
+                  checked={selectedStatus === 'Cancelled'}
+                  onChange={(e) => setSelectedStatus(e.target.value)}
+                />
+                <span className="radio-label cancelled">Cancelled</span>
+              </label>
             </div>
           </div>
         </div>
@@ -82,4 +78,3 @@ const StatusModal = ({ order, isOpen, onClose, onUpdate }) => {
 };
 
 export default StatusModal;
-

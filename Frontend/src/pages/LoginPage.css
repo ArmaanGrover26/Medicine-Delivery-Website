@@ -1,67 +1,3 @@
-/* Responsive Login Page Styles */
-@media (max-width: 900px) {
-  .login-content-wrapper {
-    flex-direction: column;
-    gap: 18px;
-  }
-  .login-promo-column, .login-form-column {
-    padding: 28px;
-  }
-  .login-promo-column h2 {
-    font-size: 1.5rem;
-  }
-  .login-form-column h3 {
-    font-size: 1.3rem;
-  }
-}
-@media (max-width: 600px) {
-  .login-page-container {
-    padding: 0 2vw;
-  }
-  .login-content-wrapper {
-    gap: 6px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  }
-  .login-promo-column, .login-form-column {
-    padding: 10px;
-  }
-  .login-logo {
-    font-size: 1.1rem;
-    margin-bottom: 10px;
-  }
-  .login-promo-column h2 {
-    font-size: 1.1rem;
-    margin-bottom: 8px;
-  }
-  .login-promo-column > p {
-    font-size: 0.95rem;
-    margin-bottom: 10px;
-  }
-  .login-form-column h3 {
-    font-size: 1.1rem;
-  }
-  .form-subtitle {
-    font-size: 0.95rem;
-    margin-bottom: 10px;
-  }
-  .form-group label {
-    font-size: 0.95rem;
-    margin-bottom: 4px;
-  }
-  .input-wrapper input {
-    font-size: 0.95rem;
-    padding: 10px 12px;
-  }
-  .signin-btn {
-    padding: 10px;
-    font-size: 0.95rem;
-    margin-bottom: 10px;
-  }
-  .signup-link {
-    font-size: 0.95rem;
-  }
-}
 .login-page-container {
   max-width: 1200px;
   margin: 40px auto;
@@ -91,7 +27,7 @@
 .login-promo-column {
   flex: 1;
   padding: 50px;
-  background-color: #f8f9f8; /* Light grey background */
+  background-color: #f8f9fa; /* Light grey background */
 }
 
 .login-logo {
@@ -119,7 +55,7 @@
 }
 
 .login-promo-column > p {
-  color: var(--text-dark);
+  color: var(--text-light);
   line-height: 1.6;
   margin-bottom: 30px;
 }
@@ -168,7 +104,7 @@
 
 .testimonial-author {
   font-weight: 600;
-  color: var(--text-dark);
+  color: var(--text-light);
 }
 
 /* --- Right Column (Form) --- */
@@ -185,8 +121,8 @@
   color: var(--text-dark);
 }
 
-.form-subtitle  {
-  color: var(--text-dark);
+.form-subtitle {
+  color: var(--text-light);
   margin-bottom: 30px;
 }
 
@@ -297,7 +233,7 @@
 
 .signup-link {
   text-align: center;
-  color: var(--text-dark);
+  color: var(--text-light);
 }
 
 .signup-link a {
