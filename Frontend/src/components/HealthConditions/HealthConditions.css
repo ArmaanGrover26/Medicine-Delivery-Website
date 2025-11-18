@@ -81,10 +81,7 @@
 }
 
 /* New style for the highlighted card */
-.condition-card.highlighted {
-  background-color: #fff0f5; /* A light pink background */
-  border-color: #ffc0cb;
-}
+
 
 .condition-card h3 {
   font-size: 1.3rem;

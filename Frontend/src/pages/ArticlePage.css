@@ -99,17 +99,17 @@
   gap: 10px;
 }
 .author-details div { display: flex; flex-direction: column; }
-.author-details span { font-size: 0.9rem; color: var(--text-light); }
+.author-details span { font-size: 0.9rem; color: var(--text-dark); }
 
 .article-stats, .article-actions {
   display: flex;
   align-items: center;
   gap: 15px;
-  color: var(--text-light);
+  color: var(--text-dark);
   font-size: 0.9rem;
 }
 .article-actions button {
-  background: none; border: none; font-size: 1.1rem; cursor: pointer; color: var(--text-light);
+  background: none; border: none; font-size: 1.1rem; cursor: pointer; color: var(--text-dark);
 }
 .article-main-image {
   width: 100%;
@@ -135,7 +135,7 @@
   padding: 25px;
 }
 .author-bio-box { display: flex; gap: 20px; }
-.author-bio-box p { font-size: 0.9rem; color: var(--text-light); margin-top: 5px; }
+.author-bio-box p { font-size: 0.9rem; color: var(--text-dark); margin-top: 5px; }
 
 .feedback-box { text-align: center; }
 .feedback-box h4 { margin: 0 0 15px 0; }
@@ -152,5 +152,5 @@
   gap: 8px;
 }
 .feedback-box button:hover { background-color: #f1f1f1; }
-.feedback-box > span { font-size: 0.8rem; color: var(--text-light); }
+.feedback-box > span { font-size: 0.8rem; color: var(--text-dark); }
 .feedback-thanks { font-weight: 600; color: var(--green-tag); }

@@ -5,6 +5,7 @@ import PopularProducts from '../components/PopularProducts/PopularProducts';
 import PrescriptionUpload from '../components/PrescriptionUpload/PrescriptionUpload';
 import PlusMembership from '../components/PlusMembership/PlusMembership';
 import { products as allProducts } from '../productData';
+import './HomePage.css'; // Make sure to create this CSS file
 
 const HomePage = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -37,7 +38,7 @@ const HomePage = () => {
         }}
       />
       
-      {/* The main page content is now wrapped in a container for consistent spacing */}
+      {/* The main page content is wrapped in a container for consistent spacing */}
       <div className="container">
         <PrescriptionUpload />
         <HealthConditions />
