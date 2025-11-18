@@ -10,11 +10,11 @@ const PaymentPage = () => {
   const { user, addOrder } = useAuth();
   const { cartItems, cartTotal, shippingAddress, clearCart } = useCart();
   const [paymentMethod, setPaymentMethod] = useState('cod');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    // Redirect if there's no address selected or cart is empty
     if (!shippingAddress || cartItems.length === 0) {
       navigate('/cart');
     }
@@ -22,23 +22,23 @@ const PaymentPage = () => {
 
   const handlePlaceOrder = async () => {
     if (paymentMethod === 'cod') {
+      setIsLoading(true);
       const orderData = {
         userId: user.id,
         cartItems: cartItems,
         cartTotal: cartTotal,
-        shippingAddress: {
-          name: shippingAddress.name,
-          address: shippingAddress.address,
-          phone: shippingAddress.phone,
-        }
+        shippingAddress: shippingAddress // Pass the full address object
       };
       
       try {
-        await addOrder(orderData); // This function now calls the backend
-        clearCart();
-        navigate('/order-success');
+        // This is the correct sequence
+        await addOrder(orderData); // 1. Attempt to save the order
+        clearCart();              // 2. If successful, clear the cart
+        navigate('/order-success'); // 3. Then, navigate to the success page
       } catch (error) {
         alert(`Failed to place order: ${error.message}`);
+      } finally {
+        setIsLoading(false);
       }
 
     } else {
@@ -78,8 +78,8 @@ const PaymentPage = () => {
           <span className="total-amount">₹{cartTotal.toFixed(2)}</span>
         </div>
         
-        <button className="place-order-btn" onClick={handlePlaceOrder}>
-          Place Order
+        <button className="place-order-btn" onClick={handlePlaceOrder} disabled={isLoading}>
+          {isLoading ? 'Placing Order...' : 'Place Order'}
         </button>
       </div>
     </div>

@@ -40,7 +40,7 @@ app.post('/api/chat', async (req, res) => {
       return res.status(400).json({ error: 'Message is required' });
     }
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash"});
 
     const prompt = `You are a helpful and knowledgeable pharmacist assistant for a website called HealthMeds. Provide concise, safe, and general health advice. Do not provide specific medical diagnoses or prescriptions. The user's question is: "${message}"`;
 
