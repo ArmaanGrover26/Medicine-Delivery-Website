@@ -1,4 +1,4 @@
-# Logs
+# ─── Logs ────────────────────────────────────────────────────────────
 logs
 *.log
 npm-debug.log*
@@ -7,15 +7,30 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# ─── Dependencies ────────────────────────────────────────────────────
+node_modules/
+Frontend/node_modules/
+Backend/node_modules/
 
-# Editor directories and files
+# ─── Build output ────────────────────────────────────────────────────
+dist/
+dist-ssr/
+*.local
+build/
+
+# ─── Environment files (never commit secrets!) ───────────────────────
+.env
+.env.*
+!.env.example
+
+# ─── Uploaded files (user prescriptions etc.) ───────────────────────
+Backend/uploads/*
+!Backend/uploads/.gitkeep
+
+# ─── Editor directories and files ────────────────────────────────────
 .vscode/*
 !.vscode/extensions.json
-.idea
+.idea/
 .DS_Store
 *.suo
 *.ntvs*
@@ -23,5 +38,5 @@ dist-ssr
 *.sln
 *.sw?
 
-# environment files
-*.env
+# ─── OS files ────────────────────────────────────────────────────────
+Thumbs.db
