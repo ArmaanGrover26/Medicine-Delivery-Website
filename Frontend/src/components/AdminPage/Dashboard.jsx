@@ -3,10 +3,10 @@ import TopCards from './TopCards';
 import RecentOrdersTable from './RecentOrdersTable';
 import './Dashboard.css';
 
-const Dashboard = ({ orders, medicines }) => {
+const Dashboard = ({ orders, medicines = [] }) => {
   // Calculate summary data from props
   const totalOrders = orders.length;
-  const outOfStock = medicines.filter(med => med.stock === 0).length;
+  const outOfStock = medicines.filter(med => (med.stock || med.units_available || 0) === 0).length;
   const totalRevenue = orders.reduce((sum, order) => sum + order.total, 0).toFixed(2);
   const totalCustomers = [...new Set(orders.map(order => order.customer))].length;
 

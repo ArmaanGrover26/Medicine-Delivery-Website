@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './AllProductsPage.css';
 import { Link, useSearchParams } from 'react-router-dom';
-import { products as allProducts } from '../productData';
 import ProductCard from '../components/ProductCard/ProductCard';
 import { BsArrowLeft } from 'react-icons/bs';
 
@@ -9,20 +8,43 @@ const AllProductsPage = () => {
   const [searchParams] = useSearchParams();
   const subcategoryFilter = searchParams.get('subcategory');
   const categoryFilter = searchParams.get('category');
-  const conditionFilter = searchParams.get('condition'); // 1. Read the new 'condition' filter
+  const conditionFilter = searchParams.get('condition');
+
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch products from API
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('http://localhost:3001/api/products');
+        if (response.ok) {
+          const data = await response.json();
+          setProducts(data);
+        } else {
+          console.error('Failed to fetch products');
+        }
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   // Scroll to the top of the page whenever any filter changes
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [subcategoryFilter, categoryFilter, conditionFilter]);
 
-  // 2. Updated filtering logic to handle all three cases
-  const filteredProducts = allProducts.filter(product => {
-    // If no filter is in the URL, show all products
+  // Filter products based on URL parameters
+  const filteredProducts = products.filter(product => {
     if (!subcategoryFilter && !categoryFilter && !conditionFilter) {
       return true;
     }
-    // Check for a match with any of the applied filters
     if (subcategoryFilter && product.subcategory === subcategoryFilter) {
       return true;
     }
@@ -32,12 +54,20 @@ const AllProductsPage = () => {
     if (conditionFilter && product.condition === conditionFilter) {
       return true;
     }
-    // If none of the above, don't include the product
     return false;
   });
 
-  // 3. Update the page title to reflect any of the filters
   const pageTitle = subcategoryFilter || categoryFilter || conditionFilter || 'All Products';
+
+  if (loading) {
+    return (
+      <div className="all-products-page">
+        <div className="all-products-container">
+          <p>Loading products...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="all-products-page">
@@ -48,7 +78,7 @@ const AllProductsPage = () => {
         <h1 className="all-products-title" style={{ textTransform: 'capitalize' }}>
           {pageTitle.replace('-', ' ')}
         </h1>
-        
+
         {filteredProducts.length > 0 ? (
           <div className="products-grid">
             {filteredProducts.map((product) => (

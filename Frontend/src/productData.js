@@ -13,7 +13,7 @@ export const products = [
     status: 'In Stock',
     unitsAvailable: 255,
     rxRequired: false,
-    description: "Used to treat mild to moderate pain (from headaches, menstrual periods, toothaches) and to reduce fever.",
+    description: "Used to treat mild to moderate pain (from headaches, menstrual periods , toothaches) and to reduce fever.",
     dosage: "Adults: 1 to 2 tablets every 4 to 6 hours as needed.",
     sideEffects: ["Nausea", "Allergic reaction", "Stomach pain"],
     precautions: ["Do not exceed the recommended dose.", "Consult a doctor if you have liver or kidney problems."]

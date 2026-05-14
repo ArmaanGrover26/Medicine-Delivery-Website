@@ -1,76 +1,59 @@
 import React, { useState, useEffect } from 'react';
 import './StatusModal.css';
+import { FaTimes } from 'react-icons/fa';
 
-const StatusModal = ({ order, isOpen, onClose, onUpdate }) => {
-  const [selectedStatus, setSelectedStatus] = useState('');
+const StatusModal = ({ isOpen, onClose, onUpdate, order }) => {
+  const [status, setStatus] = useState('');
 
   useEffect(() => {
     if (order) {
-      setSelectedStatus(order.status);
+      setStatus(order.status);
     }
   }, [order]);
 
-  const handleUpdate = () => {
-    if (onUpdate) {
-      onUpdate(order.id, selectedStatus);
-    }
-    onClose();
-  };
+  if (!isOpen || !order) return null;
 
-  if (!isOpen || !order) {
-    return null;
-  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // We pass only the status here because the parent component 
+    // (AdminOrders.jsx) already knows which order is selected.
+    onUpdate(status); 
+  };
 
   return (
     <div className="modal-overlay">
       <div className="modal-content">
         <div className="modal-header">
           <h3>Update Order Status</h3>
-          <button className="close-button" onClick={onClose}>&times;</button>
+          <button className="close-btn" onClick={onClose}><FaTimes /></button>
         </div>
+        
         <div className="modal-body">
-          <div className="order-details">
-            <p><strong>Order ID</strong></p>
-            <p className="detail-value">{order.id}</p>
-            <p><strong>Customer</strong></p>
-            <p className="detail-value">{order.customer}</p>
+          <div className="order-details-summary">
+            <p><strong>Order ID:</strong> #ORD-{String(order.id).padStart(5, '0')}</p>
+            <p><strong>Customer:</strong> {order.shipping_name || order.customer}</p>
           </div>
-          <div className="status-selection">
-            <p>Select New Status</p>
-            <div className="radio-group">
-              <label>
-                <input
-                  type="radio"
-                  value="Pending"
-                  checked={selectedStatus === 'Pending'}
-                  onChange={(e) => setSelectedStatus(e.target.value)}
-                />
-                <span className="radio-label pending">Pending</span>
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  value="Delivered"
-                  checked={selectedStatus === 'Delivered'}
-                  onChange={(e) => setSelectedStatus(e.target.value)}
-                />
-                <span className="radio-label delivered">Delivered</span>
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  value="Cancelled"
-                  checked={selectedStatus === 'Cancelled'}
-                  onChange={(e) => setSelectedStatus(e.target.value)}
-                />
-                <span className="radio-label cancelled">Cancelled</span>
-              </label>
+          
+          <form onSubmit={handleSubmit} className="status-form">
+            <label>Select New Status:</label>
+            <select 
+              value={status} 
+              onChange={(e) => setStatus(e.target.value)}
+              className="status-dropdown"
+            >
+              <option value="Pending">Pending</option>
+              <option value="Processing">Processing</option>
+              <option value="Shipped">Shipped</option>
+              <option value="Out for Delivery">Out for Delivery</option>
+              <option value="Delivered">Delivered</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+            
+            <div className="modal-actions">
+              <button type="button" className="cancel-btn" onClick={onClose}>Cancel</button>
+              <button type="submit" className="save-btn">Update Status</button>
             </div>
-          </div>
-        </div>
-        <div className="modal-footer">
-          <button className="cancel-button" onClick={onClose}>Cancel</button>
-          <button className="update-button" onClick={handleUpdate}>Update Status</button>
+          </form>
         </div>
       </div>
     </div>

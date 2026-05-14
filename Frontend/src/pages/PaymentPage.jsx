@@ -29,12 +29,12 @@ const PaymentPage = () => {
         cartTotal: cartTotal,
         shippingAddress: shippingAddress // Pass the full address object
       };
-      
+
       try {
-        // This is the correct sequence
+        // Navigate to success page BEFORE clearing cart to prevent redirect race condition
         await addOrder(orderData); // 1. Attempt to save the order
-        clearCart();              // 2. If successful, clear the cart
-        navigate('/order-success'); // 3. Then, navigate to the success page
+        navigate('/order-success', { state: { shouldClearCart: true } }); // 2. Navigate first
+        // Cart will be cleared by OrderSuccessPage after it mounts
       } catch (error) {
         alert(`Failed to place order: ${error.message}`);
       } finally {
@@ -51,20 +51,20 @@ const PaymentPage = () => {
       <Link to="/checkout" className="back-link">
         <BsArrowLeft /> Back to Address
       </Link>
-      
+
       <div className="payment-content">
         <h3>Payment</h3>
         <p>Choose your payment method to complete the purchase.</p>
-        
+
         <div className="payment-options">
-          <div 
+          <div
             className={`payment-option ${paymentMethod === 'cod' ? 'selected' : ''}`}
             onClick={() => setPaymentMethod('cod')}
           >
             <FaRegMoneyBillAlt />
             <span>Cash / Pay on Delivery</span>
           </div>
-          <div 
+          <div
             className={`payment-option ${paymentMethod === 'online' ? 'selected' : ''}`}
             onClick={() => setPaymentMethod('online')}
           >
@@ -77,7 +77,7 @@ const PaymentPage = () => {
           <span>Amount to Pay:</span>
           <span className="total-amount">₹{cartTotal.toFixed(2)}</span>
         </div>
-        
+
         <button className="place-order-btn" onClick={handlePlaceOrder} disabled={isLoading}>
           {isLoading ? 'Placing Order...' : 'Place Order'}
         </button>

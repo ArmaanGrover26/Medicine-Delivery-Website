@@ -22,16 +22,45 @@ const Chatbot = ({ onClose }) => {
     setIsLoading(true);
 
     try {
+      console.log('Sending message to chatbot API...');
+
+      // Add timeout to prevent infinite loading
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
       const response = await fetch('http://localhost:3001/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: input }),
+        signal: controller.signal
       });
+
+      clearTimeout(timeoutId);
+
+      console.log('Response status:', response.status);
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'API request failed');
+      }
+
       const data = await response.json();
-      const botMessage = { sender: 'bot', text: data.reply };
+      console.log('Received response:', data);
+
+      const botMessage = { sender: 'bot', text: data.reply || data.error || 'No response received' };
       setMessages(prev => [...prev, botMessage]);
     } catch (error) {
-      const errorMessage = { sender: 'bot', text: 'Sorry, something went wrong. Please try again.' };
+      console.error('Chatbot error:', error);
+
+      let errorText = 'Sorry, something went wrong. Please try again.';
+
+      if (error.name === 'AbortError') {
+        errorText = 'Request timed out. The AI is taking too long to respond. Please try again.';
+      } else if (error.message) {
+        errorText = error.message;
+      }
+
+      const errorMessage = { sender: 'bot', text: errorText };
       setMessages(prev => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);

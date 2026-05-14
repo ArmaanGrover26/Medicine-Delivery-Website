@@ -8,9 +8,10 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [addresses, setAddresses] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true); // Track initialization status
   const navigate = useNavigate();
 
-  // This is the function to fetch orders for the logged-in user
+  // Fetch orders for the logged-in user
   const fetchOrders = async (authToken) => {
     if (!authToken) return;
     try {
@@ -23,11 +24,30 @@ export const AuthProvider = ({ children }) => {
         const data = await response.json();
         setOrders(data);
       } else {
-        // Handle cases where the token might be expired
-        logout();
+        console.error("Failed to fetch orders - status:", response.status);
       }
     } catch (error) {
       console.error("Failed to fetch orders:", error);
+    }
+  };
+
+  // Fetch addresses for the logged-in user
+  const fetchAddresses = async (authToken) => {
+    if (!authToken) return;
+    try {
+      const response = await fetch('http://localhost:3001/api/addresses', {
+        headers: {
+          'x-auth-token': authToken
+        }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setAddresses(data);
+      } else {
+        console.error("Failed to fetch addresses - status:", response.status);
+      }
+    } catch (error) {
+      console.error("Failed to fetch addresses:", error);
     }
   };
 
@@ -36,12 +56,15 @@ export const AuthProvider = ({ children }) => {
       try {
         const decoded = JSON.parse(atob(token.split('.')[1]));
         setUser(decoded.user);
-        fetchOrders(token); // Fetch orders when the app loads and a token exists
-        // In a real app, you'd fetch addresses too
-        setAddresses([{ id: 1, type: 'Home', name: decoded.user.name, address: '123 Health St, Wellness City', pincode: '400001', state: 'Maharashtra', phone: decoded.user.phone }]);
+        fetchOrders(token);
+        fetchAddresses(token); // Fetch addresses from database
       } catch (e) {
-        logout(); // Clear everything if token is invalid
+        logout();
+      } finally {
+        setLoading(false);
       }
+    } else {
+      setLoading(false);
     }
   }, [token]);
 
@@ -59,14 +82,12 @@ export const AuthProvider = ({ children }) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(credentials),
     });
-    
+
     if (response.ok) {
       const data = await response.json();
       localStorage.setItem('token', data.token);
       setToken(data.token); // This will trigger the useEffect above
       setUser(data.user);
-      // In a real app, you'd fetch addresses too
-      setAddresses([{ id: 1, type: 'Home', name: data.user.name, address: '123 Health St, Wellness City', pincode: '400001', state: 'Maharashtra', phone: data.user.phone }]);
       navigate('/');
     } else {
       const errorData = await response.json();
@@ -82,35 +103,53 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('token');
     navigate('/');
   };
-  
-  const addAddress = (newAddressData) => {
-    // In a real app, this would be a POST request to the backend
-    const newAddress = { id: Date.now(), ...newAddressData };
-    setAddresses(prev => [...prev, newAddress]);
-    return newAddress;
+
+  const addAddress = async (newAddressData) => {
+    try {
+      const response = await fetch('http://localhost:3001/api/addresses', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-auth-token': token
+        },
+        body: JSON.stringify(newAddressData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to add address.");
+      }
+
+      const newAddress = await response.json();
+      await fetchAddresses(token); // Refresh addresses from database
+      return newAddress;
+    } catch (error) {
+      console.error("Error adding address:", error);
+      throw error;
+    }
   };
 
   const addOrder = async (orderData) => {
     const response = await fetch('http://localhost:3001/api/orders', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'x-auth-token': token
-        },
-        body: JSON.stringify(orderData),
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-auth-token': token
+      },
+      body: JSON.stringify(orderData),
     });
 
     if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to place order.");
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to place order.");
     }
-    
+
     await fetchOrders(token); // Re-fetch orders after adding a new one
-    
+
     return await response.json();
   };
 
-  const value = { user, token, login, logout, signup, addresses, addAddress, orders, addOrder };
+  const value = { user, token, loading, login, logout, signup, addresses, addAddress, orders, addOrder };
 
   return (
     <AuthContext.Provider value={value}>

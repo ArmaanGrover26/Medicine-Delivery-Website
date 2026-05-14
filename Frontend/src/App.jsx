@@ -17,6 +17,8 @@ import ProductDetailPage from './pages/ProductDetailPage';
 import CheckoutPage from './pages/CheckoutPage';
 import PaymentPage from './pages/PaymentPage';         // 1. Import PaymentPage
 import OrderSuccessPage from './pages/OrderSuccessPage'; // 2. Import OrderSuccessPage
+import OrderDetailPage from './pages/OrderDetailPage';   // Order tracking page
+import PrescriptionUploadPage from './pages/PrescriptionUploadPage'; // Prescription upload
 
 // Admin Pages
 import AdminDashboardPage from './components/AdminPage/AdminDashboardPage';
@@ -24,7 +26,13 @@ import AdminLoginPage from './components/AdminPage/AdminLoginPage';
 
 // Protected Route for Regular Users
 const UserProtectedRoute = ({ children }) => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+
+  // Wait for auth initialization to complete
+  if (loading) {
+    return <div>Loading...</div>; // Or a proper loading spinner component
+  }
+
   if (!user) {
     return <Navigate to="/login" replace />;
   }
@@ -54,6 +62,7 @@ function App() {
         <Route path="/blogs" element={<Layout><BlogListPage /></Layout>} />
         <Route path="/blogs/:articleId" element={<Layout><ArticlePage /></Layout>} />
         <Route path="/order-success" element={<Layout><OrderSuccessPage /></Layout>} />
+        <Route path="/upload-prescription" element={<Layout><PrescriptionUploadPage /></Layout>} />
 
         {/* Protected User Routes */}
         <Route
@@ -83,6 +92,17 @@ function App() {
             <Layout>
               <UserProtectedRoute>
                 <PaymentPage />
+              </UserProtectedRoute>
+            </Layout>
+          }
+        />
+        {/* Order Detail/Tracking Page */}
+        <Route
+          path="/orders/:orderId"
+          element={
+            <Layout>
+              <UserProtectedRoute>
+                <OrderDetailPage />
               </UserProtectedRoute>
             </Layout>
           }

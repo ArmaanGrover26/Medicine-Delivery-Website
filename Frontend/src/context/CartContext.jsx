@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
 // 1. Create the context
 const CartContext = createContext();
@@ -8,8 +8,28 @@ export const useCart = () => useContext(CartContext);
 
 // 3. Create the Provider component
 export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
-  const [shippingAddress, setShippingAddress] = useState(null);
+  const [cartItems, setCartItems] = useState(() => {
+    const savedCart = localStorage.getItem('cartItems');
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
+  const [shippingAddress, setShippingAddress] = useState(() => {
+    const savedAddress = localStorage.getItem('shippingAddress');
+    return savedAddress ? JSON.parse(savedAddress) : null;
+  });
+
+  // Save cart items to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  // Save shipping address to localStorage whenever it changes
+  useEffect(() => {
+    if (shippingAddress) {
+      localStorage.setItem('shippingAddress', JSON.stringify(shippingAddress));
+    } else {
+      localStorage.removeItem('shippingAddress');
+    }
+  }, [shippingAddress]);
 
   // Function to add a product to the cart
   const addToCart = (product) => {
@@ -27,7 +47,7 @@ export const CartProvider = ({ children }) => {
       }
     });
   };
-  
+
   // Function to remove an item from the cart
   const removeFromCart = (productId) => {
     setCartItems(prevItems => prevItems.filter(item => item.id !== productId));
@@ -56,6 +76,9 @@ export const CartProvider = ({ children }) => {
   // This is the new function to empty the cart after an order is placed
   const clearCart = () => {
     setCartItems([]);
+    localStorage.removeItem('cartItems');
+    setShippingAddress(null);
+    localStorage.removeItem('shippingAddress');
   };
 
   // Calculate the total price of all items in the cart

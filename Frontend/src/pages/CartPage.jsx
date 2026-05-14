@@ -14,7 +14,7 @@ const CartPage = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const totalMRP = cartItems.reduce((total, item) => total + (item.originalPrice || item.price) * item.quantity, 0);
+  const totalMRP = cartItems.reduce((total, item) => total + (item.originalPrice || item.original_price || item.price) * item.quantity, 0);
   const cartTotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   const totalDiscount = totalMRP - cartTotal;
 
@@ -31,11 +31,11 @@ const CartPage = () => {
       <Link to="/" className="back-to-home">
         <BsArrowLeft /> Back to Home
       </Link>
-      
+
       <div className="cart-page-container">
         <div className="cart-items-section">
           <h2 className="cart-header">MY CART ({cartItems.length} ITEMS)</h2>
-          
+
           {cartItems.length === 0 ? (
             <div className="empty-cart">
               <h3>Your cart is empty!</h3>
@@ -51,8 +51,8 @@ const CartPage = () => {
                     <h3>{item.name}</h3>
                     <p className="item-manufacturer">{item.manufacturer}</p>
                     <div className="item-pricing">
-                      <span className="price">₹{item.price.toFixed(2)}</span>
-                      {item.originalPrice && <span className="mrp">₹{item.originalPrice.toFixed(2)}</span>}
+                      <span className="price">₹{Number(item.price).toFixed(2)}</span>
+                      {(item.originalPrice || item.original_price) && <span className="mrp">₹{Number(item.originalPrice || item.original_price).toFixed(2)}</span>}
                     </div>
                   </div>
                   <div className="item-actions-cart">

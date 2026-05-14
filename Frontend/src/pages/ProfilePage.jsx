@@ -8,7 +8,7 @@ import { BsArrowLeft } from 'react-icons/bs';
 const ProfilePage = () => {
   const { user, addresses, deleteAddress, orders } = useAuth(); // Get real orders
   const [activeTab, setActiveTab] = useState('profile');
-  
+
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
@@ -22,11 +22,11 @@ const ProfilePage = () => {
       });
     }
   }, [user]);
-  
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
-  
+
   const handleUpdateProfile = (e) => {
     e.preventDefault();
     alert(`Profile updated for ${formData.fullName}`);
@@ -45,7 +45,7 @@ const ProfilePage = () => {
             <form className="profile-edit-form" onSubmit={handleUpdateProfile}>
               <div className="form-group">
                 <label htmlFor="fullName">Full Name</label>
-                <input type="text" id="fullName" value={formData.fullName} onChange={handleChange}/>
+                <input type="text" id="fullName" value={formData.fullName} onChange={handleChange} />
               </div>
               <div className="form-group">
                 <label htmlFor="phone">Phone Number</label>
@@ -67,10 +67,17 @@ const ProfilePage = () => {
               {orders && orders.length > 0 ? (
                 orders.map(order => (
                   <div key={order.id} className="order-item">
-                    <span>Order #ORD-{String(order.id).padStart(5, '0')}</span>
-                    <span>{new Date(order.order_date).toLocaleDateString()}</span>
-                    <span>₹{Number(order.total_amount).toFixed(2)}</span>
-                    <span className={`order-status ${order.status.toLowerCase()}`}>{order.status}</span>
+                    <div className="order-info">
+                      <span>Order #ORD-{String(order.id).padStart(5, '0')}</span>
+                      <span>{new Date(order.order_date).toLocaleDateString()}</span>
+                      <span>₹{Number(order.total_amount).toFixed(2)}</span>
+                      <span className={`order-status ${(order.status || 'order placed').toLowerCase().replace(' ', '-')}`}>
+                        {order.status || 'Order Placed'}
+                      </span>
+                    </div>
+                    <Link to={`/orders/${order.id}`} className="track-order-btn">
+                      Track Order
+                    </Link>
                   </div>
                 ))
               ) : (

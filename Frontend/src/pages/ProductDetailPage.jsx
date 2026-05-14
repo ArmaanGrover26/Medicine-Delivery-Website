@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './ProductDetailPage.css';
 import { useParams, Link } from 'react-router-dom';
-import { products } from '../productData';
 import { useCart } from '../context/CartContext';
 
 // Import Icons
@@ -11,11 +10,41 @@ import { FaStar, FaHeart, FaExclamationTriangle, FaCheckCircle, FaBox, FaShippin
 const ProductDetailPage = () => {
   const { productId } = useParams();
   const { addToCart } = useCart();
-  const product = products.find(p => p.id === parseInt(productId));
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    // Fetch product from API
+    const fetchProduct = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(`http://localhost:3001/api/products/${productId}`);
+        if (response.ok) {
+          const data = await response.json();
+          setProduct(data);
+        } else {
+          setProduct(null);
+        }
+      } catch (error) {
+        console.error('Error fetching product:', error);
+        setProduct(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
   }, [productId]);
+
+  if (loading) {
+    return (
+      <div className="product-not-found">
+        <h2>Loading...</h2>
+      </div>
+    );
+  }
 
   if (!product) {
     return (
@@ -26,7 +55,7 @@ const ProductDetailPage = () => {
     );
   }
 
-  const discount = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
+  const discount = product.discount || Math.round(((product.original_price - product.price) / product.original_price) * 100);
 
   return (
     <div className="pdp-wrapper">
@@ -40,14 +69,14 @@ const ProductDetailPage = () => {
             <div className="pdp-image-container">
               <img src={product.image || 'https://placehold.co/400'} alt={product.name} />
               {discount > 0 && <span className="pdp-discount-tag">{discount}% OFF</span>}
-              {product.rxRequired && <span className="pdp-rx-tag"><BsFileEarmarkMedicalFill /> Prescription Required</span>}
+              {product.rx_required && <span className="pdp-rx-tag"><BsFileEarmarkMedicalFill /> Prescription Required</span>}
             </div>
             <div className="pdp-info-boxes">
               <div className="pdp-info-box">
                 <FaBox className="info-icon" />
                 <div>
                   <strong>{product.status}</strong>
-                  <span>{product.unitsAvailable || 'N/A'} units available</span>
+                  <span>{product.units_available || 'N/A'} units available</span>
                 </div>
               </div>
               <div className="pdp-info-box">
@@ -70,8 +99,8 @@ const ProductDetailPage = () => {
               <span>4.4 (189 reviews)</span>
             </div>
             <div className="pdp-price">
-              <span className="current-price">₹{product.price.toFixed(2)}</span>
-              {product.originalPrice && <span className="original-price">₹{product.originalPrice.toFixed(2)}</span>}
+              <span className="current-price">₹{Number(product.price).toFixed(2)}</span>
+              {product.original_price && <span className="original-price">₹{Number(product.original_price).toFixed(2)}</span>}
               {discount > 0 && <span className="save-amount">Save {discount}%</span>}
             </div>
             <div className="pdp-actions">
@@ -91,11 +120,11 @@ const ProductDetailPage = () => {
               <h4>Description</h4>
               <p>{product.description}</p>
               <h4>Dosage</h4>
-              <p>{product.dosage}</p>
+              <p>{product.dosage || 'As directed by physician'}</p>
               <div className="pdp-warnings">
                 <h4><FaExclamationTriangle /> Side Effects</h4>
                 <ul>
-                  {product.sideEffects?.map((effect, i) => <li key={i}>{effect}</li>)}
+                  {product.side_effects?.map((effect, i) => <li key={i}>{effect}</li>)}
                 </ul>
                 <h4><FaCheckCircle /> Precautions</h4>
                 <ul>

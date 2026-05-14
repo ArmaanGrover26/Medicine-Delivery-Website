@@ -1,10 +1,3 @@
-/* Responsive Profile Page Styles */
-@media (max-width: 900px) {
-  .profile-dashboard {
-    flex-direction: column;
-  }
-}
-
 /* Base Styles */
 .back-to-home {
   display: inline-flex;
@@ -14,6 +7,11 @@
   color: var(--text-dark);
   font-weight: 600;
   margin-bottom: 30px;
+  transition: color 0.2s;
+}
+
+.back-to-home:hover {
+  color: var(--primary-blue);
 }
 
 .profile-page-container {
@@ -21,24 +19,31 @@
   margin: 40px auto;
   padding: 0 30px;
 }
+
 .profile-page-container h2 {
   font-size: 2.5rem;
   margin-bottom: 30px;
+  color: var(--text-dark);
 }
+
 .profile-dashboard {
   display: flex;
   gap: 30px;
   align-items: flex-start;
 }
+
+/* Sidebar Styles */
 .profile-sidebar {
   flex: 1;
+  min-width: 250px;
   background: var(--background-white);
   border-radius: 12px;
   border: 1px solid var(--border-color);
   padding: 25px;
-  position: sticky; /* Makes sidebar stick on scroll */
-  top: 100px;     /* Adjust based on your header's height */
+  position: sticky;
+  top: 100px;
 }
+
 .user-info {
   display: flex;
   flex-direction: column;
@@ -47,6 +52,7 @@
   padding-bottom: 20px;
   margin-bottom: 20px;
 }
+
 .user-avatar {
   width: 80px;
   height: 80px;
@@ -60,9 +66,23 @@
   font-weight: 600;
   margin-bottom: 15px;
 }
-.user-info strong { font-size: 1.2rem; }
-.user-info span { color: var(--text-dark); }
-.profile-nav { display: flex; flex-direction: column; gap: 10px; }
+
+.user-info strong {
+  font-size: 1.2rem;
+  color: var(--text-dark);
+}
+
+.user-info span {
+  color: var(--text-dark);
+  font-size: 0.9rem;
+}
+
+.profile-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .profile-nav button {
   background: none;
   border: none;
@@ -74,98 +94,264 @@
   font-weight: 500;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   width: 100%;
-  transition: background-color 0.2s, color 0.2s;
+  color: var(--text-dark);
+  transition: all 0.2s ease;
 }
+
 .profile-nav button:hover {
   background-color: #f8f9fa;
+  color: var(--primary-blue);
 }
+
 .profile-nav button.active {
   background-color: #e7f5ff;
   color: var(--primary-blue);
+  font-weight: 600;
 }
+
+/* Content Area Styles */
 .profile-content {
   flex: 3;
   background: var(--background-white);
   border-radius: 12px;
   border: 1px solid var(--border-color);
   padding: 30px;
+  min-height: 400px;
 }
-.order-item, .wishlist-item {
+
+.profile-content h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+}
+
+.profile-content p {
+  color: var(--text-dark);
+  margin-bottom: 25px;
+}
+
+/* Edit Profile Form */
+.profile-edit-form {
+  margin-top: 20px;
+  max-width: 600px;
+}
+
+.profile-edit-form .form-group {
+  margin-bottom: 20px;
+}
+
+.profile-edit-form label {
+  display: block;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.profile-edit-form input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: #fff;
+  margin-bottom: 0px;
+  padding-left: 0px;
+}
+
+.profile-edit-form input[readOnly] {
+  background-color: #f1f3f5;
+  cursor: not-allowed;
+  color: var(--text-dark);
+}
+
+.profile-edit-form .action-btn {
+  padding: 12px 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background: var(--primary-gradient);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: opacity 0.2s;
+}
+
+.profile-edit-form .action-btn:hover {
+  opacity: 0.9;
+}
+
+/* Orders List */
+.order-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-item {
   display: flex;
   justify-content: space-between;
-  padding: 15px;
-  border-bottom: 1px solid var(--border-color);
+  align-items: center;
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 15px;
+  background: #fff;
+  transition: box-shadow 0.2s;
 }
-.order-list > .order-item:last-child,
-.wishlist-list > .wishlist-item:last-child {
-  border-bottom: none;
+
+.order-item:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
-.order-status.delivered {
-  color: var(--green-tag);
+
+.order-info {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  flex: 1;
+}
+
+.order-info span {
+  font-weight: 500;
+  color: var(--text-dark);
+}
+
+.order-info span:nth-child(2) {
+  color: var(--text);
+}
+
+.track-order-btn {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
   font-weight: 600;
+  font-size: 0.9rem;
+  transition: opacity 0.2s;
+  white-space: nowrap;
 }
-.order-status.processing {
-  color: #ffc107;
+
+.track-order-btn:hover {
+  opacity: 0.9;
+}
+
+/* Status Colors (Shared with Admin) */
+.order-status {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
   font-weight: 600;
 }
 
-/* --- Saved Address Styles (NEW SECTION) --- */
+.order-status.pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.order-status.order-placed {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+.order-status.processing {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+.order-status.shipped {
+  background-color: #e0cffc;
+  color: #590098;
+}
+
+.order-status.out-for-delivery {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+.order-status.delivered {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.order-status.cancelled {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Saved Addresses */
 .saved-address-list {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  margin-top: 20px;
 }
+
 .saved-address-card {
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  padding: 15px;
+  padding: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
+  background-color: #fff;
 }
+
 .address-details {
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
-.address-details strong { 
-  font-size: 1.1rem; 
+
+.address-details strong {
+  font-size: 1.1rem;
+  color: var(--text-dark);
 }
-.address-details span { 
-  color: var(--text-dark); 
+
+.address-details span {
+  color: var(--text-dark);
+  font-size: 0.95rem;
 }
 
 .address-actions {
   display: flex;
   gap: 10px;
 }
+
 .address-actions button {
   background: none;
   border: 1px solid var(--border-color);
-  padding: 8px 12px;
-  border-radius: 5px;
+  padding: 8px 15px;
+  border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
   display: flex;
   align-items: center;
-  gap: 5px;
-  transition: background-color 0.2s;
-}
-.address-actions button:hover {
-  background-color: #f8f9fa;
-}
-.address-actions .delete-btn:hover {
-  background-color: #f8d7da;
-  color: #721c24;
-  border-color: #f5c6cb;
+  gap: 6px;
+  transition: all 0.2s;
+  color: var(--text-dark);
 }
 
-.order-status.processing {
-  color: #ffc107; /* A yellow/gold color */
-  font-weight: 600;
+.address-actions .edit-btn:hover {
+  background-color: #e7f5ff;
+  color: var(--primary-blue);
+  border-color: var(--primary-blue);
+}
+
+.address-actions .delete-btn:hover {
+  background-color: #fee2e2;
+  color: #dc2626;
+  border-color: #dc2626;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .profile-dashboard {
+    flex-direction: column;
+  }
+
+  .profile-sidebar {
+    width: 100%;
+    position: static;
+  }
 }

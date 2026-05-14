@@ -18,17 +18,22 @@ router.post('/', authMiddleware, async (req, res) => {
       INSERT INTO orders (user_id, total_amount, shipping_name, shipping_address, shipping_phone) 
       VALUES ($1, $2, $3, $4, $5) RETURNING id
     `;
-    const orderValues = [userId, cartTotal, shippingAddress.name, shippingAddress.address, shippingAddress.phone];
+    // Handle both old and new address field names for backward compatibility
+    const shippingName = shippingAddress.full_name || shippingAddress.name;
+    const shippingAddr = shippingAddress.address_line || shippingAddress.address;
+    const shippingPhone = shippingAddress.phone_number || shippingAddress.phone;
+
+    const orderValues = [userId, cartTotal, shippingName, shippingAddr, shippingPhone];
     const newOrder = await client.query(orderQuery, orderValues);
     const orderId = newOrder.rows[0].id;
 
-    // 2. Insert each cart item into the 'order_items' table
+    // 2. Insert each cart item into the 'order_items' table with product details
     for (const item of cartItems) {
       const itemQuery = `
-        INSERT INTO order_items (order_id, product_id, quantity, price_at_purchase)
-        VALUES ($1, $2, $3, $4)
+        INSERT INTO order_items (order_id, product_id, quantity, price_at_purchase, product_name, product_category)
+        VALUES ($1, $2, $3, $4, $5, $6)
       `;
-      const itemValues = [orderId, item.id, item.quantity, item.price];
+      const itemValues = [orderId, item.id, item.quantity, item.price, item.name, item.category];
       await client.query(itemQuery, itemValues);
     }
 
@@ -49,14 +54,51 @@ router.post('/', authMiddleware, async (req, res) => {
 
 // === GET ORDERS FOR A LOGGED-IN USER ===
 router.get('/', authMiddleware, async (req, res) => {
-    try {
-        // req.user.id comes from the authMiddleware
-        const userOrders = await pool.query("SELECT * FROM orders WHERE user_id = $1 ORDER BY order_date DESC", [req.user.id]);
-        res.json(userOrders.rows);
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
+  try {
+    // req.user.id comes from the authMiddleware
+    const userOrders = await pool.query("SELECT * FROM orders WHERE user_id = $1 ORDER BY order_date DESC", [req.user.id]);
+    res.json(userOrders.rows);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+// === GET SINGLE ORDER DETAILS ===
+router.get('/:id', authMiddleware, async (req, res) => {
+  try {
+    const orderId = req.params.id;
+    const userId = req.user.id;
+
+    // Get order details
+    const orderResult = await pool.query(
+      'SELECT * FROM orders WHERE id = $1 AND user_id = $2',
+      [orderId, userId]
+    );
+
+    if (orderResult.rows.length === 0) {
+      return res.status(404).json({ message: 'Order not found' });
     }
+
+    const order = orderResult.rows[0];
+
+    // Get order items
+    const itemsResult = await pool.query(
+      'SELECT * FROM order_items WHERE order_id = $1',
+      [orderId]
+    );
+
+    // Combine order and items
+    const orderDetails = {
+      ...order,
+      items: itemsResult.rows
+    };
+
+    res.json(orderDetails);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
 });
 
 

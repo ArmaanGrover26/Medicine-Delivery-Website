@@ -45,7 +45,7 @@ const ProductCard = ({ product }) => {
         <p className="product-manufacturer">{product.manufacturer}</p>
         <div className="product-price">
           <span className="current-price">₹{product.price}</span>
-          {product.originalPrice && <span className="original-price">₹{product.originalPrice}</span>}
+          {(product.originalPrice || product.original_price) && <span className="original-price">₹{product.originalPrice || product.original_price}</span>}
         </div>
         <div className="product-actions">
           {itemInCart ? (
@@ -63,7 +63,7 @@ const ProductCard = ({ product }) => {
               Add to Cart
             </button>
           )}
-          
+
           <button className="wishlist-btn" onClick={(e) => e.preventDefault()}>♡</button>
         </div>
       </div>

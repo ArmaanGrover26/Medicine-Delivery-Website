@@ -34,21 +34,20 @@ const initialCustomers = [
 function AdminDashboardPage() {
   const [currentPage, setCurrentPage] = useState('dashboard');
   const [orders, setOrders] = useState(initialOrders);
-  const [medicines, setMedicines] = useState(initialMedicines);
   const [customers, setCustomers] = useState(initialCustomers);
 
   const renderPage = () => {
     switch (currentPage) {
       case 'dashboard':
-        return <Dashboard orders={orders} medicines={medicines} />;
+        return <Dashboard orders={orders} />;
       case 'manage-medicines':
-        return <ManageMedicines medicines={medicines} setMedicines={setMedicines} />;
+        return <ManageMedicines />;
       case 'orders':
         return <Orders orders={orders} setOrders={setOrders} />;
       case 'customers':
         return <Customers customers={customers} setCustomers={setCustomers} />;
       default:
-        return <Dashboard orders={orders} medicines={medicines} />;
+        return <Dashboard orders={orders} />;
     }
   };
 

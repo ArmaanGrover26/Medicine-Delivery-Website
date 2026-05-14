@@ -14,36 +14,44 @@ const CheckoutPage = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (addresses && addresses.length > 0 && !selectedAddressId) {
-      const defaultAddress = addresses[0];
-      setSelectedAddressId(defaultAddress.id);
-      setShippingAddress(defaultAddress); // Set the default address in the context
-    }
+    // Don't auto-select any address - let user choose
     if (!addresses || addresses.length === 0) {
       setShowNewAddressForm(true);
     }
-  }, [addresses, selectedAddressId, setShippingAddress]);
-  
+  }, [addresses]);
+
   const handleAddressSelect = (address) => {
     setSelectedAddressId(address.id);
     setShippingAddress(address); // 3. Save the selected address to the CartContext
   };
 
-  const handleAddNewAddress = (e) => {
+  const handleAddNewAddress = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const newAddressData = {
-        name: formData.get('name'),
-        address: formData.get('address'),
-        pincode: formData.get('pincode'),
-        state: formData.get('state'),
-        phone: formData.get('phone'),
-        type: 'Home',
+      fullName: formData.get('fullName'),
+      phoneNumber: formData.get('phoneNumber'),
+      addressLine: formData.get('addressLine'),
+      pincode: formData.get('pincode'),
+      state: formData.get('state'),
+      addressType: 'Home',
     };
-    const newlyAddedAddress = addAddress(newAddressData);
-    handleAddressSelect(newlyAddedAddress); // Select the new address
-    setShowNewAddressForm(false);
-    e.target.reset();
+    try {
+      const newlyAddedAddress = await addAddress(newAddressData);
+      if (newlyAddedAddress) {
+        handleAddressSelect(newlyAddedAddress); // Select the new address
+        setShowNewAddressForm(false);
+        e.target.reset();
+        alert('Address saved successfully!');
+      }
+    } catch (error) {
+      console.error('Failed to add address:', error);
+      if (error.message && error.message.includes('Token is not valid')) {
+        alert('Your session has expired. Please log out and log back in to continue.');
+      } else {
+        alert('Failed to add address: ' + (error.message || 'Please try again'));
+      }
+    }
   };
 
   return (
@@ -51,10 +59,10 @@ const CheckoutPage = () => {
       <Link to="/cart" className="back-to-home">
         <BsArrowLeft /> Back to Cart
       </Link>
-      
+
       <div className="checkout-content">
         <h3>Select Delivery Address</h3>
-        
+
         {addresses && addresses.length > 0 && (
           <div className="address-list">
             {addresses.map(addr => (
@@ -65,40 +73,40 @@ const CheckoutPage = () => {
               >
                 <div className="address-card-header">
                   <FaHome />
-                  <span>{addr.type}</span>
+                  <span>{addr.address_type || 'Home'}</span>
                 </div>
                 <div className="address-card-body">
-                  <strong>{addr.name}</strong>
-                  <p>{addr.address}, {addr.state} - {addr.pincode}</p>
-                  <p>Phone: {addr.phone}</p>
+                  <strong>{addr.full_name}</strong>
+                  <p>{addr.address_line}, {addr.state} - {addr.pincode}</p>
+                  <p>Phone: {addr.phone_number}</p>
                 </div>
               </div>
             ))}
             {!showNewAddressForm && (
-                <button className="add-address-btn-text" onClick={() => setShowNewAddressForm(true)}>
-                    <FaPlusCircle /> Add a new address
-                </button>
+              <button className="add-address-btn-text" onClick={() => setShowNewAddressForm(true)}>
+                <FaPlusCircle /> Add a new address
+              </button>
             )}
           </div>
         )}
-        
+
         {showNewAddressForm && (
           <div className="new-address-form">
             <h4>{addresses && addresses.length > 0 ? 'Add a New Address' : 'Add your delivery address'}</h4>
             <form onSubmit={handleAddNewAddress}>
-              <input name="name" type="text" placeholder="Full Name" defaultValue={user?.name} required />
-              <input name="phone" type="tel" placeholder="Phone Number" required />
-              <input name="address" type="text" placeholder="House No, Building, Street, Area" required />
+              <input name="fullName" type="text" placeholder="Full Name" defaultValue={user?.name} required />
+              <input name="phoneNumber" type="tel" placeholder="Phone Number" required />
+              <input name="addressLine" type="text" placeholder="House No, Building, Street, Area" required />
               <input name="pincode" type="text" placeholder="Pincode" required />
               <input name="state" type="text" placeholder="State" required />
               <button type="submit" className="action-btn">Save Address</button>
             </form>
           </div>
         )}
-        
+
         <div className="payment-section">
-          <Link 
-            to="/payment" 
+          <Link
+            to="/payment"
             className={`proceed-btn ${!selectedAddressId ? 'disabled' : ''}`}
             onClick={(e) => { if (!selectedAddressId) e.preventDefault(); }}
           >

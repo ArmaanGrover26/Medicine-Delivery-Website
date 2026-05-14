@@ -1,288 +1,113 @@
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 1000;
+  align-items: center;
+  z-index: 2000;
+  backdrop-filter: blur(2px);
 }
 
 .modal-content {
-  background-color: #fff;
+  background: white;
   padding: 25px;
-  border-radius: 8px;
+  border-radius: 12px;
   width: 90%;
   max-width: 400px;
-  min-width: 320px;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  display: flex;
-  flex-direction: column;
-  margin: 0 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 15px;
   margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
 }
 
-.modal-header h3 {
-  margin: 0;
-  font-size: 1.2rem;
-}
+.modal-header h3 { margin: 0; color: #333; font-size: 1.2rem; }
 
-.close-button {
+.close-btn {
   background: none;
   border: none;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   cursor: pointer;
   color: #999;
+  transition: color 0.2s;
 }
+.close-btn:hover { color: #333; }
 
-.modal-body {
-  flex-grow: 1;
-}
-
-.order-details p {
-  margin: 5px 0;
-  font-size: 0.9rem;
-  font-weight: bold; /* New: Making the labels bold */
-  color: #555; /* New: Softer color for the labels */
-}
-
-.detail-value {
-  font-weight: bold;
-  font-size: 1.2rem; /* Increased font size to make it more prominent */
-  color: #000; /* New: Changed to pure black for a strong contrast */
-  margin-top: -5px; /* New: Reduced top margin to bring it closer to the label */
+.order-details-summary {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
   margin-bottom: 20px;
 }
-
-.status-selection p {
-  font-weight: bold;
-  margin-bottom: 10px;
+.order-details-summary p { 
+  margin: 5px 0; 
+  color: #555; 
+  font-size: 0.95rem; 
+}
+.order-details-summary p strong {
+  color: #333;
 }
 
-.radio-group label {
+.status-form label {
   display: block;
-  margin-bottom: 5px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.status-dropdown {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  margin-bottom: 25px;
+  outline: none;
+  background-color: white;
   cursor: pointer;
 }
+.status-dropdown:focus { border-color: #007bff; }
 
-.radio-group input[type="radio"] {
-  display: none;
-}
-
-.radio-label {
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-weight: bold;
-  font-size: 0.8rem;
-  cursor: pointer;
-  border: 1px solid transparent;
-  transition: all 0.2s ease-in-out;
-}
-
-.radio-group input[type="radio"]:checked + .radio-label {
-  border-color: #007bff;
-  box-shadow: 0 0 0 2px #e6f7ff;
-}
-
-.radio-label.pending {
-  background-color: #fff3cd;
-  color: #ffc107;
-}
-
-.radio-label.delivered {
-  background-color: #d4edda;
-  color: #28a745;
-}
-
-.radio-label.cancelled {
-  background-color: #f8d7da;
-  color: #dc3545;
-}
-
-.modal-footer {
+.modal-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
+  gap: 15px;
+  margin-top: 10px;
   padding-top: 20px;
   border-top: 1px solid #eee;
-  margin-top: 20px;
 }
 
-.cancel-button, .update-button {
+.cancel-btn {
+  background: #f1f1f1;
+  color: #333;
+  border: 1px solid #ddd;
   padding: 10px 20px;
-  border-radius: 5px;
-  border: none;
+  border-radius: 6px;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
 }
+.cancel-btn:hover { background: #e2e2e2; }
 
-.cancel-button {
-  background-color: #f0f0f0;
-  color: #666;
+.save-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
 }
-
-.update-button {
-  background-color: #28a745;
-  color: #fff;
-}
-
-.update-button:hover {
-  background-color: #218838;
-}
-
-/* Responsive Breakpoints */
-
-/* Large tablets and small desktops */
-@media (max-width: 768px) {
-  .modal-content {
-    padding: 20px;
-    margin: 0 15px;
-    width: 95%;
-    min-width: 280px;
-  }
-  
-  .modal-header h3 {
-    font-size: 1.1rem;
-  }
-  
-  .order-details p {
-    font-size: 0.85rem;
-  }
-  
-  .detail-value {
-    font-size: 1.1rem;
-    margin-bottom: 18px;
-  }
-  
-  .status-selection p {
-    font-size: 0.9rem;
-  }
-  
-  .radio-label {
-    padding: 5px 10px;
-    font-size: 0.75rem;
-  }
-  
-  .cancel-button, .update-button {
-    padding: 8px 16px;
-    font-size: 0.9rem;
-  }
-}
-
-/* Mobile phones */
-@media (max-width: 480px) {
-  .modal-content {
-    padding: 15px;
-    margin: 0 10px;
-    width: calc(100% - 20px);
-    min-width: 260px;
-    max-height: 85vh;
-  }
-  
-  .modal-header {
-    padding-bottom: 12px;
-    margin-bottom: 15px;
-  }
-  
-  .modal-header h3 {
-    font-size: 1rem;
-  }
-  
-  .close-button {
-    font-size: 1.3rem;
-  }
-  
-  .order-details p {
-    font-size: 0.8rem;
-    margin: 4px 0;
-  }
-  
-  .detail-value {
-    font-size: 1rem;
-    margin-bottom: 15px;
-  }
-  
-  .status-selection p {
-    font-size: 0.85rem;
-    margin-bottom: 8px;
-  }
-  
-  .radio-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  
-  .radio-group label {
-    margin-bottom: 0;
-  }
-  
-  .radio-label {
-    padding: 8px 15px;
-    font-size: 0.8rem;
-    text-align: center;
-    border-radius: 25px;
-  }
-  
-  .modal-footer {
-    padding-top: 15px;
-    margin-top: 15px;
-    flex-direction: column-reverse;
-    gap: 8px;
-  }
-  
-  .cancel-button, .update-button {
-    padding: 10px;
-    width: 100%;
-    font-size: 0.9rem;
-  }
-}
-
-/* Very small screens */
-@media (max-width: 320px) {
-  .modal-content {
-    padding: 12px;
-    margin: 0 5px;
-    min-width: 240px;
-  }
-  
-  .modal-header h3 {
-    font-size: 0.9rem;
-  }
-  
-  .order-details p {
-    font-size: 0.75rem;
-  }
-  
-  .detail-value {
-    font-size: 0.9rem;
-    margin-bottom: 12px;
-  }
-  
-  .status-selection p {
-    font-size: 0.8rem;
-  }
-  
-  .radio-label {
-    padding: 6px 12px;
-    font-size: 0.75rem;
-  }
-  
-  .cancel-button, .update-button {
-    padding: 8px;
-    font-size: 0.8rem;
-  }
-}
+.save-btn:hover { background: #0056b3; }
