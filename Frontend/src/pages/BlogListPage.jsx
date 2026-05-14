@@ -1,62 +1,48 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './BlogListPage.css';
+import { Link } from 'react-router-dom';
 import { articles as allArticles } from '../blogData';
 import ArticleCard from '../components/ArticleCard/ArticleCard';
-import { FaSearch } from 'react-icons/fa';
-
-const categories = ['All', 'Diabetes Care', 'Heart Health', 'Mental Health', 'Skin Care', 'Bone Health'];
+// 1. Import the icons you'll need for the trust bar
+import { BsArrowLeft } from 'react-icons/bs';
+import { FaRegLightbulb, FaRegFileAlt, FaRegClock } from 'react-icons/fa';
 
 const BlogListPage = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [activeCategory, setActiveCategory] = useState('All');
-  const [filteredArticles, setFilteredArticles] = useState(allArticles);
-
-  useEffect(() => {
-    let result = allArticles;
-    // Filter by category
-    if (activeCategory !== 'All') {
-      result = result.filter(article => article.category === activeCategory);
-    }
-    // Filter by search term
-    if (searchTerm) {
-      result = result.filter(article =>
-        article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        article.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-    setFilteredArticles(result);
-  }, [searchTerm, activeCategory]);
-
   const featuredArticle = allArticles.find(a => a.isFeatured);
+  const latestArticles = allArticles.filter(a => !a.isFeatured);
 
   return (
     <div className="blog-list-page">
+      <Link to="/" className="back-to-home">
+        <BsArrowLeft /> Back to Home
+      </Link>
+
       <div className="blog-header">
         <h1>Health <span className="highlight">Blogs & Articles</span></h1>
-        <p>Stay informed with expert insights, health tips, and the latest medical information from our healthcare professionals</p>
-      </div>
+        
+        {/* --- THIS IS THE NEW TRUST BAR SECTION --- */}
+        <div className="trust-bar">
+          <div className="trust-item">
+            <div className="trust-icon-wrapper">
+              <FaRegLightbulb />
+            </div>
+            <span>Integrity</span>
+          </div>
+          <div className="trust-item">
+            <div className="trust-icon-wrapper">
+              <FaRegFileAlt />
+            </div>
+            <span>Verified</span>
+          </div>
+          <div className="trust-item">
+            <div className="trust-icon-wrapper">
+              <FaRegClock />
+            </div>
+            <span>Reliable</span>
+          </div>
+        </div>
+        {/* --- END OF NEW SECTION --- */}
 
-      <div className="blog-filters">
-        <div className="blog-search-bar">
-          <FaSearch />
-          <input
-            type="text"
-            placeholder="Search articles, topics, or conditions..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
-        <div className="category-buttons">
-          {categories.map(category => (
-            <button
-              key={category}
-              className={activeCategory === category ? 'active' : ''}
-              onClick={() => setActiveCategory(category)}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
       </div>
 
       {featuredArticle && (
@@ -69,7 +55,7 @@ const BlogListPage = () => {
       <div className="latest-articles-section">
         <h3>Latest Articles</h3>
         <div className="articles-grid">
-          {filteredArticles.map(article => (
+          {latestArticles.map(article => (
             <ArticleCard key={article.id} article={article} />
           ))}
         </div>

@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -13,109 +13,297 @@
 
 .modal-content {
   background-color: #fff;
-  padding: 15px; /* Made it even shorter */
+  padding: 25px;
   border-radius: 8px;
-  width: 350px; /* Reduced width */
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 600px;
+  min-width: 320px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
+  margin: 0 20px;
 }
 
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #e0e0e0;
-  padding-bottom: 8px; /* Reduced padding */
-  margin-bottom: 10px; /* Reduced margin */
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .modal-header h3 {
   margin: 0;
-  font-size: 1.1rem; /* Reduced heading size */
+  font-size: 1.2rem;
   color: #333;
 }
 
 .close-button {
   background: none;
   border: none;
-  font-size: 1.4rem; /* Reduced close button size */
+  font-size: 1.5rem;
   cursor: pointer;
   color: #999;
-  transition: color 0.2s ease-in-out;
-}
-
-.close-button:hover {
-  color: #555;
 }
 
 .form-group {
-  margin-bottom: 10px; /* Reduced spacing between form fields */
+  margin-bottom: 15px;
 }
 
 .form-group label {
   display: block;
-  font-weight: 600;
-  margin-bottom: 4px; /* Reduced margin */
-  font-size: 0.9rem; /* Reduced label font size */
+  font-weight: bold;
+  margin-bottom: 5px;
   color: #555;
 }
 
 .form-group input {
   width: 100%;
-  padding: 8px; /* Reduced padding */
-  border-radius: 6px;
+  padding: 10px;
+  border-radius: 5px;
   border: 1px solid #ddd;
-  background-color: #f9f9f9;
-  color: #333;
   box-sizing: border-box;
-  font-size: 0.9rem; /* Reduced font size */
-  transition: all 0.2s ease-in-out;
 }
 
-.form-group input:focus {
-  outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
-  background-color: #fff;
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  background-color: white;
+}
+
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  min-height: 80px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+}
+
+.array-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.array-input-item {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.array-input-item input {
+  flex: 1;
+}
+
+.array-btn {
+  padding: 5px 10px;
+  border-radius: 3px;
+  border: 1px solid #ddd;
+  background: #f8f9fa;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.array-btn.add-btn {
+  background: #28a745;
+  color: white;
+  border-color: #28a745;
+}
+
+.array-btn.remove-btn {
+  background: #dc3545;
+  color: white;
+  border-color: #dc3545;
 }
 
 .modal-footer {
   display: flex;
   justify-content: flex-end;
-  gap: 8px;
-  padding-top: 10px; /* Reduced padding */
-  border-top: 1px solid #e0e0e0;
-  margin-top: 10px; /* Reduced margin */
+  gap: 10px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+  margin-top: 20px;
 }
 
 .cancel-button, .update-button {
-  padding: 8px 16px; /* Reduced padding for smaller buttons */
-  border-radius: 20px;
+  padding: 10px 20px;
+  border-radius: 5px;
   border: none;
   cursor: pointer;
   font-weight: bold;
-  transition: all 0.2s ease-in-out;
-  font-size: 0.8rem; /* Reduced font size */
 }
 
 .cancel-button {
-  background-color: #e9ecef;
-  color: #6c757d;
-}
-
-.cancel-button:hover {
-  background-color: #ced4da;
+  background-color: #f0f0f0;
+  color: #666;
 }
 
 .update-button {
   background-color: #007bff;
   color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
 }
 
 .update-button:hover {
   background-color: #0056b3;
-  box-shadow: 0 4px 6px rgba(0, 123, 255, 0.3);
+}
+
+/* Responsive Breakpoints */
+
+/* Large tablets and small desktops */
+@media (max-width: 768px) {
+  .modal-content {
+    padding: 20px;
+    margin: 0 15px;
+    width: 95%;
+    min-width: 280px;
+    max-width: 500px;
+  }
+  
+  .modal-header h3 {
+    font-size: 1.1rem;
+  }
+  
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+  
+  .array-btn {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+  }
+  
+  .cancel-button, .update-button {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 15px;
+    margin: 0 10px;
+    width: calc(100% - 20px);
+    min-width: 260px;
+    max-height: 85vh;
+  }
+  
+  .modal-header {
+    padding-bottom: 12px;
+    margin-bottom: 15px;
+  }
+  
+  .modal-header h3 {
+    font-size: 1rem;
+  }
+  
+  .close-button {
+    font-size: 1.3rem;
+  }
+  
+  .form-group {
+    margin-bottom: 12px;
+  }
+  
+  .form-group label {
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+  
+  .array-input-item {
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .array-btn {
+    width: 100%;
+    font-size: 0.8rem;
+  }
+  
+  .modal-footer {
+    padding-top: 15px;
+    margin-top: 15px;
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+  
+  .cancel-button, .update-button {
+    padding: 10px;
+    width: 100%;
+    font-size: 0.9rem;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 320px) {
+  .modal-content {
+    padding: 12px;
+    margin: 0 5px;
+    min-width: 240px;
+  }
+  
+  .modal-header h3 {
+    font-size: 0.9rem;
+  }
+  
+  .form-group label {
+    font-size: 0.85rem;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 0.85rem;
+    padding: 6px;
+  }
+  
+  .array-btn {
+    font-size: 0.75rem;
+    padding: 4px 6px;
+  }
 }
     

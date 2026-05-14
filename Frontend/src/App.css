@@ -1,3 +1,42 @@
+/* Responsive container and section styles */
+@media (max-width: 1200px) {
+  .container {
+    max-width: 1000px;
+    padding: 32px 18px;
+  }
+  .section-title {
+    font-size: 2.1rem;
+  }
+}
+@media (max-width: 900px) {
+  .container {
+    max-width: 700px;
+    padding: 24px 8px;
+  }
+  .section-title {
+    font-size: 1.7rem;
+  }
+  .section-subtitle {
+    font-size: 1rem;
+  }
+}
+@media (max-width: 600px) {
+  .container {
+    max-width: 98vw;
+    padding: 12px 2vw;
+  }
+  .section-title {
+    font-size: 1.3rem;
+  }
+  .section-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+  }
+  .btn, .btn-primary {
+    font-size: 0.95rem;
+    padding: 8px 12px;
+  }
+}
 /* General App styles */
 body {
   margin: 0;

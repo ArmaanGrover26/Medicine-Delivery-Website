@@ -1,19 +1,10 @@
 import React, { useState } from 'react';
-import { FaPlus, FaSearch, FaEdit, FaTrash, FaCheckCircle, FaExclamationTriangle, FaTimesCircle } from 'react-icons/fa';
+import { FaPlus, FaSearch, FaEdit, FaTrash } from 'react-icons/fa';
 import AddMedicineModal from './AddMedicineModal';
 import EditMedicineModal from './EditMedicineModal';
 import './ManageMedicines.css';
 
-// This is our mock data. In a real application, this would come from the backend.
-const initialMedicines = [
-  { id: 'med-001', name: 'Paracetamol 500mg', category: 'Pain Relief', price: 12.99, stock: 150, manufacturer: 'PharmaCorp', expiryDate: '2026-08-15' },
-  { id: 'med-002', name: 'Vitamin D3 1000IU', category: 'Vitamins', price: 15.99, stock: 8, manufacturer: 'HealthPlus', expiryDate: '2025-12-20' },
-  { id: 'med-003', name: 'Aspirin 75mg', category: 'Cardiovascular', price: 6.25, stock: 0, manufacturer: 'MediCore', expiryDate: '2025-10-30' },
-  { id: 'med-004', name: 'Omega-3 Fish Oil', category: 'Supplements', price: 29.99, stock: 45, manufacturer: 'NaturaLife', expiryDate: '2026-03-12' },
-];
-
-const ManageMedicines = () => {
-  const [medicines, setMedicines] = useState(initialMedicines);
+const ManageMedicines = ({ medicines, setMedicines }) => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedMedicine, setSelectedMedicine] = useState(null);

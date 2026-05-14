@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
-import { useAuth } from './context/AuthContext'; // Import the useAuth hook
+import { useAuth } from './context/AuthContext';
 
 // Layout and Page Imports
 import Layout from './components/Layout/Layout';
@@ -13,6 +13,10 @@ import SignUpPage from './pages/SignUpPage';
 import BlogListPage from './pages/BlogListPage';
 import ArticlePage from './pages/ArticlePage';
 import ProfilePage from './pages/ProfilePage';
+import ProductDetailPage from './pages/ProductDetailPage';
+import CheckoutPage from './pages/CheckoutPage';
+import PaymentPage from './pages/PaymentPage';         // 1. Import PaymentPage
+import OrderSuccessPage from './pages/OrderSuccessPage'; // 2. Import OrderSuccessPage
 
 // Admin Pages
 import AdminDashboardPage from './components/AdminPage/AdminDashboardPage';
@@ -20,15 +24,14 @@ import AdminLoginPage from './components/AdminPage/AdminLoginPage';
 
 // Protected Route for Regular Users
 const UserProtectedRoute = ({ children }) => {
-  const { user } = useAuth(); // Get user state from the AuthContext
+  const { user } = useAuth();
   if (!user) {
-    // If no user is logged in, redirect to the login page
     return <Navigate to="/login" replace />;
   }
   return children;
 };
 
-// Your Existing Protected Route for Admin (I've renamed it for clarity)
+// Your Existing Protected Route for Admin
 const AdminProtectedRoute = ({ children, isAdminLoggedIn }) => {
   if (!isAdminLoggedIn) {
     return <Navigate to="/admin/login" replace />;
@@ -37,7 +40,6 @@ const AdminProtectedRoute = ({ children, isAdminLoggedIn }) => {
 };
 
 function App() {
-  // Your state for the admin login
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
 
   return (
@@ -46,17 +48,41 @@ function App() {
         {/* Main Website Routes with Layout */}
         <Route path="/" element={<Layout><HomePage /></Layout>} />
         <Route path="/products" element={<Layout><AllProductsPage /></Layout>} />
+        <Route path="/products/:category" element={<Layout><AllProductsPage /></Layout>} />
+        <Route path="/product/:productId" element={<Layout><ProductDetailPage /></Layout>} />
         <Route path="/cart" element={<Layout><CartPage /></Layout>} />
         <Route path="/blogs" element={<Layout><BlogListPage /></Layout>} />
         <Route path="/blogs/:articleId" element={<Layout><ArticlePage /></Layout>} />
+        <Route path="/order-success" element={<Layout><OrderSuccessPage /></Layout>} />
 
-        {/* New Protected Profile Route */}
+        {/* Protected User Routes */}
         <Route
           path="/profile"
           element={
             <Layout>
               <UserProtectedRoute>
                 <ProfilePage />
+              </UserProtectedRoute>
+            </Layout>
+          }
+        />
+        <Route
+          path="/checkout"
+          element={
+            <Layout>
+              <UserProtectedRoute>
+                <CheckoutPage />
+              </UserProtectedRoute>
+            </Layout>
+          }
+        />
+        {/* 3. Add the new protected route for the payment page */}
+        <Route
+          path="/payment"
+          element={
+            <Layout>
+              <UserProtectedRoute>
+                <PaymentPage />
               </UserProtectedRoute>
             </Layout>
           }

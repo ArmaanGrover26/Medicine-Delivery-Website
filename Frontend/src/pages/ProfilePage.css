@@ -1,3 +1,21 @@
+/* Responsive Profile Page Styles */
+@media (max-width: 900px) {
+  .profile-dashboard {
+    flex-direction: column;
+  }
+}
+
+/* Base Styles */
+.back-to-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--text-dark);
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
 .profile-page-container {
   max-width: 1200px;
   margin: 40px auto;
@@ -18,6 +36,8 @@
   border-radius: 12px;
   border: 1px solid var(--border-color);
   padding: 25px;
+  position: sticky; /* Makes sidebar stick on scroll */
+  top: 100px;     /* Adjust based on your header's height */
 }
 .user-info {
   display: flex;
@@ -41,7 +61,7 @@
   margin-bottom: 15px;
 }
 .user-info strong { font-size: 1.2rem; }
-.user-info span { color: var(--text-light); }
+.user-info span { color: var(--text-dark); }
 .profile-nav { display: flex; flex-direction: column; gap: 10px; }
 .profile-nav button {
   background: none;
@@ -55,6 +75,11 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  width: 100%;
+  transition: background-color 0.2s, color 0.2s;
+}
+.profile-nav button:hover {
+  background-color: #f8f9fa;
 }
 .profile-nav button.active {
   background-color: #e7f5ff;
@@ -72,4 +97,75 @@
   justify-content: space-between;
   padding: 15px;
   border-bottom: 1px solid var(--border-color);
+}
+.order-list > .order-item:last-child,
+.wishlist-list > .wishlist-item:last-child {
+  border-bottom: none;
+}
+.order-status.delivered {
+  color: var(--green-tag);
+  font-weight: 600;
+}
+.order-status.processing {
+  color: #ffc107;
+  font-weight: 600;
+}
+
+/* --- Saved Address Styles (NEW SECTION) --- */
+.saved-address-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+.saved-address-card {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.address-details {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.address-details strong { 
+  font-size: 1.1rem; 
+}
+.address-details span { 
+  color: var(--text-dark); 
+}
+
+.address-actions {
+  display: flex;
+  gap: 10px;
+}
+.address-actions button {
+  background: none;
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: background-color 0.2s;
+}
+.address-actions button:hover {
+  background-color: #f8f9fa;
+}
+.address-actions .delete-btn:hover {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-color: #f5c6cb;
+}
+
+.order-status.processing {
+  color: #ffc107; /* A yellow/gold color */
+  font-weight: 600;
 }

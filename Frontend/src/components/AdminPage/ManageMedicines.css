@@ -13,21 +13,21 @@
 
 .manage-medicines-header h1 {
   margin: 0 0 5px;
-  color: #212529; /* Darker heading color */
+  color: #212529;
   font-weight: 600;
 }
 
 .manage-medicines-header p {
   margin: 0;
-  color: #6c757d; /* Softer text color */
+  color: #6c757d;
 }
 
 .add-medicine-button {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 25px; /* Increased padding for a more prominent button */
-  border-radius: 50px; /* Pill-shaped button */
+  padding: 12px 25px;
+  border-radius: 50px;
   border: none;
   background-color: #28a745;
   color: #fff;
@@ -70,7 +70,7 @@
   border-radius: 20px;
   border: 1px solid #ddd;
   background-color: #f8f9fa;
-  color: #333; /* Ensuring text color is dark */
+  color: #333;
   transition: all 0.2s ease-in-out;
 }
 
@@ -88,24 +88,38 @@
   color: #888;
 }
 
+/* --- Table Styling for Continuous Horizontal Line --- */
 .medicine-table-container table {
   width: 100%;
-  border-collapse: collapse;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
-.medicine-table-container th, .medicine-table-container td {
+.medicine-table-container th,
+.medicine-table-container td {
   text-align: left;
   padding: 12px 15px;
-  border-bottom: 1px solid #eee;
-  color: #495057; /* Explicitly setting the text color for all cells */
+  border: none; /* Remove cell borders */
+  color: #495057;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .medicine-table-container th {
   background-color: #f8f9fa;
-  color: #495057; /* Darker header color */
+  color: #495057;
   font-weight: 600;
   text-transform: uppercase;
   font-size: 0.85rem;
+}
+
+.medicine-table-container tr {
+  border-bottom: 1px solid #ddd; /* Single horizontal line for each row */
+}
+
+.medicine-table-container tr:last-child {
+  border-bottom: none; /* Remove border from last row */
 }
 
 .medicine-table-container tr:hover {
@@ -157,4 +171,285 @@
 
 .trash-icon:hover {
   color: #c82333;
+}
+
+/* Responsive Breakpoints */
+
+/* Large tablets and small desktops */
+@media (max-width: 1024px) {
+  .manage-medicines-container {
+    padding: 20px;
+  }
+  
+  .manage-medicines-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .add-medicine-button {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+  
+  .medicine-inventory-section {
+    padding: 18px;
+  }
+  
+  .search-bar input {
+    width: 250px;
+  }
+  
+  .medicine-table-container th,
+  .medicine-table-container td {
+    padding: 10px 12px;
+  }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+  .manage-medicines-container {
+    padding: 15px;
+  }
+  
+  .manage-medicines-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .manage-medicines-header h1 {
+    font-size: 1.6rem;
+  }
+  
+  .add-medicine-button {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .medicine-inventory-section {
+    padding: 15px;
+  }
+  
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  
+  .section-header h2 {
+    font-size: 1.3rem;
+  }
+  
+  .search-bar input {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  /* Table horizontal scroll */
+  .medicine-table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .medicine-table-container table {
+    min-width: 800px;
+  }
+  
+  .medicine-table-container th,
+  .medicine-table-container td {
+    padding: 8px 10px;
+    font-size: 0.9rem;
+  }
+  
+  .medicine-table-container th {
+    font-size: 0.8rem;
+  }
+  
+  .status-badge {
+    font-size: 0.75rem;
+    padding: 3px 8px;
+  }
+  
+  .actions-cell {
+    gap: 10px;
+  }
+  
+  .action-icon {
+    font-size: 0.9rem;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  .manage-medicines-container {
+    padding: 10px;
+  }
+  
+  .manage-medicines-header h1 {
+    font-size: 1.4rem;
+  }
+  
+  .manage-medicines-header p {
+    font-size: 0.9rem;
+  }
+  
+  .add-medicine-button {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+  }
+  
+  .medicine-inventory-section {
+    padding: 12px;
+  }
+  
+  .section-header h2 {
+    font-size: 1.2rem;
+  }
+  
+  .search-bar input {
+    width: 100%;
+    padding: 6px 8px 6px 30px;
+    font-size: 0.9rem;
+  }
+  
+  .search-icon {
+    left: 8px;
+  }
+  
+  /* Card view for mobile */
+  .medicine-table-container {
+    display: none;
+  }
+  
+  .medicine-cards-container {
+    display: block;
+  }
+  
+  .medicine-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .medicine-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+  
+  .medicine-card-name {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 4px;
+  }
+  
+  .medicine-card-manufacturer {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  .medicine-card-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  
+  .medicine-card-item {
+    font-size: 0.9rem;
+  }
+  
+  .medicine-card-item strong {
+    display: block;
+    color: #666;
+    font-size: 0.8rem;
+    margin-bottom: 2px;
+    text-transform: uppercase;
+  }
+  
+  .medicine-card-price {
+    font-weight: bold;
+    color: #28a745;
+  }
+  
+  .medicine-card-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+  }
+  
+  .action-icon {
+    font-size: 1.1rem;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 320px) {
+  .manage-medicines-container {
+    padding: 8px;
+  }
+  
+  .manage-medicines-header h1 {
+    font-size: 1.2rem;
+  }
+  
+  .add-medicine-button {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+  }
+  
+  .medicine-inventory-section {
+    padding: 10px;
+  }
+  
+  .section-header h2 {
+    font-size: 1rem;
+  }
+  
+  .search-bar input {
+    padding: 5px 6px 5px 25px;
+    font-size: 0.85rem;
+  }
+  
+  .search-icon {
+    left: 6px;
+    font-size: 0.9rem;
+  }
+  
+  .medicine-card {
+    padding: 12px;
+  }
+  
+  .medicine-card-name {
+    font-size: 1rem;
+  }
+  
+  .medicine-card-info {
+    grid-template-columns: 1fr;
+  }
+  
+  .medicine-card-item {
+    font-size: 0.85rem;
+  }
+  
+  .status-badge {
+    font-size: 0.7rem;
+    padding: 2px 6px;
+  }
+}
+
+/* Hide card container on desktop by default */
+@media (min-width: 481px) {
+  .medicine-cards-container {
+    display: none;
+  }
 }
