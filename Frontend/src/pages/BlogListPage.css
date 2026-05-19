@@ -148,6 +148,7 @@
   justify-content: center;
   gap: 3rem; /* Space between the items */
   margin-top: 2rem; /* Space below the main heading */
+  flex-wrap: wrap;
 }
 
 .trust-item {
@@ -173,3 +174,17 @@
   font-weight: 600;
   color: var(--text-secondary);
 }
+
+@media (max-width: 600px) {
+  .trust-bar {
+    gap: 1.5rem;
+  }
+  .trust-icon-wrapper {
+    width: 52px;
+    height: 52px;
+    font-size: 1.3rem;
+  }
+  .trust-item span {
+    font-size: 0.85rem;
+  }
+}

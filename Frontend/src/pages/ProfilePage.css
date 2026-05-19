@@ -355,3 +355,74 @@
     position: static;
   }
 }
+
+@media (max-width: 600px) {
+  .profile-page-container {
+    margin: 16px auto;
+    padding: 0 12px;
+  }
+
+  .profile-page-container h2 {
+    font-size: 1.6rem;
+    margin-bottom: 16px;
+  }
+
+  .profile-content {
+    padding: 16px;
+  }
+
+  .profile-content h3 {
+    font-size: 1.2rem;
+  }
+
+  .order-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .order-info {
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-start;
+  }
+
+  .track-order-btn {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .saved-address-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px;
+  }
+
+  .address-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .address-actions button {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .profile-sidebar {
+    padding: 16px;
+  }
+
+  .user-avatar {
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+  }
+
+  .profile-nav button {
+    padding: 12px;
+    font-size: 0.95rem;
+  }
+}

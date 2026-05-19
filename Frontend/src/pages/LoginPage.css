@@ -1,71 +1,13 @@
-/* Responsive Login Page Styles */
-@media (max-width: 900px) {
-  .login-content-wrapper {
-    flex-direction: column;
-    gap: 18px;
-  }
-  .login-promo-column, .login-form-column {
-    padding: 28px;
-  }
-  .login-promo-column h2 {
-    font-size: 1.5rem;
-  }
-  .login-form-column h3 {
-    font-size: 1.3rem;
-  }
-}
-@media (max-width: 600px) {
-  .login-page-container {
-    padding: 0 2vw;
-  }
-  .login-content-wrapper {
-    gap: 6px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  }
-  .login-promo-column, .login-form-column {
-    padding: 10px;
-  }
-  .login-logo {
-    font-size: 1.1rem;
-    margin-bottom: 10px;
-  }
-  .login-promo-column h2 {
-    font-size: 1.1rem;
-    margin-bottom: 8px;
-  }
-  .login-promo-column > p {
-    font-size: 0.95rem;
-    margin-bottom: 10px;
-  }
-  .login-form-column h3 {
-    font-size: 1.1rem;
-  }
-  .form-subtitle {
-    font-size: 0.95rem;
-    margin-bottom: 10px;
-  }
-  .form-group label {
-    font-size: 0.95rem;
-    margin-bottom: 4px;
-  }
-  .input-wrapper input {
-    font-size: 0.95rem;
-    padding: 10px 12px;
-  }
-  .signin-btn {
-    padding: 10px;
-    font-size: 0.95rem;
-    margin-bottom: 10px;
-  }
-  .signup-link {
-    font-size: 0.95rem;
-  }
-}
+/* =========================================
+   LOGIN PAGE – FULLY RESPONSIVE
+   ========================================= */
+
 .login-page-container {
-  max-width: 1200px;
+  max-width: 550px;
   margin: 40px auto;
-  padding: 0 30px;
+  padding: 0 20px;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .back-to-home {
@@ -80,7 +22,7 @@
 
 .login-content-wrapper {
   display: flex;
-  gap: 50px;
+  flex-direction: column;
   background: var(--background-white);
   border-radius: 16px;
   overflow: hidden;
@@ -91,7 +33,7 @@
 .login-promo-column {
   flex: 1;
   padding: 50px;
-  background-color: #f8f9f8; /* Light grey background */
+  background-color: #f8f9f8;
 }
 
 .login-logo {
@@ -128,6 +70,7 @@
   display: flex;
   gap: 20px;
   margin-bottom: 40px;
+  flex-wrap: wrap;
 }
 
 .promo-feature-item {
@@ -171,10 +114,9 @@
   color: var(--text-dark);
 }
 
-/* --- Right Column (Form) --- */
+/* --- Form Container --- */
 .login-form-column {
-  flex: 1;
-  padding: 50px;
+  padding: 40px 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -185,7 +127,7 @@
   color: var(--text-dark);
 }
 
-.form-subtitle  {
+.form-subtitle {
   color: var(--text-dark);
   margin-bottom: 30px;
 }
@@ -209,22 +151,20 @@
 
 .input-wrapper input {
   width: 100%;
-  padding: 12px 15px;
+  padding: 12px 15px 12px 44px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
   font-size: 1rem;
-  padding-left: 44px; /* space for left icon */
+  box-sizing: border-box;
 }
 
-/* Email input (icon on left) */
-#email {
-  padding-left: 44px; /* space for left icon */
+.input-wrapper input.right-icon {
+  padding-right: 44px;
 }
 
-/* Password input (icon on right) */
-#password {
+.input-wrapper input.both-icons {
   padding-left: 44px;
- /* space for right icon */
+  padding-right: 44px;
 }
 
 /* Icon styles */
@@ -236,30 +176,14 @@
   color: #aaa;
 }
 
-/* Positions */
 .input-icon.left {
   left: 15px;
 }
 
-.input-icon.right {
+.input-icon.right,
+.input-icon-right {
   right: 15px;
-  cursor: pointer; /* so later we can make it toggle show/hide */
-}
-
-/* Input icon padding logic for login/signup */
-.input-wrapper input {
-  padding-left: 15px;
-  padding-right: 15px;
-}
-.input-wrapper input.left-icon {
-  padding-left: 44px;
-}
-.input-wrapper input.right-icon {
-  padding-right: 44px;
-}
-.input-wrapper input.both-icons {
-  padding-left: 44px;
-  padding-right: 44px;
+  cursor: pointer;
 }
 
 .form-options {
@@ -268,6 +192,8 @@
   align-items: center;
   margin-bottom: 25px;
   font-size: 0.9rem;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .checkbox-label {
@@ -304,4 +230,112 @@
   color: var(--primary-blue);
   text-decoration: none;
   font-weight: 600;
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+/* Tablet: hide promo, center form */
+@media (max-width: 900px) {
+  .login-page-container {
+    margin: 20px auto;
+    padding: 0 20px;
+  }
+
+  .login-content-wrapper {
+    flex-direction: column;
+  }
+
+  .login-promo-column {
+    padding: 30px 28px;
+  }
+
+  .login-form-column {
+    padding: 30px 28px;
+    justify-content: flex-start;
+  }
+
+  .login-promo-column h2 {
+    font-size: 1.8rem;
+  }
+
+  .login-form-column h3 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Mobile: fully centered, compact */
+@media (max-width: 600px) {
+  .login-page-container {
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #f0f4f8;
+  }
+
+  .login-content-wrapper {
+    flex-direction: column;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    gap: 0;
+  }
+
+  /* Hide the promo column on mobile – just show the form */
+  .login-promo-column {
+    display: none;
+  }
+
+  .login-form-column {
+    padding: 28px 20px;
+    justify-content: center;
+    min-height: 100vh;
+    background: white;
+    border-radius: 16px;
+    margin: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    box-sizing: border-box;
+  }
+
+  .login-form-column h3 {
+    font-size: 1.6rem;
+    text-align: center;
+  }
+
+  .form-subtitle {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+  }
+
+  .signin-btn {
+    padding: 13px;
+    font-size: 1rem;
+    margin-bottom: 16px;
+  }
+
+  .signup-link {
+    font-size: 0.95rem;
+  }
+
+  .input-wrapper input {
+    font-size: 0.95rem;
+    padding: 12px 15px 12px 44px;
+  }
+
+  .form-options {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .login-form-column {
+    margin: 8px;
+    padding: 24px 16px;
+  }
 }

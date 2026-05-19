@@ -134,3 +134,70 @@
 .pdp-warnings ul { padding-left: 20px; }
 .pdp-warnings h4 { display: flex; align-items: center; gap: 8px; }
 .pdp-warnings h4 svg { color: var(--primary-blue); }
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .pdp-wrapper {
+    padding: 24px 0;
+  }
+  .pdp-container {
+    padding: 0 16px;
+  }
+  .pdp-main-content {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .pdp-right-column h1 {
+    font-size: 1.5rem;
+  }
+  .pdp-price .current-price {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .pdp-wrapper {
+    padding: 12px 0;
+  }
+  .pdp-container {
+    padding: 0 12px;
+  }
+  .pdp-main-content {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .pdp-info-boxes {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .pdp-info-box {
+    padding: 10px;
+    gap: 10px;
+  }
+  .info-icon {
+    font-size: 1.3rem;
+  }
+  .pdp-right-column h1 {
+    font-size: 1.2rem;
+  }
+  .pdp-price {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .pdp-price .current-price {
+    font-size: 1.3rem;
+  }
+  .pdp-actions {
+    flex-direction: column;
+  }
+  .wishlist-btn-pdp {
+    padding: 12px;
+  }
+  .pdp-details-accordion {
+    padding: 12px;
+  }
+  .detail-item {
+    flex-direction: column;
+    gap: 4px;
+  }
+}

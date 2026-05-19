@@ -152,13 +152,119 @@ td.contact-cell p:first-child {
 }
 
 .block-icon:hover {
-  color: #dc3545; /* Red for blocking */
+  color: #dc3545;
 }
 
 .unblock-icon:hover {
-  color: #28a745; /* Green for unblocking */
+  color: #28a745;
 }
 
 .trash-icon:hover {
-  color: #dc3545; /* Red for deleting */
+  color: #dc3545;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .customers-container {
+    padding: 20px;
+  }
+  .customers-header h1 {
+    font-size: 1.7rem;
+  }
+  .customer-list-section {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .customers-container {
+    padding: 16px;
+  }
+  .customers-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .customers-header h1 {
+    font-size: 1.4rem;
+  }
+  .customers-header p {
+    font-size: 0.9rem;
+  }
+  .customers-summary {
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .summary-value {
+    font-size: 1.6rem;
+  }
+  .customer-list-section {
+    padding: 14px;
+    border-radius: 8px;
+  }
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .section-header h2 {
+    font-size: 1.2rem;
+  }
+  /* Fix the fixed 300px search bar */
+  .search-bar input {
+    width: 100%;
+    max-width: 100%;
+    padding: 9px 12px 9px 36px;
+    font-size: 0.9rem;
+  }
+  .customer-table-container th,
+  .customer-table-container td {
+    padding: 10px 12px;
+    font-size: 0.85rem;
+  }
+  .customer-table-container th {
+    font-size: 0.75rem;
+  }
+  .status-badge {
+    font-size: 0.75rem;
+    padding: 3px 8px;
+  }
+  .actions-cell {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .customers-container {
+    padding: 10px;
+  }
+  .customers-header h1 {
+    font-size: 1.2rem;
+  }
+  .customer-list-section {
+    padding: 10px;
+  }
+  .customers-summary {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .summary-card {
+    padding: 14px;
+  }
+  .summary-title {
+    font-size: 0.85rem;
+  }
+  .summary-value {
+    font-size: 1.4rem;
+  }
+  .customer-table-container th,
+  .customer-table-container td {
+    padding: 8px 10px;
+    font-size: 0.8rem;
+  }
+  td.contact-cell p {
+    font-size: 0.8rem;
+  }
 }

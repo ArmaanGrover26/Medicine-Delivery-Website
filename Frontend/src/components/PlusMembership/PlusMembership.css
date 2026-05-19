@@ -12,6 +12,7 @@
 .plus-header {
   background-color: #eaf5ff;
   padding: 3rem;
+  padding-bottom: 6rem; /* Extra padding so the overlapping card doesn't hide content */
   border-radius: 16px;
   position: relative;
   overflow: hidden;
@@ -45,6 +46,9 @@
   padding: 0.8rem 1.5rem;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  white-space: normal;
+  word-break: break-word;
+  max-width: 100%;
 }
 
 /* --- THIS IS THE FIX --- */
@@ -130,9 +134,90 @@
 /* Responsive adjustments for smaller screens */
 @media (max-width: 992px) {
   .plus-family-image {
-    display: none; /* Hide the image on smaller screens to prevent layout breaking */
+    display: none;
   }
   .plus-header {
-    padding-right: 3rem; /* Reset padding when image is hidden */
+    padding-right: 3rem;
+  }
+  .main-benefit-btn {
+    font-size: 0.95rem;
+    padding: 0.7rem 1.2rem;
+  }
+}
+
+@media (max-width: 820px) {
+  .plus-header {
+    padding: 2rem;
+  }
+  .main-benefit-btn {
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .plus-membership-section {
+    padding: 2.5rem 1rem;
+  }
+  .plus-header {
+    padding: 2rem;
+  }
+  .plus-title {
+    font-size: 2rem;
+  }
+  .plus-subtitle {
+    font-size: 1rem;
+  }
+  .plus-benefits-card {
+    padding: 1.5rem;
+    margin-top: -30px;
+  }
+  .benefits-grid {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .plus-membership-section {
+    padding: 1.5rem 0.5rem;
+  }
+  .plus-header {
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+  .plus-title {
+    font-size: 1.5rem;
+  }
+  .plus-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+  .main-benefit-btn {
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+  }
+  .plus-benefits-card {
+    padding: 1rem;
+    margin-top: -20px;
+  }
+  .benefits-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding-bottom: 1rem;
+  }
+  .benefit-icon {
+    font-size: 1.4rem;
+  }
+  .benefit-item strong {
+    font-size: 1rem;
+  }
+  .additional-benefits {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    font-size: 0.9rem;
   }
 }

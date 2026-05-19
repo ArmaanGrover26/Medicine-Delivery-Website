@@ -4,7 +4,8 @@ import Dashboard from './Dashboard';
 import ManageMedicines from './ManageMedicines';
 import Orders from './Orders';
 import Customers from './Customers';
-// import './AdminDashboardPage.css';
+import { FaBars, FaTimes } from 'react-icons/fa';
+import './AdminDashboardPage.css';
 
 // Mock data to simulate an API response for orders
 const initialOrders = [
@@ -31,10 +32,25 @@ const initialCustomers = [
   { id: 'CUST-005', name: 'David Wilson', email: 'd.wilson@email.com', phone: '+1 234 567 8904', address: '654 Maple Dr, City, State 12345', totalOrders: 7, lastOrder: '2024-12-15', status: 'Inactive' },
 ];
 
+// Page title map for mobile top bar
+const pageTitles = {
+  'dashboard': 'Dashboard',
+  'manage-medicines': 'Manage Medicines',
+  'orders': 'Orders',
+  'customers': 'Customers',
+};
+
 function AdminDashboardPage() {
   const [currentPage, setCurrentPage] = useState('dashboard');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [orders, setOrders] = useState(initialOrders);
   const [customers, setCustomers] = useState(initialCustomers);
+
+  // Navigate and auto-close sidebar on mobile
+  const handleNavigate = (page) => {
+    setCurrentPage(page);
+    setSidebarOpen(false);
+  };
 
   const renderPage = () => {
     switch (currentPage) {
@@ -52,9 +68,39 @@ function AdminDashboardPage() {
   };
 
   return (
-    <div className="app-container">
-      <Sidebar currentPage={currentPage} setCurrentPage={setCurrentPage} />
-      {renderPage()}
+    <div className="admin-layout">
+
+      {/* ── Mobile sticky top bar ── */}
+      <div className="admin-mobile-topbar">
+        <button
+          className="admin-hamburger"
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          aria-label="Toggle sidebar"
+        >
+          {sidebarOpen ? <FaTimes /> : <FaBars />}
+        </button>
+        <span className="admin-mobile-title">
+          {pageTitles[currentPage] || 'Admin Panel'}
+        </span>
+      </div>
+
+      {/* ── Overlay (click to close sidebar on mobile) ── */}
+      {sidebarOpen && (
+        <div
+          className="admin-sidebar-overlay"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* ── Main flex layout ── */}
+      <div className="app-container">
+        <Sidebar
+          currentPage={currentPage}
+          setCurrentPage={handleNavigate}
+          isOpen={sidebarOpen}
+        />
+        {renderPage()}
+      </div>
     </div>
   );
 }

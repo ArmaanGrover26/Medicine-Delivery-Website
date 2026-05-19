@@ -1,97 +1,7 @@
-@media (max-width: 480px) {
-  .footer-container {
-    flex-direction: column;
-    gap: 4px;
-    padding: 0 1vw;
-  }
-  .footer-links-grid {
-    grid-template-columns: 1fr;
-    gap: 4px;
-  }
-  .footer-bottom, .footer-legal {
-    flex-direction: column;
-    gap: 4px;
-    padding-left: 1vw;
-    padding-right: 1vw;
-  }
-  .newsletter-form input {
-    width: 94vw;
-    font-size: 0.9rem;
-    min-width: 0;
-  }
-  .newsletter-form button {
-    width: 100%;
-    padding: 8px 0;
-    font-size: 0.9rem;
-  }
-  .social-links {
-    gap: 4px;
-  }
-  .footer-column h4 {
-    font-size: 1rem;
-    margin-bottom: 6px;
-  }
-  .footer-column p, .footer-column ul a {
-    font-size: 0.92rem;
-  }
-}
-/* Responsive Footer Styles */
-@media (max-width: 900px) {
-  .footer-container {
-    flex-direction: column;
-    gap: 18px;
-    padding: 0 10px;
-  }
-  .footer-bottom, .footer-legal {
-    flex-direction: column;
-    gap: 12px;
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-  .newsletter-form input {
-    width: 220px;
-    font-size: 0.95rem;
-  }
-}
-@media (max-width: 600px) {
-  .footer {
-    padding-top: 18px;
-  }
-  .footer-container {
-    gap: 8px;
-    padding: 0 2vw;
-  }
-  .footer-column.about, .footer-links-grid {
-    min-width: 0;
-    width: 100%;
-  }
-  .footer-links-grid {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-  .footer-bottom, .footer-legal {
-    padding-left: 2vw;
-    padding-right: 2vw;
-    gap: 8px;
-  }
-  .newsletter-form input {
-    width: 98vw;
-    min-width: 0;
-    font-size: 0.92rem;
-  }
-  .newsletter-form button {
-    width: 100%;
-    padding: 10px 0;
-  }
-  .social-links {
-    gap: 8px;
-  }
-}
 .footer {
   background-color: var(--primary-dark-blue);
   color: var(--text-light);
-
-  padding-top: 40px; /* Removed bottom padding */
+  padding-top: 40px;
 }
 
 .footer-container {
@@ -99,7 +9,7 @@
   margin: 0 auto;
   padding: 0 30px;
   display: flex;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 30px;
 }
@@ -173,23 +83,20 @@
   color: white;
 }
 
-/* --- Updated Newsletter Section Styles --- */
+/* --- Newsletter Section --- */
 .footer-bottom {
   border-top: 1px solid #2c3e50;
   margin-top: 30px;
-  padding: 25px 0;
-  /* New flexbox layout */
+  padding: 25px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 20px;
-  /* These rules use the main container's width and centering */
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 30px;
-  padding-right: 30px;
+  box-sizing: border-box;
 }
 
 .newsletter-text h4 {
@@ -198,48 +105,57 @@
 }
 .newsletter-text p {
   margin: 0;
+  font-size: 0.9rem;
 }
 
 .newsletter-form {
   display: flex;
   gap: 10px;
-  flex-wrap: wrap;
+  align-items: center;
+  flex-wrap: nowrap; /* keep inline on desktop */
 }
 
 .email-input-container {
   position: relative;
   display: flex;
   align-items: center;
+  flex: 1;
+  min-width: 0;
 }
 
 .newsletter-form input {
-  padding: 12px 40px 12px 15px; /* Add right padding for icon */
+  padding: 12px 40px 12px 15px;
   border-radius: 8px;
   border: 1px solid #34495e;
   background-color: #1c2b3e;
   color: white;
-  width: 300px;
+  width: 280px;
   font-size: 1rem;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .email-icon {
   position: absolute;
-  right: 15px;
+  right: 12px;
   color: #888;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+  pointer-events: none;
 }
 
 .newsletter-form button {
-  padding: 12px 25px;
+  padding: 12px 22px;
   border: none;
   border-radius: 8px;
   background-color: var(--primary-blue);
   color: white;
   font-weight: 600;
   cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
-/* --- New Legal Bar & Social Icon Styles --- */
+/* --- Legal Bar & Social Icons --- */
 .footer-legal {
   border-top: 1px solid #2c3e50;
   display: flex;
@@ -247,13 +163,11 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 15px;
-  padding: 20px 0;
+  padding: 20px 30px;
   font-size: 0.9rem;
-  /* These rules use the main container's width and centering */
   max-width: 1200px;
   margin: 0 auto;
-  padding-left: 30px;
-  padding-right: 30px;
+  box-sizing: border-box;
 }
 
 .social-links {
@@ -279,4 +193,109 @@
   background-color: var(--primary-blue);
   border-color: var(--primary-blue);
   color: white;
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 900px) {
+  .footer-container {
+    flex-direction: column;
+    gap: 18px;
+    padding: 0 20px;
+  }
+
+  .footer-bottom {
+    padding: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .footer-legal {
+    padding: 16px 20px;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .newsletter-form input {
+    width: 240px;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer {
+    padding-top: 20px;
+  }
+
+  .footer-container {
+    gap: 16px;
+    padding: 0 16px;
+  }
+
+  .footer-column.about,
+  .footer-links-grid {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .footer-links-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* Newsletter: stack vertically, full width */
+  .footer-bottom {
+    padding: 18px 16px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .newsletter-form {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .email-input-container {
+    width: 100%;
+  }
+
+  .newsletter-form input {
+    width: 100%;
+    font-size: 0.95rem;
+    padding-right: 40px;
+  }
+
+  .newsletter-form button {
+    width: 100%;
+    padding: 13px;
+    font-size: 1rem;
+  }
+
+  .footer-legal {
+    padding: 14px 16px;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 0.85rem;
+  }
+
+  .social-links {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 400px) {
+  .footer-links-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-bottom,
+  .footer-legal {
+    padding: 14px 12px;
+  }
 }

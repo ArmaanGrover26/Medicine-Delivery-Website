@@ -40,3 +40,25 @@
   color: var(--text-light);
   padding: 40px 0;
 }
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .view-all-btn {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+  }
+  .view-all-container {
+    margin-top: 24px;
+  }
+}

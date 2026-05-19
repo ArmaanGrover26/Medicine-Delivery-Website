@@ -37,44 +37,7 @@ const LoginPage = () => {
         <BsArrowLeft /> Back to Home
       </Link>
       <div className="login-content-wrapper">
-        {/* Left Column */}
-        <div className="login-promo-column">
-          <div className="login-logo">
-            <FaHeartbeat />
-            <span>HealthMeds</span>
-          </div>
-          <h2>
-            Welcome Back to Better <span className="health-text">Health</span>
-          </h2>
-          <p>
-            Access your personalized healthcare dashboard, track orders, and
-            manage your wellness journey with our comprehensive platform.
-          </p>
-          <div className="promo-features">
-            <div className="promo-feature-item">
-              <BsShieldFillCheck /> Secure & Encrypted
-            </div>
-            <div className="promo-feature-item">
-              <BsShieldFillCheck /> Verified Medicines
-            </div>
-            <div className="promo-feature-item">
-              <BsShieldFillCheck /> Expert Care
-            </div>
-          </div>
-          <div className="testimonial-box">
-            <FaCheckCircle className="testimonial-icon" />
-            <p className="testimonial-quote">
-              "HealthMeds has revolutionized how I manage my family's healthcare
-              needs. Quick delivery, authentic medicines, and excellent customer
-              service."
-            </p>
-            <span className="testimonial-author">
-              Dr. Sarah Johnson, Family Physician
-            </span>
-          </div>
-        </div>
-
-        {/* Right Column (Sign-in Form) */}
+        {/* Sign-in Form */}
         <div className="login-form-column">
           <h3>Sign In</h3>
           <p className="form-subtitle">

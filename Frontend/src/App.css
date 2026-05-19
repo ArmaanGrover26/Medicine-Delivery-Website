@@ -1,7 +1,7 @@
 /* Responsive container and section styles */
 @media (max-width: 1200px) {
   .container {
-    max-width: 1000px;
+    max-width: 100%;
     padding: 32px 18px;
   }
   .section-title {
@@ -10,8 +10,8 @@
 }
 @media (max-width: 900px) {
   .container {
-    max-width: 700px;
-    padding: 24px 8px;
+    max-width: 100%;
+    padding: 24px 16px;
   }
   .section-title {
     font-size: 1.7rem;
@@ -22,8 +22,8 @@
 }
 @media (max-width: 600px) {
   .container {
-    max-width: 98vw;
-    padding: 12px 2vw;
+    max-width: 100%;
+    padding: 12px 14px;
   }
   .section-title {
     font-size: 1.3rem;
@@ -38,11 +38,6 @@
   }
 }
 /* General App styles */
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f4f5f7;
-}
 
 .app-container {
   display: flex; /* This is the key line to make the layout side-by-side */

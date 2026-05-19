@@ -29,3 +29,30 @@
 }
 .success-btn.primary { background: var(--primary-gradient); color: white; }
 .success-btn.secondary { border: 1px solid var(--border-color); color: var(--text-dark); }
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .order-success-container {
+    margin: 30px auto;
+    padding: 24px 16px;
+  }
+  .success-icon {
+    font-size: 3.5rem;
+  }
+  .order-success-container h2 {
+    font-size: 1.6rem;
+  }
+  .order-success-container p {
+    font-size: 1rem;
+  }
+  .success-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+  .success-btn {
+    width: 100%;
+    text-align: center;
+    padding: 12px;
+  }
+}

@@ -70,7 +70,7 @@
 }
 
 /* Mobile menu toggle button */
-.mobile-menu-toggle {
+.sidebar-mobile-toggle {
   display: none;
   position: fixed;
   top: 20px;
@@ -85,7 +85,7 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
-.mobile-menu-toggle:hover {
+.sidebar-mobile-toggle:hover {
   background-color: #0056b3;
 }
 
@@ -165,7 +165,7 @@
 
 /* Mobile phones and small tablets */
 @media (max-width: 768px) {
-  .mobile-menu-toggle {
+  .sidebar-mobile-toggle {
     display: block;
   }
   
@@ -178,6 +178,7 @@
     z-index: 1000;
     transition: left 0.3s ease-in-out;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+    overflow-y: auto;
   }
   
   .sidebar.mobile-open {
@@ -186,7 +187,7 @@
   
   .logo-container {
     margin-bottom: 20px;
-    margin-top: 40px; /* Account for mobile menu button */
+    margin-top: 16px; /* Reduced — mobile topbar sits above the sidebar */
   }
   
   .logo-text {
@@ -288,7 +289,7 @@
     font-size: 16px;
   }
   
-  .mobile-menu-toggle {
+  .sidebar-mobile-toggle {
     top: 15px;
     left: 15px;
     padding: 8px;
