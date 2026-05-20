@@ -1,20 +1,20 @@
 const jwt = require('jsonwebtoken');
 
 module.exports = function(req, res, next) {
-  // Get token from the header
-  const token = req.header('x-auth-token');
+  // Read token from HTTP-only cookie (not header)
+  const token = req.cookies && req.cookies.auth_token;
 
-  // Check if no token
   if (!token) {
     return res.status(401).json({ message: 'No token, authorization denied' });
   }
 
-  // Verify token
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded.user; // Add user payload to the request object
+    req.user = decoded.user;
     next();
   } catch (err) {
-    res.status(401).json({ message: 'Token is not valid' });
+    // Token is expired or invalid — clear the stale cookie
+    res.clearCookie('auth_token');
+    return res.status(401).json({ message: 'Token is not valid or has expired' });
   }
 };
