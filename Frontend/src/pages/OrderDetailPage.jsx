@@ -7,7 +7,7 @@ import MockOrderTrackingMap from '../components/OrderTrackingMap/MockOrderTracki
 
 const OrderDetailPage = () => {
     const { orderId } = useParams();
-    const { token } = useAuth();
+    const { user } = useAuth();
     const [order, setOrder] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -15,9 +15,7 @@ const OrderDetailPage = () => {
         const fetchOrderDetails = async () => {
             try {
                 const response = await fetch(`${import.meta.env.VITE_API_URL}/api/orders/${orderId}`, {
-                    headers: {
-                        'x-auth-token': token
-                    }
+                    credentials: 'include',
                 });
 
                 if (response.ok) {
@@ -33,10 +31,10 @@ const OrderDetailPage = () => {
             }
         };
 
-        if (token) {
+        if (user) {
             fetchOrderDetails();
         }
-    }, [orderId, token]);
+    }, [orderId, user]);
 
     if (loading) {
         return <div className="order-detail-loading">Loading order details...</div>;
