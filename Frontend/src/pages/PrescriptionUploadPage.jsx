@@ -65,7 +65,7 @@ const PrescriptionUploadPage = () => {
             formData.append('prescription', selectedFile);
 
             // TODO: Replace with actual API endpoint
-            const response = await fetch(`\${import.meta.env.VITE_API_URL}/api/prescriptions/upload`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/prescriptions/upload`, {
                 method: 'POST',
                 body: formData,
                 headers: {

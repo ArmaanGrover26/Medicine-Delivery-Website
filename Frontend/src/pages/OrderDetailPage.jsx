@@ -14,7 +14,7 @@ const OrderDetailPage = () => {
     useEffect(() => {
         const fetchOrderDetails = async () => {
             try {
-                const response = await fetch(`\${import.meta.env.VITE_API_URL}/api/orders/${orderId}`, {
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/api/orders/${orderId}`, {
                     headers: {
                         'x-auth-token': token
                     }
