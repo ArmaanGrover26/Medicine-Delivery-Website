@@ -8,8 +8,11 @@ const app = express();
 
 // CORS — allow credentials (cookies) from the frontend
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-  credentials: true,  // Required to allow cookies to be sent cross-origin
+  origin: [
+    "http://localhost:5173",
+    "https://medicine-delivery-website.vercel.app"
+  ],
+  credentials: true,
 }));
 
 // Parse cookies from every incoming request
