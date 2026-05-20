@@ -14,7 +14,7 @@ const Orders = () => {
   // 1. Fetch Orders from Backend
   const fetchOrders = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/admin/orders');
+      const response = await fetch(`\${import.meta.env.VITE_API_URL}/api/admin/orders`);
       if (!response.ok) {
         throw new Error('Failed to fetch orders');
       }
@@ -34,7 +34,7 @@ const Orders = () => {
   // 2. Update Order Status Function
   const handleUpdateStatus = async (orderId, newStatus) => {
     try {
-      const response = await fetch(`http://localhost:3001/api/admin/orders/${orderId}/status`, {
+      const response = await fetch(`\${import.meta.env.VITE_API_URL}/api/admin/orders/${orderId}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus }),

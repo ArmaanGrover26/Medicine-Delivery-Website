@@ -20,7 +20,7 @@ const ManageMedicines = () => {
   const fetchMedicines = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:3001/api/admin/products');
+      const response = await fetch(`\${import.meta.env.VITE_API_URL}/api/admin/products`);
       if (response.ok) {
         const data = await response.json();
         setMedicines(data);
@@ -36,7 +36,7 @@ const ManageMedicines = () => {
 
   const handleAddMedicine = async (newMedicine) => {
     try {
-      const response = await fetch('http://localhost:3001/api/admin/products', {
+      const response = await fetch(`\${import.meta.env.VITE_API_URL}/api/admin/products`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -72,7 +72,7 @@ const ManageMedicines = () => {
 
   const handleUpdateMedicine = async (updatedMedicine) => {
     try {
-      const response = await fetch(`http://localhost:3001/api/admin/products/${updatedMedicine.id}`, {
+      const response = await fetch(`\${import.meta.env.VITE_API_URL}/api/admin/products/${updatedMedicine.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -113,7 +113,7 @@ const ManageMedicines = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:3001/api/admin/products/${medicineId}`, {
+      const response = await fetch(`\${import.meta.env.VITE_API_URL}/api/admin/products/${medicineId}`, {
         method: 'DELETE'
       });
 

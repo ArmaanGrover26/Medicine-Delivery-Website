@@ -12,7 +12,7 @@ const Customers = () => {
   const fetchCustomers = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:3001/api/admin/users');
+      const response = await fetch(`\${import.meta.env.VITE_API_URL}/api/admin/users`);
       if (!response.ok) {
         throw new Error('Failed to fetch customers');
       }
@@ -33,7 +33,7 @@ const Customers = () => {
   // Function to handle blocking a user
   const handleBlock = async (customerId) => {
     try {
-      await fetch(`http://localhost:3001/api/admin/users/${customerId}/block`, { method: 'PUT' });
+      await fetch(`\${import.meta.env.VITE_API_URL}/api/admin/users/${customerId}/block`, { method: 'PUT' });
       // Update the user's status in the local state for an immediate UI update
       setCustomers(customers.map(cust => 
         cust.id === customerId ? { ...cust, is_blocked: true } : cust
@@ -46,7 +46,7 @@ const Customers = () => {
   // Function to handle unblocking a user
   const handleUnblock = async (customerId) => {
     try {
-      await fetch(`http://localhost:3001/api/admin/users/${customerId}/unblock`, { method: 'PUT' });
+      await fetch(`\${import.meta.env.VITE_API_URL}/api/admin/users/${customerId}/unblock`, { method: 'PUT' });
       // Update the user's status in the local state
       setCustomers(customers.map(cust => 
         cust.id === customerId ? { ...cust, is_blocked: false } : cust

@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
   const fetchOrders = async (authToken) => {
     if (!authToken) return;
     try {
-      const response = await fetch('http://localhost:3001/api/orders', {
+      const response = await fetch(`\${import.meta.env.VITE_API_URL}/api/orders`, {
         headers: {
           'x-auth-token': authToken
         }
@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
   const fetchAddresses = async (authToken) => {
     if (!authToken) return;
     try {
-      const response = await fetch('http://localhost:3001/api/addresses', {
+      const response = await fetch(`\${import.meta.env.VITE_API_URL}/api/addresses`, {
         headers: {
           'x-auth-token': authToken
         }
@@ -69,7 +69,7 @@ export const AuthProvider = ({ children }) => {
   }, [token]);
 
   const signup = async (userData) => {
-    return fetch('http://localhost:3001/api/users/signup', {
+    return fetch(`\${import.meta.env.VITE_API_URL}/api/users/signup`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(userData),
@@ -77,7 +77,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const login = async (credentials) => {
-    const response = await fetch('http://localhost:3001/api/users/login', {
+    const response = await fetch(`\${import.meta.env.VITE_API_URL}/api/users/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(credentials),
@@ -106,7 +106,7 @@ export const AuthProvider = ({ children }) => {
 
   const addAddress = async (newAddressData) => {
     try {
-      const response = await fetch('http://localhost:3001/api/addresses', {
+      const response = await fetch(`\${import.meta.env.VITE_API_URL}/api/addresses`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -130,7 +130,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const addOrder = async (orderData) => {
-    const response = await fetch('http://localhost:3001/api/orders', {
+    const response = await fetch(`\${import.meta.env.VITE_API_URL}/api/orders`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
