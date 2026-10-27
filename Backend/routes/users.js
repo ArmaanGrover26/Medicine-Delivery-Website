@@ -28,7 +28,7 @@ router.post('/signup', async (req, res) => {
     const passwordHash = await bcrypt.hash(password, salt);
 
     const newUser = await pool.query(
-      "INSERT INTO users (full_name, email, phone_number, password_hash) VALUES ($1, $2, $3, $4) RETURNING id, full_name, email",
+      "INSERT INTO users (full_name, email, phone_number, password_hash, role) VALUES ($1, $2, $3, $4, 'user') RETURNING id, full_name, email, role",
       [fullName, email, phone, passwordHash]
     );
 
@@ -54,6 +54,12 @@ router.post('/login', async (req, res) => {
       return res.status(403).json({ message: "This account has been suspended." });
     }
 
+    if (user.rows[0].role === 'delivery') {
+      return res.status(403).json({ 
+        message: "This account is registered as a delivery partner. Please sign in via the Delivery Partner portal." 
+      });
+    }
+
     const isValidPassword = await bcrypt.compare(password, user.rows[0].password_hash);
     if (!isValidPassword) {
       return res.status(401).json({ message: "Invalid credentials." });
@@ -64,7 +70,8 @@ router.post('/login', async (req, res) => {
         id: user.rows[0].id,
         name: user.rows[0].full_name,
         email: user.rows[0].email,
-        phone: user.rows[0].phone_number
+        phone: user.rows[0].phone_number,
+        role: user.rows[0].role || 'user'
       }
     };
 

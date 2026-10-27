@@ -1,297 +1,159 @@
+/* ============================================================
+   ADMIN SIDEBAR — SLEEK, MODERN SAAS NAVIGATION
+   ============================================================ */
+
 .sidebar {
-  width: 250px;
-  background-color: #fff;
-  height: 100vh;
-  padding: 20px;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  flex-shrink: 0; /* Ensures the sidebar does not shrink */
+  width: 260px;
+  background-color: #ffffff;
+  min-height: 100vh;
+  padding: 24px 16px;
+  border-right: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Brand Header */
 .logo-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-bottom: 30px;
-  font-weight: bold;
+  padding: 0 12px 20px 12px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #f1f5f9;
 }
 
 .sidebar-logo-link {
   display: flex;
   align-items: center;
-  gap: 8px; /* Adds space between the icon and text */
-  text-decoration: none; /* Removes underline from the link */
+  gap: 10px;
+  text-decoration: none;
 }
 
 .logo-icon-svg {
-  width: 30px;
-  height: 30px;
-  color: #3498db; /* This line ensures the color is blue */
+  width: 28px;
+  height: 28px;
+  color: #2563eb;
+  filter: drop-shadow(0 2px 4px rgba(37, 99, 235, 0.2));
 }
 
 .logo-text {
-  font-size: 24px;
-  font-weight: 700;
-  color: #333;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #0f172a;
 }
 
 .admin-panel-text {
-  font-size: 14px;
-  color: #999;
+  font-size: 0.725rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+  margin-top: 4px;
 }
 
+/* Menu Items */
 .sidebar-menu {
   list-style: none;
   padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
 }
 
 .menu-item {
   display: flex;
   align-items: center;
-  padding: 15px 20px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  color: #555;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  color: #64748b;
+  font-size: 0.925rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.menu-item.active {
-  background-color: #e6f7ff;
-  color: #007bff;
-}
-
-.menu-item:hover {
-  background-color: #f0f0f0;
+  border: 1px solid transparent;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .menu-icon {
-  margin-right: 15px;
-  font-size: 20px;
+  font-size: 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  transition: color 0.2s;
 }
 
-/* Mobile menu toggle button */
-.sidebar-mobile-toggle {
-  display: none;
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 1001;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 10px;
-  cursor: pointer;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+.menu-item:hover {
+  background-color: #f8fafc;
+  color: #0f172a;
 }
 
-.sidebar-mobile-toggle:hover {
-  background-color: #0056b3;
+.menu-item:hover .menu-icon {
+  color: #2563eb;
 }
 
-/* Sidebar overlay for mobile */
-.sidebar-overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
+.menu-item.active {
+  background-color: #eff6ff;
+  color: #2563eb;
+  font-weight: 600;
+  border-color: #dbeafe;
+}
+
+.menu-item.active .menu-icon {
+  color: #2563eb;
+}
+
+/* Sidebar Footer & Sign Out */
+.sidebar-footer {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.sidebar-logout-btn {
   width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #fee2e2;
+  background-color: #fff5f5;
+  color: #ef4444;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.sidebar-overlay.active {
-  display: block;
+.sidebar-logout-btn:hover {
+  background-color: #fee2e2;
+  color: #dc2626;
+  border-color: #fca5a5;
+  transform: translateY(-1px);
 }
 
-/* Responsive Breakpoints */
-
-/* Large tablets and small desktops */
-@media (max-width: 1024px) {
-  .sidebar {
-    width: 220px;
-    padding: 18px;
-  }
-  
-  .logo-text {
-    font-size: 22px;
-  }
-  
-  .admin-panel-text {
-    font-size: 13px;
-  }
-  
-  .menu-item {
-    padding: 12px 18px;
-    margin-bottom: 8px;
-  }
-  
-  .menu-icon {
-    margin-right: 12px;
-    font-size: 18px;
-  }
-}
-
-/* Tablets */
-@media (max-width: 768px) {
-  .sidebar {
-    width: 200px;
-    padding: 15px;
-  }
-  
-  .logo-container {
-    margin-bottom: 25px;
-  }
-  
-  .logo-text {
-    font-size: 20px;
-  }
-  
-  .admin-panel-text {
-    font-size: 12px;
-  }
-  
-  .menu-item {
-    padding: 10px 15px;
-    margin-bottom: 6px;
-  }
-  
-  .menu-icon {
-    margin-right: 10px;
-    font-size: 16px;
-  }
-}
-
-/* Mobile phones and small tablets */
-@media (max-width: 768px) {
-  .sidebar-mobile-toggle {
-    display: block;
-  }
-  
+/* Mobile responsive drawer */
+@media (max-width: 900px) {
   .sidebar {
     position: fixed;
     top: 0;
-    left: -250px;
-    width: 250px;
-    height: 100vh;
+    left: 0;
+    bottom: 0;
     z-index: 1000;
-    transition: left 0.3s ease-in-out;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
-    overflow-y: auto;
+    transform: translateX(-100%);
+    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.15);
   }
-  
-  .sidebar.mobile-open {
-    left: 0;
-  }
-  
-  .logo-container {
-    margin-bottom: 20px;
-    margin-top: 16px; /* Reduced — mobile topbar sits above the sidebar */
-  }
-  
-  .logo-text {
-    font-size: 18px;
-  }
-  
-  .admin-panel-text {
-    font-size: 11px;
-  }
-  
-  .menu-item {
-    padding: 12px 15px;
-    margin-bottom: 5px;
-  }
-  
-  .menu-icon {
-    margin-right: 12px;
-    font-size: 16px;
-  }
-}
 
-/* Mobile phones */
-@media (max-width: 480px) {
-  .sidebar {
-    width: 280px;
-    left: -280px;
-  }
-  
   .sidebar.mobile-open {
-    left: 0;
-  }
-  
-  .logo-container {
-    margin-bottom: 18px;
-  }
-  
-  .logo-icon-svg {
-    width: 26px;
-    height: 26px;
-  }
-  
-  .logo-text {
-    font-size: 16px;
-  }
-  
-  .admin-panel-text {
-    font-size: 10px;
-  }
-  
-  .menu-item {
-    padding: 14px 18px;
-    margin-bottom: 4px;
-    font-size: 14px;
-  }
-  
-  .menu-icon {
-    margin-right: 15px;
-    font-size: 18px;
-  }
-}
-
-/* Very small screens */
-@media (max-width: 320px) {
-  .sidebar {
-    width: 260px;
-    left: -260px;
-    padding: 12px;
-  }
-  
-  .sidebar.mobile-open {
-    left: 0;
-  }
-  
-  .logo-container {
-    margin-bottom: 15px;
-  }
-  
-  .logo-icon-svg {
-    width: 24px;
-    height: 24px;
-  }
-  
-  .logo-text {
-    font-size: 14px;
-  }
-  
-  .admin-panel-text {
-    font-size: 9px;
-  }
-  
-  .menu-item {
-    padding: 12px 15px;
-    margin-bottom: 3px;
-    font-size: 13px;
-  }
-  
-  .menu-icon {
-    margin-right: 12px;
-    font-size: 16px;
-  }
-  
-  .sidebar-mobile-toggle {
-    top: 15px;
-    left: 15px;
-    padding: 8px;
+    transform: translateX(0);
   }
 }

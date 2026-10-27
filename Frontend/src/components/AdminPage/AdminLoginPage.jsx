@@ -1,109 +1,188 @@
 import React, { useState } from 'react';
 import { BsArrowLeft, BsShieldLockFill } from 'react-icons/bs';
-import { MdEmail, MdVisibility, MdVisibilityOff } from 'react-icons/md';
-import { FaUserPlus, FaHeadset, FaHeart, FaCheckCircle, FaUser, FaPhoneAlt, FaLock } from 'react-icons/fa'; // Import FaLock
-import { useNavigate } from 'react-router-dom';
+import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
+import { FaUser, FaLock, FaMotorcycle, FaBoxes, FaShieldAlt, FaCheckCircle, FaBolt } from 'react-icons/fa';
+import { useNavigate, Link } from 'react-router-dom';
 import './AdminLoginPage.css';
 
 const AdminLoginPage = ({ onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
 
-    // Hardcoded credentials for demonstration
-    if (username === 'admin' && password === 'password123') {
-      onLogin(); // Call the login function passed from App.jsx
-      navigate('/admin');
-    } else {
-      setError('Invalid username or password');
-    }
+    // Simulate smooth auth check
+    setTimeout(() => {
+      if (username === 'admin' && password === 'password123') {
+        onLogin();
+        navigate('/admin');
+      } else {
+        setError('Invalid username or password. Verify credentials and retry.');
+        setLoading(false);
+      }
+    }, 400);
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+  const fillDemoCredentials = () => {
+    setUsername('admin');
+    setPassword('password123');
+    setError('');
   };
 
   return (
-    <div className="admin-login-container">
-      <div className="login-content-wrapper">
-        {/* Left Column (Promotional Content) */}
-        <div className="login-promo-column">
-          <h2>
-            Welcome Back to <span className="health-text">Better Health</span>
-          </h2>
-          <p>
-            Access your personalized healthcare dashboard, track orders and manage your wellness journey with our comprehensive platform.
-          </p>
-          <div className="promo-features-list">
-            <div className="feature-item">
-              <div className="feature-icon">
-                <BsShieldLockFill />
-              </div>
-              <p>Secure & Encrypted</p>
+    <div className="admin-login-wrapper">
+      <Link to="/" className="admin-back-link">
+        <BsArrowLeft /> Back to HealthMeds Store
+      </Link>
+
+      <div className="admin-login-card">
+        {/* Left Column: Command Center Branding & Overview */}
+        <div className="admin-brand-column">
+          <div className="admin-system-status">
+            <span className="status-indicator-dot"></span>
+            <span>Console Operational • v2.4</span>
+          </div>
+
+          <div className="admin-brand-header">
+            <div className="admin-brand-badge">
+              <BsShieldLockFill />
             </div>
-            <div className="feature-item">
-              <div className="feature-icon">
-                <FaCheckCircle />
+            <h2>HealthMeds <strong>Command Center</strong></h2>
+            <p>
+              Executive management console for store operations, pharmacy inventory, and real-time fleet dispatch.
+            </p>
+          </div>
+
+          <div className="admin-features-grid">
+            <div className="admin-feature-row">
+              <div className="feature-icon-box blue">
+                <FaMotorcycle />
               </div>
-              <p>Verified Medicines</p>
-            </div>
-            <div className="feature-item">
-              <div className="feature-icon">
-                <FaHeadset />
+              <div>
+                <strong>Fleet Dispatch & Tracking</strong>
+                <p>Assign orders to active delivery partners & monitor runs</p>
               </div>
-              <p>Expert Care</p>
             </div>
+
+            <div className="admin-feature-row">
+              <div className="feature-icon-box emerald">
+                <FaBoxes />
+              </div>
+              <div>
+                <strong>Pharmacy Inventory Control</strong>
+                <p>Manage stock availability, medicine catalog & pricing</p>
+              </div>
+            </div>
+
+            <div className="admin-feature-row">
+              <div className="feature-icon-box purple">
+                <FaShieldAlt />
+              </div>
+              <div>
+                <strong>Security & Governance</strong>
+                <p>Customer accounts, rider verification & audit logging</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="admin-security-footer">
+            <BsShieldLockFill className="footer-shield" />
+            <span>256-bit Encrypted Session • Restricted Admin Access</span>
           </div>
         </div>
 
-        {/* Right Column (Login Form) */}
-        <div className="login-form-column">
-          <h3>Sign In</h3>
-          <p className="form-subtitle">Welcome to your admin dashboard</p>
-          {error && <div className="error-message">{error}</div>}
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="username">Username</label>
-              <div className="input-wrapper">
-                <FaUser className="input-icon" />
+        {/* Right Column: Interactive Login Form */}
+        <div className="admin-form-column">
+          <div className="admin-form-header">
+            <div className="admin-form-icon">
+              <FaLock />
+            </div>
+            <h3>Administrator Sign In</h3>
+            <p className="form-subtext">Enter your credentials to access operations</p>
+          </div>
+
+          {/* Quick Demo Fill Helper */}
+          <button
+            type="button"
+            className="demo-credentials-pill"
+            onClick={fillDemoCredentials}
+            title="Auto-fill default admin credentials"
+          >
+            <FaBolt className="bolt-icon" /> Auto-fill Demo Credentials (admin / password123)
+          </button>
+
+          {error && (
+            <div className="admin-login-error">
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="admin-login-form">
+            <div className="form-field-group">
+              <label htmlFor="username">Admin Username</label>
+              <div className="input-field-inner">
+                <FaUser className="field-icon-left" />
                 <input
                   type="text"
                   id="username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Enter your username"
+                  placeholder="e.g. admin"
                   required
+                  autoFocus
                 />
               </div>
             </div>
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <div className="input-wrapper">
-                {/* New: Add a static lock icon */}
-                <FaLock className="input-icon" />
+
+            <div className="form-field-group">
+              <label htmlFor="password">Security Password</label>
+              <div className="input-field-inner">
+                <FaLock className="field-icon-left" />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   id="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter your password"
+                  placeholder="Enter security password"
                   required
                 />
-                <span onClick={togglePasswordVisibility} className="input-icon-right">
+                <button
+                  type="button"
+                  className="password-toggle-btn"
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label="Toggle password visibility"
+                >
                   {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
-                </span>
+                </button>
               </div>
             </div>
-            <button type="submit" className="login-button">
-              Sign In
+
+            <button
+              type="submit"
+              className="admin-submit-btn"
+              disabled={loading}
+            >
+              {loading ? (
+                <span className="btn-spinner-wrap">
+                  <span className="spinner-dot"></span>
+                  Authenticating...
+                </span>
+              ) : (
+                <>Sign In to Dashboard</>
+              )}
             </button>
           </form>
+
+          <div className="admin-login-footer-hint">
+            <span>HealthMeds Internal Enterprise Systems</span>
+          </div>
         </div>
       </div>
     </div>

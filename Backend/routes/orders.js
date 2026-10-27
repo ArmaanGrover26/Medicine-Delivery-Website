@@ -70,9 +70,18 @@ router.get('/:id', authMiddleware, async (req, res) => {
     const orderId = req.params.id;
     const userId = req.user.id;
 
-    // Get order details
+    // Get order details along with delivery partner info if assigned
     const orderResult = await pool.query(
-      'SELECT * FROM orders WHERE id = $1 AND user_id = $2',
+      `SELECT 
+        o.*,
+        dp_user.full_name AS delivery_partner_name,
+        dp_user.phone_number AS delivery_partner_phone,
+        dp.vehicle_type,
+        dp.vehicle_number
+       FROM orders o
+       LEFT JOIN users dp_user ON o.delivery_partner_id = dp_user.id
+       LEFT JOIN delivery_profiles dp ON dp_user.id = dp.user_id
+       WHERE o.id = $1 AND o.user_id = $2`,
       [orderId, userId]
     );
 

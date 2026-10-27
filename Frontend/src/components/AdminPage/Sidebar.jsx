@@ -1,9 +1,18 @@
 import React from 'react';
 import './Sidebar.css';
-import { FaTachometerAlt, FaBoxes, FaUser, FaClipboardList, FaHeartbeat } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { FaTachometerAlt, FaBoxes, FaUser, FaClipboardList, FaHeartbeat, FaMotorcycle, FaSignOutAlt } from 'react-icons/fa';
+import { Link, useNavigate } from 'react-router-dom';
 
-const Sidebar = ({ currentPage, setCurrentPage, isOpen }) => {
+const Sidebar = ({ currentPage, setCurrentPage, isOpen, onLogout }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    if (onLogout) {
+      onLogout();
+    }
+    navigate('/admin/login');
+  };
+
   return (
     <div className={`sidebar ${isOpen ? 'mobile-open' : ''}`}>
       <div className="logo-container">
@@ -42,7 +51,20 @@ const Sidebar = ({ currentPage, setCurrentPage, isOpen }) => {
           <div className="menu-icon"><FaUser /></div>
           Customers
         </li>
+        <li
+          className={`menu-item ${currentPage === 'riders' ? 'active' : ''}`}
+          onClick={() => setCurrentPage('riders')}
+        >
+          <div className="menu-icon"><FaMotorcycle /></div>
+          Delivery Fleet
+        </li>
       </ul>
+
+      <div className="sidebar-footer">
+        <button className="sidebar-logout-btn" onClick={handleLogout} title="Sign Out of Admin Console">
+          <FaSignOutAlt /> Sign Out
+        </button>
+      </div>
     </div>
   );
 };

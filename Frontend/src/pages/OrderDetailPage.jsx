@@ -138,9 +138,95 @@ const OrderDetailPage = () => {
                     </div>
                 </div>
 
-                {/* Delivery Information */}
+                {/* Delivery Information & Partner Details */}
                 <div className="delivery-info-section">
-                    <h2>Delivery Information</h2>
+                    <h2>Delivery Details</h2>
+
+                    {/* Delivery Security PIN for Customer */}
+                    {order.delivery_otp && order.status === 'Out for Delivery' && (
+                        <div style={{
+                            background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(5, 150, 105, 0.08) 100%)',
+                            border: '2px dashed #10b981',
+                            borderRadius: '12px',
+                            padding: '1.25rem',
+                            marginBottom: '1.5rem',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            flexWrap: 'wrap',
+                            gap: '1rem'
+                        }}>
+                            <div>
+                                <h3 style={{ margin: '0 0 0.25rem 0', color: '#047857', fontSize: '1.1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                    🔒 Delivery Security PIN
+                                </h3>
+                                <p style={{ margin: 0, color: '#4b5563', fontSize: '0.9rem' }}>
+                                    Please share this 4-digit PIN with your delivery rider upon package arrival.
+                                </p>
+                            </div>
+                            <div style={{
+                                background: '#10b981',
+                                color: 'white',
+                                padding: '0.5rem 1.25rem',
+                                borderRadius: '10px',
+                                fontSize: '1.75rem',
+                                fontWeight: '800',
+                                letterSpacing: '0.25em',
+                                boxShadow: '0 4px 12px rgba(16, 185, 129, 0.35)'
+                            }}>
+                                {order.delivery_otp}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Assigned Rider Card */}
+                    {order.delivery_partner_name && (
+                        <div style={{
+                            background: '#f8fafc',
+                            border: '1px solid #e2e8f0',
+                            borderRadius: '12px',
+                            padding: '1.25rem',
+                            marginBottom: '1.5rem',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            flexWrap: 'wrap',
+                            gap: '1rem'
+                        }}>
+                            <div>
+                                <span style={{ fontSize: '0.75rem', fontWeight: '700', textTransform: 'uppercase', color: '#64748b' }}>
+                                    Assigned Delivery Partner
+                                </span>
+                                <h3 style={{ margin: '0.25rem 0', color: '#0f172a', fontSize: '1.15rem' }}>
+                                    {order.delivery_partner_name}
+                                </h3>
+                                <p style={{ margin: 0, color: '#64748b', fontSize: '0.875rem' }}>
+                                    Vehicle: {order.vehicle_type || 'Motorcycle'} {order.vehicle_number ? `(${order.vehicle_number})` : ''}
+                                </p>
+                            </div>
+
+                            {order.delivery_partner_phone && (
+                                <a
+                                    href={`tel:${order.delivery_partner_phone}`}
+                                    style={{
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        gap: '0.5rem',
+                                        background: '#2563eb',
+                                        color: 'white',
+                                        padding: '0.6rem 1.2rem',
+                                        borderRadius: '8px',
+                                        fontWeight: '600',
+                                        textDecoration: 'none',
+                                        fontSize: '0.9rem'
+                                    }}
+                                >
+                                    📞 Call Rider
+                                </a>
+                            )}
+                        </div>
+                    )}
+
                     <div className="info-card">
                         <div className="info-row">
                             <span className="info-label">Name:</span>

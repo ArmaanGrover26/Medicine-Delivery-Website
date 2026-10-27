@@ -4,6 +4,7 @@ import Dashboard from './Dashboard';
 import ManageMedicines from './ManageMedicines';
 import Orders from './Orders';
 import Customers from './Customers';
+import Riders from './Riders';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import './AdminDashboardPage.css';
 
@@ -38,9 +39,10 @@ const pageTitles = {
   'manage-medicines': 'Manage Medicines',
   'orders': 'Orders',
   'customers': 'Customers',
+  'riders': 'Delivery Fleet',
 };
 
-function AdminDashboardPage() {
+function AdminDashboardPage({ onLogout }) {
   const [currentPage, setCurrentPage] = useState('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [orders, setOrders] = useState(initialOrders);
@@ -55,15 +57,17 @@ function AdminDashboardPage() {
   const renderPage = () => {
     switch (currentPage) {
       case 'dashboard':
-        return <Dashboard orders={orders} />;
+        return <Dashboard />;
       case 'manage-medicines':
         return <ManageMedicines />;
       case 'orders':
         return <Orders orders={orders} setOrders={setOrders} />;
       case 'customers':
         return <Customers customers={customers} setCustomers={setCustomers} />;
+      case 'riders':
+        return <Riders />;
       default:
-        return <Dashboard orders={orders} />;
+        return <Dashboard />;
     }
   };
 
@@ -98,6 +102,7 @@ function AdminDashboardPage() {
           currentPage={currentPage}
           setCurrentPage={handleNavigate}
           isOpen={sidebarOpen}
+          onLogout={onLogout}
         />
         {renderPage()}
       </div>

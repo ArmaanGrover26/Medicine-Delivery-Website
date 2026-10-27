@@ -1,13 +1,49 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Chatbot.css';
-import { FaPaperPlane, FaTimes } from 'react-icons/fa';
+import { FaPaperPlane, FaTimes, FaPills, FaBook } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
+// ─── Constants ───────────────────────────────────────────────────────────────
+// Keep at most this many turns (user + bot pairs) in memory for context
+const MAX_HISTORY_TURNS = 3;
+
+// ─── Helper: source type → readable label ────────────────────────────────────
+function sourceTypeLabel(type) {
+  switch (type) {
+    case 'medicine_overview':     return 'Medicine Info';
+    case 'medicine_dosage':       return 'Dosage Guide';
+    case 'medicine_side_effects': return 'Side Effects';
+    case 'medicine_precautions':  return 'Precautions';
+    case 'medicine_uses':         return 'Uses';
+    case 'blog_article':          return 'HealthMeds Blog';
+    default:                      return 'Knowledge Base';
+  }
+}
+
+// ─── Source icon ─────────────────────────────────────────────────────────────
+function SourceIcon({ type }) {
+  if (type === 'blog_article') return <FaBook style={{ marginRight: '5px', opacity: 0.7 }} />;
+  return <FaPills style={{ marginRight: '5px', opacity: 0.7 }} />;
+}
+
+// ─── Chatbot Component ───────────────────────────────────────────────────────
 const Chatbot = ({ onClose }) => {
-  const [messages, setMessages] = useState([{ sender: 'bot', text: 'Hello! How can I assist you with your health questions today?' }]);
-  const [input, setInput] = useState('');
+  const [messages, setMessages]   = useState([{
+    sender: 'bot',
+    text: 'Hello! I\'m the HealthMeds AI Medicine Assistant. Ask me about medicines, health topics, or finding products in our catalog.',
+    sources:  [],
+    products: [],
+  }]);
+  const [input, setInput]         = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  // conversationHistory is what we send to the backend for multi-turn context.
+  // It follows the Gemini multi-turn format: [{ role, parts: [{ text }] }, ...]
+  const [conversationHistory, setConversationHistory] = useState([]);
+
   const chatEndRef = useRef(null);
 
+  // Auto-scroll to the latest message
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
@@ -16,52 +52,62 @@ const Chatbot = ({ onClose }) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
 
-    const userMessage = { sender: 'user', text: input };
+    const userText = input.trim();
+
+    // Add user message to UI immediately
+    const userMessage = { sender: 'user', text: userText, sources: [], products: [] };
     setMessages(prev => [...prev, userMessage]);
     setInput('');
     setIsLoading(true);
 
-    try {
-      console.log('Sending message to chatbot API...');
+    // Build the history array we'll send to the backend.
+    // We trim to the last MAX_HISTORY_TURNS * 2 items (user + model alternating)
+    const historyToSend = conversationHistory.slice(-(MAX_HISTORY_TURNS * 2));
 
-      // Add timeout to prevent infinite loading
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+    try {
+      const controller  = new AbortController();
+      const timeoutId   = setTimeout(() => controller.abort(), 45000); // 45s timeout
 
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/chat`, {
-        method: 'POST',
+        method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: input }),
-        signal: controller.signal
+        body:    JSON.stringify({
+          message:             userText,
+          conversationHistory: historyToSend,
+        }),
+        signal: controller.signal,
       });
 
       clearTimeout(timeoutId);
 
-      console.log('Response status:', response.status);
-
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'API request failed');
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `Request failed (${response.status})`);
       }
 
       const data = await response.json();
-      console.log('Received response:', data);
+      const { reply = '', sources = [], products = [] } = data;
 
-      const botMessage = { sender: 'bot', text: data.reply || data.error || 'No response received' };
+      // Add bot reply to UI
+      const botMessage = { sender: 'bot', text: reply, sources, products };
       setMessages(prev => [...prev, botMessage]);
+
+      // Update conversation history for multi-turn context.
+      // We append the user's message and the model's reply so follow-up questions work.
+      setConversationHistory(prev => [
+        ...prev,
+        { role: 'user',  parts: [{ text: userText }] },
+        { role: 'model', parts: [{ text: reply }] },
+      ]);
+
     } catch (error) {
-      console.error('Chatbot error:', error);
-
       let errorText = 'Sorry, something went wrong. Please try again.';
-
       if (error.name === 'AbortError') {
-        errorText = 'Request timed out. The AI is taking too long to respond. Please try again.';
+        errorText = 'The request timed out. Please try again.';
       } else if (error.message) {
         errorText = error.message;
       }
-
-      const errorMessage = { sender: 'bot', text: errorText };
-      setMessages(prev => [...prev, errorMessage]);
+      setMessages(prev => [...prev, { sender: 'bot', text: errorText, sources: [], products: [] }]);
     } finally {
       setIsLoading(false);
     }
@@ -70,31 +116,109 @@ const Chatbot = ({ onClose }) => {
   return (
     <div className="chatbot-overlay">
       <div className="chatbot-window">
+
+        {/* ── Header ─────────────────────────────────────────────────────── */}
         <div className="chatbot-header">
-          <h3>AI Pharmacist Assistant</h3>
-          <button onClick={onClose} className="close-btn"><FaTimes /></button>
+          <div className="chatbot-header-info">
+            <FaPills className="chatbot-header-icon" />
+            <div>
+              <h3>HealthMeds AI Assistant</h3>
+              <span className="chatbot-header-sub">Powered by RAG + Gemini</span>
+            </div>
+          </div>
+          <button onClick={onClose} className="close-btn" aria-label="Close chat"><FaTimes /></button>
         </div>
+
+        {/* ── Messages ───────────────────────────────────────────────────── */}
         <div className="chatbot-messages">
           {messages.map((msg, index) => (
-            <div key={index} className={`message-bubble ${msg.sender}`}>
-              {msg.text}
+            <div key={index} className={`chat-message-group ${msg.sender}`}>
+
+              {/* The text bubble */}
+              <div className={`message-bubble ${msg.sender}`}>
+                {msg.text}
+              </div>
+
+              {/* Sources / Citations — only shown for bot messages with sources */}
+              {msg.sender === 'bot' && msg.sources && msg.sources.length > 0 && (
+                <div className="sources-panel">
+                  <span className="sources-label">Sources:</span>
+                  <ul className="sources-list">
+                    {msg.sources.map((src, i) => (
+                      <li key={i} className="source-item">
+                        <SourceIcon type={src.type} />
+                        <span>{src.name}</span>
+                        <span className="source-type-badge">{sourceTypeLabel(src.type)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Product Cards — only shown when live products were found */}
+              {msg.sender === 'bot' && msg.products && msg.products.length > 0 && (
+                <div className="product-cards-row">
+                  {msg.products.map((product) => (
+                    <div key={product.id} className="product-mini-card">
+                      {product.image && (
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          className="product-mini-image"
+                          onError={(e) => { e.target.style.display = 'none'; }}
+                        />
+                      )}
+                      <div className="product-mini-info">
+                        <p className="product-mini-name">{product.name}</p>
+                        <p className="product-mini-meta">{product.manufacturer}</p>
+                        <div className="product-mini-price-row">
+                          <span className="product-mini-price">₹{product.price}</span>
+                          <span className={`product-mini-status ${product.status === 'In Stock' ? 'in-stock' : 'out-of-stock'}`}>
+                            {product.status}
+                          </span>
+                        </div>
+                        {product.rx_required && (
+                          <span className="product-mini-rx">Rx Required</span>
+                        )}
+                      </div>
+                      <Link to={`/product/${product.id}`} className="product-mini-link" onClick={onClose}>
+                        View →
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+              )}
+
             </div>
           ))}
-          {isLoading && <div className="message-bubble bot loading"><span></span><span></span><span></span></div>}
+
+          {/* Loading dots */}
+          {isLoading && (
+            <div className="chat-message-group bot">
+              <div className="message-bubble bot loading">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+          )}
+
           <div ref={chatEndRef} />
         </div>
+
+        {/* ── Input ──────────────────────────────────────────────────────── */}
         <form className="chatbot-input" onSubmit={handleSend}>
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask a question..."
+            placeholder="Ask about medicines, symptoms, or products..."
             disabled={isLoading}
+            aria-label="Chat input"
           />
-          <button type="submit" disabled={isLoading || !input.trim()}>
+          <button type="submit" disabled={isLoading || !input.trim()} aria-label="Send message">
             <FaPaperPlane />
           </button>
         </form>
+
       </div>
     </div>
   );

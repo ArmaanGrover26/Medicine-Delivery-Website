@@ -105,10 +105,49 @@ export const AuthProvider = ({ children }) => {
       // Load user data after login
       fetchOrders();
       fetchAddresses();
-      navigate('/');
+
+      if (data.user.role === 'delivery') {
+        navigate('/delivery/dashboard');
+      } else {
+        navigate('/');
+      }
     } else {
       const errorData = await response.json();
       throw new Error(errorData.message);
+    }
+  };
+
+  const deliverySignup = async (partnerData) => {
+    const response = await authFetch(`${API}/api/delivery/signup`, {
+      method: 'POST',
+      body: JSON.stringify(partnerData),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      setUser(data.user);
+      navigate('/delivery/dashboard');
+      return data;
+    } else {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Registration failed.');
+    }
+  };
+
+  const deliveryLogin = async (credentials) => {
+    const response = await authFetch(`${API}/api/delivery/login`, {
+      method: 'POST',
+      body: JSON.stringify(credentials),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      setUser(data.user);
+      navigate('/delivery/dashboard');
+      return data;
+    } else {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Delivery login failed.');
     }
   };
 
@@ -160,8 +199,10 @@ export const AuthProvider = ({ children }) => {
     user,
     loading,
     login,
+    deliveryLogin,
     logout,
     signup,
+    deliverySignup,
     addresses,
     addAddress,
     orders,

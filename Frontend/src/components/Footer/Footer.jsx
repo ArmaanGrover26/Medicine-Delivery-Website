@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Footer.css';
 // Import the necessary icons
 import { FaPhoneAlt, FaMapMarkerAlt, FaFacebookF, FaInstagram, FaTwitter } from 'react-icons/fa';
@@ -33,7 +34,7 @@ const Footer = () => {
               <li><a href="#/">Careers</a></li>
               <li><a href="#/">Press Releases</a></li>
               <li><a href="#/">Healthcare Blog</a></li>
-              <li><a href="#/">Partner with Us</a></li>
+              <li><Link to="/delivery/signup" style={{ color: '#10b981', fontWeight: '600' }}>🛵 Deliver with Us (Fleet)</Link></li>
             </ul>
           </div>
           <div className="footer-column">
